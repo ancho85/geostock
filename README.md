@@ -1,0 +1,2 @@
+# geostock
+GeotechPy Inventario App
