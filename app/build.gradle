@@ -6,15 +6,30 @@ android {
 
     defaultConfig {
         applicationId "com.geotechpy.geostock"
-        minSdkVersion 10
+        minSdkVersion 8
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"
     }
+    signingConfigs {
+        releaseConfig {
+            storeFile file("gradlekeystore.jks");
+            storePassword("123456");
+            keyAlias "ancho";
+            keyPassword "123456";
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
+            debuggable false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.releaseConfig
+        }
+
+        debug {
+            debuggable true
+            applicationIdSuffix ".debug"
         }
     }
 }
