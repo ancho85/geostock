@@ -9,6 +9,12 @@ public class Zone {
     private String name;
     private String type;
 
+    public Zone() {
+        setSernr(0);
+        setName("");
+        setType("");
+    }
+
     public Zone(Integer sernr, String name, String type) {
         setSernr(sernr);
         setName(name);

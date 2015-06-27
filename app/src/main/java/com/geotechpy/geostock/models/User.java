@@ -9,6 +9,12 @@ public class User {
     private String password;
     private String type;
 
+    public User() {
+        setCode("");
+        setPassword("");
+        setType("");
+    }
+
     public User(String code, String password, String type) {
 
         setCode(code);

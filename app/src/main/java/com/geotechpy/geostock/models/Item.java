@@ -9,6 +9,12 @@ public class Item {
     private String name;
     private String type;
 
+    public Item() {
+        setCode("");
+        setName("");
+        setType("");
+    }
+
     public Item(String code, String name, String type) {
         setCode(code);
         setName(name);

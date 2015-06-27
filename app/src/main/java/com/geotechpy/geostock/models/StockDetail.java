@@ -10,6 +10,13 @@ public class StockDetail {
     private String item_code;
     private Float qty;
 
+    public StockDetail() {
+        setStock_sernr(0);
+        setLinenr(0);
+        setItem_code("");
+        setQty(0.0f);
+    }
+
     public StockDetail(Integer stock_sernr, Integer linenr, String item_code, Float qty) {
         setStock_sernr(stock_sernr);
         setLinenr(linenr);

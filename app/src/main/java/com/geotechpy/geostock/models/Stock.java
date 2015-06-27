@@ -11,6 +11,14 @@ public class Stock {
     private String user_code;
     private Integer zone_sernr;
 
+    public Stock() {
+        setSernr(0);
+        setType("");
+        setStatus("");
+        setUser_code("");
+        setZone_sernr(0);
+    }
+
     public Stock(Integer sernr, String type, String status, String user_code, Integer zone_sernr) {
 
         setSernr(sernr);
