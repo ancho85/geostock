@@ -80,3 +80,11 @@ task jacocoTestReport(type:JacocoReport, dependsOn: "testDebug") {
         html.destination = "${buildDir}/reports/jacoco"
     }
 }
+
+project.afterEvaluate {
+    def append = "append=true"
+    def destFile = "destfile=$buildDir/outputs/code-coverage/connected/coverage.ec"
+    testDebug.jvmArgs "-javaagent:$buildDir/intermediates/jacoco/jacocoagent.jar=$append,$destFile"
+
+    createDebugCoverageReport.dependsOn testDebug
+}
