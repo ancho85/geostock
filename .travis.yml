@@ -1,4 +1,7 @@
 language: android
+jdk:
+    - openjdk7
+    - oraclejdk8
 android:
   components:
     # Uncomment the lines below if you want to
@@ -42,3 +45,6 @@ sudo: false
 cache:
   directories:
     - $HOME/.gradle
+
+after_success:
+- ./gradlew jacocoTestReport coveralls

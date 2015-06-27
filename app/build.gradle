@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'jacoco'
+apply plugin: 'com.github.kt3k.coveralls'
 
 android {
     compileSdkVersion 22
@@ -30,11 +32,59 @@ android {
         debug {
             debuggable true
             applicationIdSuffix ".debug"
+            testCoverageEnabled true
         }
+    }
+    jacoco {
+        version = "0.7.1.201405082137"
     }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.2.0'
+}
+
+jacoco {
+    toolVersion "0.7.1.201405082137"
+}
+
+task jacocoTestReport(type:JacocoReport, dependsOn: "testDebug") {
+    group = "Reporting"
+
+    description = "Generate Jacoco coverage reports"
+
+    // exclude auto-generated classes and tests
+    def fileFilter = ['**/R.class', '**/R$*.class',
+                      '**/BuildConfig.*', '**/Manifest*.*',
+                      'android/**/*.*']
+    def debugTree = fileTree(dir:
+            "${project.buildDir}/intermediates/classes/debug",
+            excludes: fileFilter)
+    def mainSrc = "${project.projectDir}/src/main/java"
+
+    sourceDirectories = files([mainSrc])
+    classDirectories = files([debugTree])
+    additionalSourceDirs = files([
+            "${buildDir}/generated/source/buildConfig/debug",
+            "${buildDir}/generated/source/r/debug"
+    ])
+    executionData = fileTree(dir: project.projectDir, includes:
+            ['**/*.exec', '**/*.ec'])
+
+    reports {
+        xml.enabled = true
+        xml.destination = "${buildDir}/reports/jacoco/test/jacocoTestReport.xml"
+        csv.enabled = false
+        html.enabled = true
+        html.destination = "${buildDir}/reports/jacoco"
+    }
+}
+
+project.afterEvaluate {
+    def append = "append=true"
+    def destFile = "destfile=$buildDir/outputs/code-coverage/connected/coverage.ec"
+    testDebug.jvmArgs "-javaagent:$buildDir/intermediates/jacoco/jacocoagent.jar=$append,$destFile"
+
+    createDebugCoverageReport.dependsOn testDebug
 }
