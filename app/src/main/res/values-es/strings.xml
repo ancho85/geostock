@@ -3,7 +3,7 @@
     <string name="action_settings">Configuración</string>
     <string name="username">Usuario</string>
     <string name="password">Clave</string>
-    <string name="reset">Borrar Base de Datos</string>
+    <string name="reset">Borrar Base</string>
     <string name="login">Ingresar</string>
     <string name="sync">Sincronizar</string>
     <string name="dbreset">Base de Datos borrada con éxito</string>
