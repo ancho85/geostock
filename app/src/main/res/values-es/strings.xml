@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_settings">Configuración</string>
+    <string name="username">Usuario</string>
+    <string name="password">Clave</string>
+    <string name="reset">Reestablecer</string>
+    <string name="login">Ingresar</string>
+    <string name="sync">Sincronizar</string>
+</resources>
