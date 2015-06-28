@@ -7,5 +7,9 @@
     <string name="reset">Reset</string>
     <string name="login">Login</string>
     <string name="sync">Sync</string>
-    <string name="dbreset">Database Reset Successfull</string>
+    <string name="dbreset">Database Reset Successful</string>
+    <string name="confirm_action">Confirm action?</string>
+    <string name="confirm_title">Confirmation required</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
 </resources>

@@ -3,8 +3,12 @@
     <string name="action_settings">Configuración</string>
     <string name="username">Usuario</string>
     <string name="password">Clave</string>
-    <string name="reset">Reestablecer</string>
+    <string name="reset">Borrar Base de Datos</string>
     <string name="login">Ingresar</string>
     <string name="sync">Sincronizar</string>
-    <string name="dbreset">Base de Datos reestablecida con exito</string>
+    <string name="dbreset">Base de Datos borrada con éxito</string>
+    <string name="confirm_action">Confirmar acción?</string>
+    <string name="confirm_title">Se requiere confirmación</string>
+    <string name="cancel">Cancelar</string>
+    <string name="ok">Aceptar</string>
 </resources>
