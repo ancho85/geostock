@@ -15,20 +15,34 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "GeoStock.db";
     private static final int DATABASE_VERSION = 1;
 
-    String sqlUserCreate = "CREATE TABLE User (code TEXT PRIMARY KEY NOT NULL, " +
-            "password TEXT NOT NULL, type TEXT NOT NULL)";
-    String sqlItemCreate = "CREATE TABLE Item (code TEXT PRIMARY KEY NOT NULL, " +
-            "name TEXT NOT NULL, type TEXT NOT NULL)";
-    String sqlZoneCreate = "CREATE TABLE Zone (sernr INTEGER PRIMARY KEY NOT NULL, " +
-            "name TEXT NOT NULL, type TEXT NOT NULL)";
-    String sqlStockCreate = "CREATE TABLE Stock (sernr INTEGER, type TEXT NOT NULL, " +
-            "status TEXT NOT NULL, user_code TEXT NOT NULL, zone_sernr INTEGER NOT NULL, "+
+    String sqlUserCreate = "CREATE TABLE User (" +
+            "code TEXT PRIMARY KEY NOT NULL, " +
+            "password TEXT NOT NULL, " +
+            "type TEXT NOT NULL)";
+    String sqlItemCreate = "CREATE TABLE Item (" +
+            "code TEXT PRIMARY KEY NOT NULL, " +
+            "name TEXT NOT NULL, " +
+            "type TEXT NOT NULL)";
+    String sqlZoneCreate = "CREATE TABLE Zone (" +
+            "sernr INTEGER PRIMARY KEY NOT NULL, " +
+            "name TEXT NOT NULL, " +
+            "type TEXT NOT NULL)";
+    String sqlStockCreate = "CREATE TABLE Stock (" +
+            "sernr INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            "type TEXT NOT NULL, " +
+            "status TEXT NOT NULL, " +
+            "user_code TEXT NOT NULL, " +
+            "zone_sernr INTEGER NOT NULL, "+
             "FOREIGN KEY (user_code) REFERENCES User(code), " +
-            "FOREIGN KEY (zone_sernr) REFERENCES Zone(sernr)";
-    String sqlStockDetailCreate = "CREATE TABLE StockDetail (stock_sernr INTEGER NOT NULL," +
-            "linenr INTEGER NOT NULL, item_code TEXT NOT NULL, qty REAL NOT NULL, " +
+            "FOREIGN KEY (zone_sernr) REFERENCES Zone(sernr))";
+    String sqlStockDetailCreate = "CREATE TABLE StockDetail (" +
+            "sernr INTEGER PRIMARY KEY AUTOINCREMENT," +
+            "stock_sernr INTEGER NOT NULL," +
+            "linenr INTEGER NOT NULL, " +
+            "item_code TEXT NOT NULL, " +
+            "qty REAL NOT NULL, " +
             "FOREIGN KEY (stock_sernr) REFERENCES Stock(sernr)," +
-            "FOREIGN KEY (item_code) REFERENCES Item(code)";
+            "FOREIGN KEY (item_code) REFERENCES Item(code))";
 
 
     public static DBHelper getInstance(Context ctx) {
