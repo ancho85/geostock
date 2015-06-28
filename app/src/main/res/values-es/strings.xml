@@ -6,4 +6,5 @@
     <string name="reset">Reestablecer</string>
     <string name="login">Ingresar</string>
     <string name="sync">Sincronizar</string>
+    <string name="dbreset">Base de Datos reestablecida con exito</string>
 </resources>

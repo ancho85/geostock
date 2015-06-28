@@ -4,14 +4,25 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
+
+import com.geotechpy.geostock.database.DBHelper;
 
 
 public class MainActivity extends AppCompatActivity {
+
+    DBHelper dbh; // by some reason, I cannot instantiate here as final
+    Button btnReset;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        btnReset = (Button) findViewById(R.id.btn_reset);
+        dbh = DBHelper.getInstance(this);
+        dbh.getWritableDatabase();
     }
 
     @Override
@@ -34,5 +45,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onClickReset(View view) {
+        Toast.makeText(MainActivity.this, R.string.dbreset, Toast.LENGTH_LONG).show();
     }
 }

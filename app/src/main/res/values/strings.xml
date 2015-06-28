@@ -7,4 +7,5 @@
     <string name="reset">Reset</string>
     <string name="login">Login</string>
     <string name="sync">Sync</string>
+    <string name="dbreset">Database Reset Successfull</string>
 </resources>
