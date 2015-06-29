@@ -86,36 +86,38 @@ public class DbTest extends AndroidTestCase {
     }
 
     public void testStock() throws Exception {
+
+        user.insert("ancho", "123456", String.valueOf(R.string.zone_admin));
+        zone.insert(1, "Admin", String.valueOf(R.string.zone_admin));
+        item.insert("keyb", "Keyboard", String.valueOf(R.string.zone_admin));
+
         stock.insert(1, String.valueOf(R.string.zone_admin), String.valueOf(R.string.stock_active), "ancho", 1);
-        stock.insert(2, String.valueOf(R.string.zone_deposit), String.valueOf(R.string.stock_active), "alex", 2);
-        stock.insert(3, String.valueOf(R.string.zone_lab), String.valueOf(R.string.stock_confirmed), "ondina", 2);
-        stock.insert(4, String.valueOf(R.string.zone_both), String.valueOf(R.string.stock_active), "ondina", 3);
-        stock.insert(5, String.valueOf(R.string.zone_both), String.valueOf(R.string.stock_confirmed), "ancho", 4);
-        assertEquals(5, stock.count().intValue());
+        assertEquals(1, stock.count().intValue());
 
-        stock.update(4, String.valueOf(R.string.zone_admin), String.valueOf(R.string.stock_confirmed), "ancho", 1);
-        Stock stockNr4 = StockManager.load(getContext(), 4);
-        assertEquals(String.valueOf(R.string.stock_confirmed), stockNr4.getStatus());
+        stock.update(1, String.valueOf(R.string.zone_admin), String.valueOf(R.string.stock_confirmed), "ancho", 1);
+        Stock stockNr1 = StockManager.load(getContext(), 1);
+        assertEquals(String.valueOf(R.string.stock_confirmed), stockNr1.getStatus());
 
-        stock.delete(5);
-        assertEquals(4, stock.count().intValue());
+        stock.delete(1);
+        assertEquals(0, stock.count().intValue());
     }
 
     public void testStockDetail() throws Exception{
+        user.insert("alex", "654321", String.valueOf(R.string.zone_deposit));
+        zone.insert(2, "Deposit", String.valueOf(R.string.zone_deposit));
+        item.insert("paper", "Papers", String.valueOf(R.string.zone_deposit));
+        stock.insert(100, String.valueOf(R.string.zone_deposit), String.valueOf(R.string.stock_active), "alex", 2);
 
-        stockDetail.insert(1, 1, "keyb", 20f);
-        stockDetail.insert(1, 2, "xray", 3f);
-        stockDetail.insert(2, 1, "paper", 1000f);
-        stockDetail.insert(3, 1, "xray", 10.5f);
-        stockDetail.insert(3, 2, "xray", 2f);
-        stockDetail.insert(3, 3, "stuffs", 4000f);
-        assertEquals(6, stockDetail.count().intValue());
+        stockDetail.insert(100, 1, "paper", 20f);
+        stockDetail.insert(100, 2, "paper", 3f);
+        stockDetail.insert(100, 3, "paper", 1000f);
+        assertEquals(3, stockDetail.count().intValue());
 
-        stockDetail.update(1, 1, "keyb", 30f);
-        StockDetail keybStockDetail = StockDetailManager.load(getContext(), 1, 1);
-        assertEquals(30f, keybStockDetail.getQty());
+        stockDetail.update(100, 2, "paper", 30f);
+        StockDetail paperStockDetail = StockDetailManager.load(getContext(), 100, 2);
+        assertEquals(30f, paperStockDetail.getQty());
 
-        stockDetail.delete(1);
-        assertEquals(4, stockDetail.count().intValue());
+        stockDetail.delete(100);
+        assertEquals(0, stockDetail.count().intValue());
     }
 }
