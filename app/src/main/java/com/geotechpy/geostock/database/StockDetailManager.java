@@ -76,12 +76,13 @@ public class StockDetailManager {
         return count;
     }
 
-    public static StockDetail load(Context ctx, Integer stock_sernr) {
+    public static StockDetail load(Context ctx, Integer stock_sernr, Integer linenr) {
         DBHelper sdb = DBHelper.getInstance(ctx);
         SQLiteDatabase db = sdb.getReadableDatabase();
         StockDetail stockDetail = new StockDetail();
         String[] columns = new String[]{CN_STOCKSERNR, CN_LINENR, CN_ITEMCODE, CN_QTY};
-        String where = "stock_sernr = '" + stock_sernr.toString() + "'";
+        String where = "stock_sernr = '" + stock_sernr.toString() + "'" +
+                " AND linenr = '" + linenr.toString() + "'";
         Cursor c = db.query(TABLE_NAME, columns, where, null, null, null, null);
         if (c.moveToFirst()) {
             stockDetail.setStock_sernr(Integer.valueOf(c.getString(0)));
