@@ -12,4 +12,10 @@
     <string name="confirm_title">Confirmation required</string>
     <string name="cancel">Cancel</string>
     <string name="ok">OK</string>
+    <string name="zone_admin">A</string>
+    <string name="zone_deposit">D</string>
+    <string name="zone_lab">L</string>
+    <string name="zone_both">Y</string>
+    <string name="stock_active">A</string>
+    <string name="stock_confirmed">C</string>
 </resources>
