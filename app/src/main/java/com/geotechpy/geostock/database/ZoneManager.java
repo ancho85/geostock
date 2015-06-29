@@ -39,8 +39,8 @@ public class ZoneManager {
         db.insert(TABLE_NAME, null, setContentValues(sernr, name, type));
     }
 
-    public void delete(String code) {
-        db.delete(TABLE_NAME, CN_SERNR + "=?", new String[]{code});
+    public void delete(Integer sernr) {
+        db.delete(TABLE_NAME, CN_SERNR + "=?", new String[]{sernr.toString()});
     }
 
     public void update(Integer sernr, String name, String type) {
