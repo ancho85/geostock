@@ -74,26 +74,20 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        try {
-            db.execSQL(sqlUserCreate);
-            db.execSQL(sqlItemCreate);
-            db.execSQL(sqlZoneCreate);
-            db.execSQL(sqlStockCreate);
-            db.execSQL(sqlStockDetailCreate);
-        }
-        catch (Exception ex) {
-            Log.e("SQLite", "Error!", ex);
-        }
+        createAll(db);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        recreateDB(db);
+    }
 
-        db.execSQL("DROP TABLE IF EXISTS StockDetail");
-        db.execSQL("DROP TABLE IF EXISTS Stock");
-        db.execSQL("DROP TABLE IF EXISTS Item");
-        db.execSQL("DROP TABLE IF EXISTS User");
-        db.execSQL("DROP TABLE IF EXISTS Zone");
+    public void recreateDB(SQLiteDatabase db){
+        dropAll(db);
+        createAll(db);
+    }
+
+    public void createAll(SQLiteDatabase db){
         try {
             db.execSQL(sqlUserCreate);
             db.execSQL(sqlItemCreate);
@@ -105,4 +99,18 @@ public class DBHelper extends SQLiteOpenHelper {
             Log.e("SQLite", "Error!", ex);
         }
     }
+
+    public void dropAll(SQLiteDatabase db){
+        try {
+            db.execSQL("DROP TABLE IF EXISTS StockDetail");
+            db.execSQL("DROP TABLE IF EXISTS Stock");
+            db.execSQL("DROP TABLE IF EXISTS Item");
+            db.execSQL("DROP TABLE IF EXISTS User");
+            db.execSQL("DROP TABLE IF EXISTS Zone");
+        }
+        catch (Exception ex) {
+            Log.e("SQLite", "Error!", ex);
+        }
+    }
+
 }

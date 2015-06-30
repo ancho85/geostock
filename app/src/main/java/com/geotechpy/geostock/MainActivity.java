@@ -2,6 +2,7 @@ package com.geotechpy.geostock;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
@@ -27,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         btnReset = (Button) findViewById(R.id.btn_reset);
         dbh = DBHelper.getInstance(this);
-        dbh.getWritableDatabase();
+        SQLiteDatabase db = dbh.getWritableDatabase();
     }
 
     @Override
@@ -69,6 +70,9 @@ public class MainActivity extends AppCompatActivity {
             builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int id) {
+                    DBHelper dbh = DBHelper.getInstance(getActivity());
+                    SQLiteDatabase db = dbh.getWritableDatabase();
+                    dbh.recreateDB(db);
                     Toast.makeText(getActivity(), R.string.dbreset, Toast.LENGTH_SHORT).show();
                 }
             });
