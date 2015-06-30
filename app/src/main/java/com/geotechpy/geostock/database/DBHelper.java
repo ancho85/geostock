@@ -89,11 +89,11 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
+        db.execSQL("DROP TABLE IF EXISTS StockDetail");
+        db.execSQL("DROP TABLE IF EXISTS Stock");
         db.execSQL("DROP TABLE IF EXISTS Item");
         db.execSQL("DROP TABLE IF EXISTS User");
         db.execSQL("DROP TABLE IF EXISTS Zone");
-        db.execSQL("DROP TABLE IF EXISTS Stock");
-        db.execSQL("DROP TABLE IF EXISTS StockDetail");
         try {
             db.execSQL(sqlUserCreate);
             db.execSQL(sqlItemCreate);

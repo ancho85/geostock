@@ -1,9 +1,11 @@
 package com.geotechpy.geostock;
 
-import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.test.AndroidTestCase;
-import android.util.Log;
+import android.test.RenamingDelegatingContext;
 
+import com.geotechpy.geostock.database.DBHelper;
 import com.geotechpy.geostock.database.ItemManager;
 import com.geotechpy.geostock.database.StockDetailManager;
 import com.geotechpy.geostock.database.StockManager;
@@ -27,16 +29,25 @@ public class DbTest extends AndroidTestCase {
     ItemManager item;
     StockManager stock;
     StockDetailManager stockDetail;
+    private DBHelper db;
+    RenamingDelegatingContext ctx;
 
     @Override
     public void setUp() throws Exception {
         super.setUp();
-        Context ctx = getContext();
+        ctx = new RenamingDelegatingContext(getContext(), "test_");
+        db = DBHelper.getInstance(ctx);
         user = new UserManager(ctx);
         zone = new ZoneManager(ctx);
         item = new ItemManager(ctx);
         stock = new StockManager(ctx);
         stockDetail = new StockDetailManager(ctx);
+    }
+
+    @Override
+    public void tearDown() throws Exception {
+        db.close();
+        super.tearDown();
     }
 
     public void testUser() throws Exception {
@@ -173,5 +184,16 @@ public class DbTest extends AndroidTestCase {
         assertEquals(1, posStockDetail.getLinenr().intValue());
         assertEquals("keyboard", posStockDetail.getItem_code());
         assertEquals(2f, posStockDetail.getQty().floatValue());
+    }
+
+    public void testUpdateDB(){
+        ctx = new RenamingDelegatingContext(getContext(), "test_");
+        db = DBHelper.getInstance(ctx);
+        SQLiteDatabase newDB = db.getWritableDatabase();
+        db.onUpgrade(newDB, 1, 2);
+        Cursor c = newDB.rawQuery("SELECT COUNT(*) FROM Stock", null);
+        c.moveToFirst();
+        Integer count = c.getInt(0);
+        assertEquals(0, count.intValue());
     }
 }
