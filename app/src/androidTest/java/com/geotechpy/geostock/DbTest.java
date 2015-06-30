@@ -52,6 +52,15 @@ public class DbTest extends AndroidTestCase {
 
         user.delete("liz");
         assertEquals(3, user.count().intValue());
+
+        ArrayList<User> aluser = user.getUsers();
+        User posUser = aluser.get(0);
+        posUser.setPassword("newPass");
+        posUser.setCode("newCode");
+        posUser.setType("newType");
+        assertEquals("newPass", posUser.getPassword());
+        assertEquals("newCode", posUser.getCode());
+        assertEquals("newType", posUser.getType());
     }
 
     public void testZone() throws Exception {
@@ -67,6 +76,15 @@ public class DbTest extends AndroidTestCase {
 
         zone.delete(4);
         assertEquals(3, zone.count().intValue());
+
+        ArrayList<Zone> alzone = zone.getZones();
+        Zone posZone = alzone.get(2);
+        posZone.setSernr(5);
+        posZone.setType(String.valueOf(R.string.zone_both));
+        posZone.setName("Other");
+        assertEquals(5, posZone.getSernr().intValue());
+        assertEquals(String.valueOf(R.string.zone_both), posZone.getType());
+        assertEquals("Other", posZone.getName());
     }
 
     public void testItem() throws Exception {
@@ -83,6 +101,15 @@ public class DbTest extends AndroidTestCase {
 
         item.delete("stuffs");
         assertEquals(3, item.count().intValue());
+
+        ArrayList<Item> alitem = item.getItems();
+        Item posItem = alitem.get(0);
+        posItem.setCode("keyboard");
+        posItem.setType(String.valueOf(R.string.zone_lab));
+        posItem.setName("KeyB");
+        assertEquals("keyboard", posItem.getCode());
+        assertEquals(String.valueOf(R.string.zone_lab), posItem.getType());
+        assertEquals("KeyB", posItem.getName());
     }
 
     public void testStock() throws Exception {
@@ -92,14 +119,28 @@ public class DbTest extends AndroidTestCase {
         item.insert("keyb", "Keyboard", String.valueOf(R.string.zone_admin));
 
         stock.insert(1, String.valueOf(R.string.zone_admin), String.valueOf(R.string.stock_active), "ancho", 1);
-        assertEquals(1, stock.count().intValue());
+        stock.insert(2, String.valueOf(R.string.zone_admin), String.valueOf(R.string.stock_active), "ancho", 1);
+        assertEquals(2, stock.count().intValue());
 
         stock.update(1, String.valueOf(R.string.zone_admin), String.valueOf(R.string.stock_confirmed), "ancho", 1);
         Stock stockNr1 = StockManager.load(getContext(), 1);
         assertEquals(String.valueOf(R.string.stock_confirmed), stockNr1.getStatus());
 
         stock.delete(1);
-        assertEquals(0, stock.count().intValue());
+        assertEquals(1, stock.count().intValue());
+
+        ArrayList<Stock> alstock = stock.getStocks();
+        Stock posStock = alstock.get(0);
+        posStock.setSernr(1);
+        posStock.setStatus(String.valueOf(R.string.stock_confirmed));
+        posStock.setType(String.valueOf(R.string.zone_admin));
+        posStock.setZone_sernr(1);
+        posStock.setUser_code("liz");
+        assertEquals(1, posStock.getSernr().intValue());
+        assertEquals(String.valueOf(R.string.stock_confirmed), posStock.getStatus());
+        assertEquals(String.valueOf(R.string.zone_admin), posStock.getType());
+        assertEquals(1, posStock.getZone_sernr().intValue());
+        assertEquals("liz", posStock.getUser_code());
     }
 
     public void testStockDetail() throws Exception{
@@ -107,17 +148,30 @@ public class DbTest extends AndroidTestCase {
         zone.insert(2, "Deposit", String.valueOf(R.string.zone_deposit));
         item.insert("paper", "Papers", String.valueOf(R.string.zone_deposit));
         stock.insert(100, String.valueOf(R.string.zone_deposit), String.valueOf(R.string.stock_active), "alex", 2);
+        stock.insert(200, String.valueOf(R.string.zone_deposit), String.valueOf(R.string.stock_active), "alex", 2);
 
         stockDetail.insert(100, 1, "paper", 20f);
         stockDetail.insert(100, 2, "paper", 3f);
         stockDetail.insert(100, 3, "paper", 1000f);
-        assertEquals(3, stockDetail.count().intValue());
+        stockDetail.insert(200, 1, "paper", 1f);
+        assertEquals(4, stockDetail.count().intValue());
 
         stockDetail.update(100, 2, "paper", 30f);
         StockDetail paperStockDetail = StockDetailManager.load(getContext(), 100, 2);
         assertEquals(30f, paperStockDetail.getQty());
 
         stockDetail.delete(100);
-        assertEquals(0, stockDetail.count().intValue());
+        assertEquals(1, stockDetail.count().intValue());
+
+        ArrayList<StockDetail> alstockDetail = stockDetail.getStockDetails();
+        StockDetail posStockDetail = alstockDetail.get(0);
+        posStockDetail.setStock_sernr(300);
+        posStockDetail.setLinenr(1);
+        posStockDetail.setItem_code("keyboard");
+        posStockDetail.setQty(2f);
+        assertEquals(300, posStockDetail.getStock_sernr().intValue());
+        assertEquals(1, posStockDetail.getLinenr().intValue());
+        assertEquals("keyboard", posStockDetail.getItem_code());
+        assertEquals(2f, posStockDetail.getQty().floatValue());
     }
 }
