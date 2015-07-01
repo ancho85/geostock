@@ -37,6 +37,8 @@ public class DbTest extends AndroidTestCase {
         super.setUp();
         ctx = new RenamingDelegatingContext(getContext(), "test_");
         db = DBHelper.getInstance(ctx);
+        SQLiteDatabase testDB = db.getWritableDatabase();
+        db.recreateDB(testDB);
         user = new UserManager(ctx);
         zone = new ZoneManager(ctx);
         item = new ItemManager(ctx);
