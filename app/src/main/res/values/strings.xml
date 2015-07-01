@@ -23,4 +23,7 @@
     <string name="empty_field_password">Empty Field Password</string>
     <string name="invalid_user">Invalid User</string>
     <string name="invalid_password">Invalid Password</string>
+    <string name="title_activity_stock_type">Stock Type</string>
+    <string name="deposit">Deposit</string>
+    <string name="laboratory">Laboratory</string>
 </resources>

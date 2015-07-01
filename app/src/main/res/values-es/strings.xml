@@ -16,4 +16,7 @@
     <string name="empty_field_password">Clave no puede quedar en blanco</string>
     <string name="invalid_user">Usuario no válido</string>
     <string name="invalid_password">Clave incorrecta</string>
+    <string name="title_activity_stock_type">Tipo de Inventario</string>
+    <string name="deposit">Depósito</string>
+    <string name="laboratory">Laboratorio</string>
 </resources>
