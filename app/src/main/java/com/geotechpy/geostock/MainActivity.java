@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     else if (btnId == R.id.btn_sync){
                         UserManager um = new UserManager(getActivity());
-                        um.insert("ancho", "666", String.valueOf(R.string.zone_admin));
+                        um.insert("ancho", "666", getString(R.string.zone_admin));
                         Toast.makeText(getActivity(), R.string.db_sync, Toast.LENGTH_SHORT).show();
                     }
                 }

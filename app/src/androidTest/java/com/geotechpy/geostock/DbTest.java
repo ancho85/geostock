@@ -53,13 +53,13 @@ public class DbTest extends AndroidTestCase {
     }
 
     public void testUser() throws Exception {
-        user.insert("ancho", "123456", String.valueOf(R.string.zone_admin));
-        user.insert("alex", "654321", String.valueOf(R.string.zone_deposit));
-        user.insert("liz", "111222", String.valueOf(R.string.zone_lab));
-        user.insert("ondina", "333444", String.valueOf(R.string.zone_both));
+        user.insert("ancho", "123456", ctx.getString(R.string.zone_admin));
+        user.insert("alex", "654321", ctx.getString(R.string.zone_deposit));
+        user.insert("liz", "111222", ctx.getString(R.string.zone_lab));
+        user.insert("ondina", "333444", ctx.getString(R.string.zone_both));
         assertEquals(4, user.count().intValue());
 
-        user.update("ancho", "666", String.valueOf(R.string.zone_admin));
+        user.update("ancho", "666", ctx.getString(R.string.zone_admin));
         User ancho = UserManager.load(getContext(), "ancho");
         assertEquals("666", ancho.getPassword());
 
@@ -77,15 +77,15 @@ public class DbTest extends AndroidTestCase {
     }
 
     public void testZone() throws Exception {
-        zone.insert(1, "Admin", String.valueOf(R.string.zone_admin));
-        zone.insert(2, "Deposit", String.valueOf(R.string.zone_deposit));
-        zone.insert(3, "Lab", String.valueOf(R.string.zone_lab));
-        zone.insert(4, "Deposit and Lab", String.valueOf(R.string.zone_both));
+        zone.insert(1, "Admin", ctx.getString(R.string.zone_admin));
+        zone.insert(2, "Deposit", ctx.getString(R.string.zone_deposit));
+        zone.insert(3, "Lab", ctx.getString(R.string.zone_lab));
+        zone.insert(4, "Deposit and Lab", ctx.getString(R.string.zone_both));
         assertEquals(4, zone.count().intValue());
 
-        zone.update(4, "Deposit & Lab", String.valueOf(R.string.zone_both));
+        zone.update(4, "Deposit & Lab", ctx.getString(R.string.zone_both));
         Zone lab = ZoneManager.load(getContext(), 4);
-        assertEquals(String.valueOf(R.string.zone_both), lab.getType());
+        assertEquals(ctx.getString(R.string.zone_both), lab.getType());
 
         zone.delete(4);
         assertEquals(3, zone.count().intValue());
@@ -93,21 +93,21 @@ public class DbTest extends AndroidTestCase {
         ArrayList<Zone> alzone = zone.getZones();
         Zone posZone = alzone.get(2);
         posZone.setSernr(5);
-        posZone.setType(String.valueOf(R.string.zone_both));
+        posZone.setType(ctx.getString(R.string.zone_both));
         posZone.setName("Other");
         assertEquals(5, posZone.getSernr().intValue());
-        assertEquals(String.valueOf(R.string.zone_both), posZone.getType());
+        assertEquals(ctx.getString(R.string.zone_both), posZone.getType());
         assertEquals("Other", posZone.getName());
     }
 
     public void testItem() throws Exception {
-        item.insert("keyb", "Keyboard", String.valueOf(R.string.zone_admin));
-        item.insert("xray", "X Ray", String.valueOf(R.string.zone_lab));
-        item.insert("paper", "Papers", String.valueOf(R.string.zone_deposit));
-        item.insert("stuffs", "Other Stuffs", String.valueOf(R.string.zone_both));
+        item.insert("keyb", "Keyboard", ctx.getString(R.string.zone_admin));
+        item.insert("xray", "X Ray", ctx.getString(R.string.zone_lab));
+        item.insert("paper", "Papers", ctx.getString(R.string.zone_deposit));
+        item.insert("stuffs", "Other Stuffs", ctx.getString(R.string.zone_both));
         assertEquals(4, item.count().intValue());
 
-        item.update("stuffs", "X Rayed Keyboard", String.valueOf(R.string.zone_both));
+        item.update("stuffs", "X Rayed Keyboard", ctx.getString(R.string.zone_both));
         Item stuff = ItemManager.load(getContext(), "stuffs");
         assertEquals("stuffs", stuff.getCode());
         assertEquals("X Rayed Keyboard", stuff.getName());
@@ -118,26 +118,25 @@ public class DbTest extends AndroidTestCase {
         ArrayList<Item> alitem = item.getItems();
         Item posItem = alitem.get(0);
         posItem.setCode("keyboard");
-        posItem.setType(String.valueOf(R.string.zone_lab));
+        posItem.setType(ctx.getString(R.string.zone_lab));
         posItem.setName("KeyB");
         assertEquals("keyboard", posItem.getCode());
-        assertEquals(String.valueOf(R.string.zone_lab), posItem.getType());
+        assertEquals(ctx.getString(R.string.zone_lab), posItem.getType());
         assertEquals("KeyB", posItem.getName());
     }
 
     public void testStock() throws Exception {
+        zone.insert(1, "Admin", ctx.getString(R.string.zone_admin));
+        user.insert("ancho", "123456", ctx.getString(R.string.zone_admin));
+        item.insert("keyboard", "Keyboard", ctx.getString(R.string.zone_admin));
 
-        user.insert("ancho", "123456", String.valueOf(R.string.zone_admin));
-        zone.insert(1, "Admin", String.valueOf(R.string.zone_admin));
-        item.insert("keyb", "Keyboard", String.valueOf(R.string.zone_admin));
-
-        stock.insert(1, String.valueOf(R.string.zone_admin), String.valueOf(R.string.stock_active), "ancho", 1);
-        stock.insert(2, String.valueOf(R.string.zone_admin), String.valueOf(R.string.stock_active), "ancho", 1);
+        stock.insert(1, ctx.getString(R.string.zone_admin), ctx.getString(R.string.stock_active), "ancho", 1);
+        stock.insert(2, ctx.getString(R.string.zone_admin), ctx.getString(R.string.stock_active), "ancho", 1);
         assertEquals(2, stock.count().intValue());
 
-        stock.update(1, String.valueOf(R.string.zone_admin), String.valueOf(R.string.stock_confirmed), "ancho", 1);
+        stock.update(1, ctx.getString(R.string.zone_admin), ctx.getString(R.string.stock_confirmed), "ancho", 1);
         Stock stockNr1 = StockManager.load(getContext(), 1);
-        assertEquals(String.valueOf(R.string.stock_confirmed), stockNr1.getStatus());
+        assertEquals(ctx.getString(R.string.stock_confirmed), stockNr1.getStatus());
 
         stock.delete(1);
         assertEquals(1, stock.count().intValue());
@@ -145,23 +144,23 @@ public class DbTest extends AndroidTestCase {
         ArrayList<Stock> alstock = stock.getStocks();
         Stock posStock = alstock.get(0);
         posStock.setSernr(1);
-        posStock.setStatus(String.valueOf(R.string.stock_confirmed));
-        posStock.setType(String.valueOf(R.string.zone_admin));
+        posStock.setStatus(ctx.getString(R.string.stock_confirmed));
+        posStock.setType(ctx.getString(R.string.zone_admin));
         posStock.setZone_sernr(1);
         posStock.setUser_code("liz");
         assertEquals(1, posStock.getSernr().intValue());
-        assertEquals(String.valueOf(R.string.stock_confirmed), posStock.getStatus());
-        assertEquals(String.valueOf(R.string.zone_admin), posStock.getType());
+        assertEquals(ctx.getString(R.string.stock_confirmed), posStock.getStatus());
+        assertEquals(ctx.getString(R.string.zone_admin), posStock.getType());
         assertEquals(1, posStock.getZone_sernr().intValue());
         assertEquals("liz", posStock.getUser_code());
     }
 
     public void testStockDetail() throws Exception{
-        user.insert("alex", "654321", String.valueOf(R.string.zone_deposit));
-        zone.insert(2, "Deposit", String.valueOf(R.string.zone_deposit));
-        item.insert("paper", "Papers", String.valueOf(R.string.zone_deposit));
-        stock.insert(100, String.valueOf(R.string.zone_deposit), String.valueOf(R.string.stock_active), "alex", 2);
-        stock.insert(200, String.valueOf(R.string.zone_deposit), String.valueOf(R.string.stock_active), "alex", 2);
+        user.insert("alex", "654321", ctx.getString(R.string.zone_deposit));
+        zone.insert(2, "Deposit", ctx.getString(R.string.zone_deposit));
+        item.insert("paper", "Papers", ctx.getString(R.string.zone_deposit));
+        stock.insert(100, ctx.getString(R.string.zone_deposit), ctx.getString(R.string.stock_active), "alex", 2);
+        stock.insert(200, ctx.getString(R.string.zone_deposit), ctx.getString(R.string.stock_active), "alex", 2);
 
         stockDetail.insert(100, 1, "paper", 20f);
         stockDetail.insert(100, 2, "paper", 3f);
