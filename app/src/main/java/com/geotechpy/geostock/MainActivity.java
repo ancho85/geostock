@@ -77,29 +77,31 @@ public class MainActivity extends AppCompatActivity {
         public Dialog onCreateDialog(Bundle savedInstanceState) {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            Integer btnId = getArguments().getInt("btnId");
-            if (btnId == R.id.btn_reset) {
-                builder.setMessage(R.string.confirm_action);
-                builder.setTitle(R.string.confirm_title);
-                builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
+            builder.setMessage(R.string.confirm_action);
+            builder.setTitle(R.string.confirm_title);
+            final Integer btnId = getArguments().getInt("btnId");
+            builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int id) {
+                    if (btnId == R.id.btn_reset) {
                         DBHelper dbh = DBHelper.getInstance(getActivity());
                         SQLiteDatabase db = dbh.getWritableDatabase();
                         dbh.recreateDB(db);
-                        Toast.makeText(getActivity(), R.string.dbreset, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), R.string.db_reset, Toast.LENGTH_SHORT).show();
                     }
-                });
-                builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
+                    else if (btnId == R.id.btn_sync){
+                        UserManager um = new UserManager(getActivity());
+                        um.insert("ancho", "666", String.valueOf(R.string.zone_admin));
+                        Toast.makeText(getActivity(), R.string.db_sync, Toast.LENGTH_SHORT).show();
                     }
-                });
-            }else if (btnId == R.id.btn_sync){
-                UserManager um = new UserManager(getActivity());
-                um.insert("ancho", "666", String.valueOf(R.string.zone_admin));
-            }
+                }
+            });
+            builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int id) {
+                    dialog.cancel();
+                }
+            });
             return builder.create();
         }
     }

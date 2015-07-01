@@ -7,15 +7,16 @@
     <string name="reset">Reset</string>
     <string name="login">Login</string>
     <string name="sync">Sync</string>
-    <string name="dbreset">Database Reset Successful</string>
+    <string name="db_reset">Database Reset Successful</string>
     <string name="confirm_action">Confirm action?</string>
     <string name="confirm_title">Confirmation required</string>
     <string name="cancel">Cancel</string>
     <string name="ok">OK</string>
-    <string name="zone_admin">A</string>
-    <string name="zone_deposit">D</string>
-    <string name="zone_lab">L</string>
-    <string name="zone_both">Y</string>
-    <string name="stock_active">A</string>
-    <string name="stock_confirmed">C</string>
+    <string name="zone_admin" translatable="false">A</string>
+    <string name="zone_deposit" translatable="false">D</string>
+    <string name="zone_lab" translatable="false">L</string>
+    <string name="zone_both" translatable="false">Y</string>
+    <string name="stock_active" translatable="false">A</string>
+    <string name="stock_confirmed" translatable="false">C</string>
+    <string name="db_sync">Database Sync Completed</string>
 </resources>
