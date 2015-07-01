@@ -19,4 +19,8 @@
     <string name="stock_active" translatable="false">A</string>
     <string name="stock_confirmed" translatable="false">C</string>
     <string name="db_sync">Database Sync Completed</string>
+    <string name="empty_field_user">Empty Field User</string>
+    <string name="empty_field_password">Empty Field Password</string>
+    <string name="invalid_user">Invalid User</string>
+    <string name="invalid_password">Invalid Password</string>
 </resources>

@@ -16,8 +16,8 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="55dp"
-        android:text="@string/reset"
-        android:onClick="onClickReset"/>
+        android:onClick="onClickReset"
+        android:text="@string/reset"/>
 
     <Button
         android:id="@+id/btn_sync"
@@ -26,8 +26,8 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/btn_reset"
-        android:text="@string/sync"
-        android:onClick="onClickSync"/>
+        android:onClick="onClickSync"
+        android:text="@string/sync"/>
 
     <TextView
         android:id="@+id/tv_username"
@@ -76,5 +76,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/et_password"
+        android:nestedScrollingEnabled="false"
+        android:onClick="onClickLogin"
         android:text="@string/login"/>
 </RelativeLayout>

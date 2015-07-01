@@ -8,28 +8,34 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.geotechpy.geostock.database.DBHelper;
 import com.geotechpy.geostock.database.UserManager;
+import com.geotechpy.geostock.models.User;
 
 
 public class MainActivity extends AppCompatActivity {
 
     DBHelper dbh; // by some reason, I cannot instantiate here as final
-    Button btnReset;
+    EditText etUserName;
+    EditText etPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        btnReset = (Button) findViewById(R.id.btn_reset);
-        dbh = DBHelper.getInstance(this);
-        SQLiteDatabase db = dbh.getWritableDatabase();
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
     }
 
     @Override
@@ -104,5 +110,32 @@ public class MainActivity extends AppCompatActivity {
             });
             return builder.create();
         }
+    }
+
+    public void onClickLogin(View view){
+        etUserName = (EditText) findViewById(R.id.et_user);
+        etPassword = (EditText) findViewById(R.id.et_password);
+        String userText = etUserName.getText().toString();
+        String passText = etPassword.getText().toString();
+        if (TextUtils.isEmpty(userText)){
+            etUserName.requestFocus();
+            displayMessage(getString(R.string.empty_field_user));
+        }else if (TextUtils.isEmpty(passText)){
+            etPassword.requestFocus();
+            displayMessage(getString(R.string.empty_field_password));
+        }else{
+            User user = UserManager.load(this, userText);
+            if (TextUtils.isEmpty(user.getCode())){
+                displayMessage(getString(R.string.invalid_user));
+            }else if (!user.getPassword().equals(passText)) {
+                displayMessage(getString(R.string.invalid_password));
+                } else{
+                    displayMessage("OK!");
+                }
+            }
+        }
+
+    public void displayMessage(String toastString){
+        Toast.makeText(getApplicationContext(), toastString, Toast.LENGTH_LONG).show();
     }
 }

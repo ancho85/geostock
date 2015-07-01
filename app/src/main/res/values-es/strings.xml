@@ -12,4 +12,8 @@
     <string name="cancel">Cancelar</string>
     <string name="ok">Aceptar</string>
     <string name="db_sync">Sincronización de Base de Datos completada</string>
+    <string name="empty_field_user">Usuario no puede quedar en blanco</string>
+    <string name="empty_field_password">Clave no puede quedar en blanco</string>
+    <string name="invalid_user">Usuario no válido</string>
+    <string name="invalid_password">Clave incorrecta</string>
 </resources>
