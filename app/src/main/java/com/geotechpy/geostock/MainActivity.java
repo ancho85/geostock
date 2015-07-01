@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.geotechpy.geostock.database.DBHelper;
+import com.geotechpy.geostock.database.UserManager;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -56,6 +57,18 @@ public class MainActivity extends AppCompatActivity {
     public void onClickReset(View view) {
         FragmentManager fragmentManager = MainActivity.this.getSupportFragmentManager();
         ConfirmDialog confirmDialog = new ConfirmDialog();
+        Bundle args = new Bundle();
+        args.putInt("btnId", R.id.btn_reset);
+        confirmDialog.setArguments(args);
+        confirmDialog.show(fragmentManager, "");
+    }
+
+    public void onClickSync(View view){
+        FragmentManager fragmentManager = MainActivity.this.getSupportFragmentManager();
+        ConfirmDialog confirmDialog = new ConfirmDialog();
+        Bundle args = new Bundle();
+        args.putInt("btnId", R.id.btn_sync);
+        confirmDialog.setArguments(args);
         confirmDialog.show(fragmentManager, "");
     }
 
@@ -64,24 +77,29 @@ public class MainActivity extends AppCompatActivity {
         public Dialog onCreateDialog(Bundle savedInstanceState) {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
-            builder.setMessage(R.string.confirm_action);
-            builder.setTitle(R.string.confirm_title);
-            builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int id) {
-                    DBHelper dbh = DBHelper.getInstance(getActivity());
-                    SQLiteDatabase db = dbh.getWritableDatabase();
-                    dbh.recreateDB(db);
-                    Toast.makeText(getActivity(), R.string.dbreset, Toast.LENGTH_SHORT).show();
-                }
-            });
-            builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int id) {
-                    dialog.cancel();
-                }
-            });
+            Integer btnId = getArguments().getInt("btnId");
+            if (btnId == R.id.btn_reset) {
+                builder.setMessage(R.string.confirm_action);
+                builder.setTitle(R.string.confirm_title);
+                builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        DBHelper dbh = DBHelper.getInstance(getActivity());
+                        SQLiteDatabase db = dbh.getWritableDatabase();
+                        dbh.recreateDB(db);
+                        Toast.makeText(getActivity(), R.string.dbreset, Toast.LENGTH_SHORT).show();
+                    }
+                });
+                builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+            }else if (btnId == R.id.btn_sync){
+                UserManager um = new UserManager(getActivity());
+                um.insert("ancho", "666", String.valueOf(R.string.zone_admin));
+            }
             return builder.create();
         }
     }
