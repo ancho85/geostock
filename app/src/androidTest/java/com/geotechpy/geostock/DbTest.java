@@ -185,7 +185,7 @@ public class DbTest extends AndroidTestCase {
         assertEquals(300, posStockDetail.getStock_sernr().intValue());
         assertEquals(1, posStockDetail.getLinenr().intValue());
         assertEquals("keyboard", posStockDetail.getItem_code());
-        assertEquals(2f, posStockDetail.getQty().floatValue());
+        assertEquals(2f, posStockDetail.getQty());
     }
 
     public void testUpdateDB(){
@@ -197,5 +197,6 @@ public class DbTest extends AndroidTestCase {
         c.moveToFirst();
         Integer count = c.getInt(0);
         assertEquals(0, count.intValue());
+        c.close();
     }
 }
