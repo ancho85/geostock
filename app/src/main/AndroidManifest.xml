@@ -20,6 +20,10 @@
             android:name=".StockTypeActivity"
             android:label="@string/title_activity_stock_type" >
         </activity>
+        <activity
+            android:name=".StockListActivity"
+            android:label="@string/title_activity_stock_list" >
+        </activity>
     </application>
 
 </manifest>

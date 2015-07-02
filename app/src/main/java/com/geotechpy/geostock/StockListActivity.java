@@ -5,25 +5,24 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 
 import com.geotechpy.geostock.R;
 
-public class StockTypeActivity extends AppCompatActivity {
+public class StockListActivity extends AppCompatActivity {
 
     TextView tvUserName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_stock_type);
+        setContentView(R.layout.activity_stock_list);
     }
 
     @Override
     public void onResume(){
         super.onResume();
-        tvUserName = (TextView) findViewById(R.id.tv_stocktype_username);
+        tvUserName = (TextView) findViewById(R.id.tv_stocklist_username);
         Intent intent = getIntent();
         tvUserName.setText(intent.getStringExtra("username"));
     }
@@ -31,7 +30,7 @@ public class StockTypeActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_stock_type, menu);
+        getMenuInflater().inflate(R.menu.menu_stock_list, menu);
         return true;
     }
 
@@ -48,19 +47,5 @@ public class StockTypeActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public void onClickDeposit(View view){
-        tvUserName = (TextView) findViewById(R.id.tv_stocktype_username);
-        Intent stockList = new Intent(this, StockListActivity.class);
-        stockList.putExtra("username", tvUserName.getText());
-        startActivity(stockList);
-    }
-
-    public void onClickLaboratory(View view){
-        tvUserName = (TextView) findViewById(R.id.tv_stocktype_username);
-        Intent stockList = new Intent(this, StockListActivity.class);
-        stockList.putExtra("username", tvUserName.getText());
-        startActivity(stockList);
     }
 }

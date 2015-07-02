@@ -132,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
                 displayMessage(getString(R.string.invalid_password));
                 } else{
                     Intent stockTypeActivity = new Intent(this, StockTypeActivity.class);
+                    stockTypeActivity.putExtra("username", userText);
                     startActivity(stockTypeActivity);
                 }
             }

@@ -6,45 +6,36 @@
                 android:paddingLeft="@dimen/activity_horizontal_margin"
                 android:paddingRight="@dimen/activity_horizontal_margin"
                 android:paddingTop="@dimen/activity_vertical_margin"
-                tools:context="com.geotechpy.geostock.StockTypeActivity">
+                tools:context="com.geotechpy.geostock.StockListActivity">
 
     <TextView
-        android:id="@+id/tv_stocktype_username"
+        android:id="@+id/tv_stocklist_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:text=""
         android:textAppearance="?android:attr/textAppearanceMedium"/>
 
     <TextView
-        android:id="@+id/tv_stocktype_title"
+        android:id="@+id/tv_stocklist_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_stocktype_username"
-        android:layout_toEndOf="@+id/tv_stocktype_username"
-        android:layout_toRightOf="@+id/tv_stocktype_username"
-        android:text="@string/title_activity_stock_type"
+        android:layout_below="@+id/tv_stocklist_username"
+        android:layout_toEndOf="@+id/tv_stocklist_username"
+        android:layout_toRightOf="@+id/tv_stocklist_username"
+        android:text="@string/title_activity_stock_list"
         android:textAppearance="?android:attr/textAppearanceLarge"/>
 
     <Button
-        android:id="@+id/btn_deposit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/tv_stocktype_title"
-        android:onClick="onClickDeposit"
-        android:text="@string/deposit"/>
-
-    <Button
-        android:id="@+id/btn_laboratory"
+        android:id="@+id/btn_new_stock"
+        style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/btn_deposit"
-        android:onClick="onClickLaboratory"
-        android:text="@string/laboratory"/>
+        android:layout_alignTop="@+id/tv_stocklist_title"
+        android:text="@string/new_stock"/>
 
 </RelativeLayout>
