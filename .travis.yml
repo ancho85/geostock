@@ -18,7 +18,7 @@ env:
 
      # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
      #   via the "travis encrypt" command using the project repo's public key
-     - secure: "lt79mSF5rFQbHqjj1XySe0y5IB6m6saQDtqPLphjAAm2VBk0iqjvqr2a7ywwW+vMcdFPJbXshJXK0BvNxK27OWNRLOpl98jK4tm9sGjx0VeoLTnpQ6plHemsN7vRKfyA24Oaq4uRrRw6qwMOTc9CNOol0vSc2ITKTBTsanUp7o+BySGzx6dhAFt1nVbUqf5NYvrxZkR9E8WAt3PkZkk9f10TN7ZeWe6mAq5XOhPoHXJPsrMEtWA9pNHsQNbmVU8i6aX+xzybXgXUHz3go2tv/JBvvpCGNcVfgF7pOF6DuAPaouHTr28Tc5PPeVawVwmzg+sNHmeyxyeFStOtsrU5SO6tRNr/XAZ1qXWNgEey/HUWs9SlBQi1bqi066pizFJil/L8R0lmkLDQd4dVMK27fb0odK6Z7bzZZN32QSVnnyfc16kKAcctASlt9H20BX8mWqFGAfSnqrgsF2diPbICHgYiVl/pjaKL18rif77rlZ85KePmt08lJWJ2T1FcXnjDMEUtQw2KytypJf2t5mCbW9Ztt9tA6yQyKgFsOr4YQehQHTDTgnNulxpaIsluPzeq+RBqqxnVttsVL5FvAWBCOzWDVtEClRD+WmiCD+T68U7ESRLsWONM9iV0QZYDMI1vvoKVz2XP4rzBiKuoMxXkYzGH8Vq7nFrYU1vPW17W8bk="
+    - secure: "lt79mSF5rFQbHqjj1XySe0y5IB6m6saQDtqPLphjAAm2VBk0iqjvqr2a7ywwW+vMcdFPJbXshJXK0BvNxK27OWNRLOpl98jK4tm9sGjx0VeoLTnpQ6plHemsN7vRKfyA24Oaq4uRrRw6qwMOTc9CNOol0vSc2ITKTBTsanUp7o+BySGzx6dhAFt1nVbUqf5NYvrxZkR9E8WAt3PkZkk9f10TN7ZeWe6mAq5XOhPoHXJPsrMEtWA9pNHsQNbmVU8i6aX+xzybXgXUHz3go2tv/JBvvpCGNcVfgF7pOF6DuAPaouHTr28Tc5PPeVawVwmzg+sNHmeyxyeFStOtsrU5SO6tRNr/XAZ1qXWNgEey/HUWs9SlBQi1bqi066pizFJil/L8R0lmkLDQd4dVMK27fb0odK6Z7bzZZN32QSVnnyfc16kKAcctASlt9H20BX8mWqFGAfSnqrgsF2diPbICHgYiVl/pjaKL18rif77rlZ85KePmt08lJWJ2T1FcXnjDMEUtQw2KytypJf2t5mCbW9Ztt9tA6yQyKgFsOr4YQehQHTDTgnNulxpaIsluPzeq+RBqqxnVttsVL5FvAWBCOzWDVtEClRD+WmiCD+T68U7ESRLsWONM9iV0QZYDMI1vvoKVz2XP4rzBiKuoMxXkYzGH8Vq7nFrYU1vPW17W8bk="
 
 android:
   components:
@@ -82,7 +82,6 @@ addons:
   coverity_scan:
     project:
       name: "ancho85/geostock"
-      description: "<Your project description here>"
     notification_email: ancho.corp@gmail.com
     build_command_prepend: "./gradlew clean --console=plain"
     build_command:   "./gradlew assembleDebug --console=plain"
