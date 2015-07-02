@@ -61,7 +61,7 @@ before_script:
 script:
     - ./gradlew clean test connectedAndroidTest
     # cleanup a little for better caching reuse
-    - rm $HOME/.gradle/daemon/2.2.4/*.*
+    - rm $HOME/.gradle/daemon/2.4/*.*
     - rm $HOME/.gradle/caches/modules-2/modules-2.lock
 
 notifications:
