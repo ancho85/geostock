@@ -18,3 +18,10 @@ allprojects {
         jcenter()
     }
 }
+
+// get Git revision as a NUMBER (subversion style of revision)
+def gitRevision() {
+    return "git rev-list --count HEAD".execute().text.trim();
+}
+
+println 'Source code GIT Revision: ' + "${gitRevision()}"
