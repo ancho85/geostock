@@ -1,6 +1,8 @@
 # References
 # ADB_INSTALL_TIMEOUT https://code.google.com/p/android/issues/detail?id=69735
 # COVERITY SCAN: https://scan.coverity.com/travis_ci
+# list of available components https://github.com/travis-ci/travis-ci/issues/2301
+# For a full list, run `android list sdk -a --extended`
 
 language: android
 jdk:
@@ -42,6 +44,14 @@ android:
     # if you need to run emulator(s) during your tests
     - sys-img-armeabi-v7a-android-$ANDROID_API_LEVEL
 
+before_install:
+    - ls -a
+    - pwd
+    # display list of all possible components
+    - android list sdk --no-ui --all --extended | grep -E '^id:' | awk -F '"' '{$1=""; print $2}'
+    # display list of installed emulators
+    - android list targets | grep -e '^\(\(id:\)\|\( Tag\)\)'
+
 before_script:
   - echo no | android create avd --force -n test -t android-$ANDROID_API_LEVEL --abi $ARMEABI
   - emulator -avd test -no-skin -no-audio -no-window &
@@ -50,6 +60,9 @@ before_script:
 
 script:
     - ./gradlew clean test connectedAndroidTest
+    # cleanup a little for better caching reuse
+    - rm $HOME/.gradle/daemon/2.2.4/*.*
+    - rm $HOME/.gradle/caches/modules-2/modules-2.lock
 
 notifications:
   email: false
@@ -57,6 +70,8 @@ notifications:
 sudo: false
 
 cache:
+  gradlew: true
+  gradle: true
   directories:
     - $HOME/.gradle
 
