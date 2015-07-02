@@ -1,3 +1,7 @@
+# References
+# ADB_INSTALL_TIMEOUT https://code.google.com/p/android/issues/detail?id=69735
+# COVERITY SCAN: https://scan.coverity.com/travis_ci
+
 language: android
 jdk:
     - openjdk7
@@ -7,9 +11,12 @@ env:
   global:
     - ANDROID_API_LEVEL=22
     - ANDROID_BUILD_TOOLS_VERSION=22.0.1
-
-    # https://code.google.com/p/android/issues/detail?id=69735
+    - ARMEABI=armeabi-v7a
     - ADB_INSTALL_TIMEOUT=8 # minutes (2 minutes by default)
+
+     # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
+     #   via the "travis encrypt" command using the project repo's public key
+     - secure: "lt79mSF5rFQbHqjj1XySe0y5IB6m6saQDtqPLphjAAm2VBk0iqjvqr2a7ywwW+vMcdFPJbXshJXK0BvNxK27OWNRLOpl98jK4tm9sGjx0VeoLTnpQ6plHemsN7vRKfyA24Oaq4uRrRw6qwMOTc9CNOol0vSc2ITKTBTsanUp7o+BySGzx6dhAFt1nVbUqf5NYvrxZkR9E8WAt3PkZkk9f10TN7ZeWe6mAq5XOhPoHXJPsrMEtWA9pNHsQNbmVU8i6aX+xzybXgXUHz3go2tv/JBvvpCGNcVfgF7pOF6DuAPaouHTr28Tc5PPeVawVwmzg+sNHmeyxyeFStOtsrU5SO6tRNr/XAZ1qXWNgEey/HUWs9SlBQi1bqi066pizFJil/L8R0lmkLDQd4dVMK27fb0odK6Z7bzZZN32QSVnnyfc16kKAcctASlt9H20BX8mWqFGAfSnqrgsF2diPbICHgYiVl/pjaKL18rif77rlZ85KePmt08lJWJ2T1FcXnjDMEUtQw2KytypJf2t5mCbW9Ztt9tA6yQyKgFsOr4YQehQHTDTgnNulxpaIsluPzeq+RBqqxnVttsVL5FvAWBCOzWDVtEClRD+WmiCD+T68U7ESRLsWONM9iV0QZYDMI1vvoKVz2XP4rzBiKuoMxXkYzGH8Vq7nFrYU1vPW17W8bk="
 
 android:
   components:
@@ -36,7 +43,7 @@ android:
     - sys-img-armeabi-v7a-android-$ANDROID_API_LEVEL
 
 before_script:
-  - echo no | android create avd --force -n test -t android-$ANDROID_API_LEVEL --abi armeabi-v7a
+  - echo no | android create avd --force -n test -t android-$ANDROID_API_LEVEL --abi $ARMEABI
   - emulator -avd test -no-skin -no-audio -no-window &
   - android-wait-for-emulator
   - adb shell input keyevent 82 &
@@ -55,3 +62,13 @@ cache:
 
 after_success:
 - ./gradlew jacocoTestReport coveralls
+
+addons:
+  coverity_scan:
+    project:
+      name: "ancho85/geostock"
+      description: "<Your project description here>"
+    notification_email: ancho.corp@gmail.com
+    build_command_prepend: "./gradlew clean --console=plain"
+    build_command:   "./gradlew assembleDebug --console=plain"
+    branch_pattern: master
