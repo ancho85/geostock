@@ -60,10 +60,8 @@ before_script:
   - adb shell input keyevent 82 &
 
 script:
-    - cat cov-int/scm_log.txt
     - ./gradlew clean test connectedAndroidTest
     # cleanup a little for better caching reuse
-    - rm $HOME/.gradle/daemon/2.4/*.*
     - rm $HOME/.gradle/caches/modules-2/modules-2.lock
 
 notifications:
