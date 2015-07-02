@@ -59,10 +59,6 @@ public class DbTest extends AndroidTestCase {
         user.insert("ondina", "333444", ctx.getString(R.string.zone_both));
         assertEquals(4, user.count().intValue());
 
-        user.update("ancho", "666", ctx.getString(R.string.zone_admin));
-        User ancho = UserManager.load(getContext(), "ancho");
-        assertEquals("666", ancho.getPassword());
-
         user.delete("liz");
         assertEquals(3, user.count().intValue());
 
@@ -74,6 +70,10 @@ public class DbTest extends AndroidTestCase {
         assertEquals("newPass", posUser.getPassword());
         assertEquals("newCode", posUser.getCode());
         assertEquals("newType", posUser.getType());
+
+        user.update("ancho", "666", ctx.getString(R.string.zone_admin));
+        User ancho = UserManager.load(ctx, "ancho");
+        assertEquals("666", ancho.getPassword());
     }
 
     public void testZone() throws Exception {
@@ -83,11 +83,7 @@ public class DbTest extends AndroidTestCase {
         zone.insert(4, "Deposit and Lab", ctx.getString(R.string.zone_both));
         assertEquals(4, zone.count().intValue());
 
-        zone.update(4, "Deposit & Lab", ctx.getString(R.string.zone_both));
-        Zone lab = ZoneManager.load(getContext(), 4);
-        assertEquals(ctx.getString(R.string.zone_both), lab.getType());
-
-        zone.delete(4);
+        zone.delete(1);
         assertEquals(3, zone.count().intValue());
 
         ArrayList<Zone> alzone = zone.getZones();
@@ -98,6 +94,10 @@ public class DbTest extends AndroidTestCase {
         assertEquals(5, posZone.getSernr().intValue());
         assertEquals(ctx.getString(R.string.zone_both), posZone.getType());
         assertEquals("Other", posZone.getName());
+
+        zone.update(4, "Deposit & Lab", ctx.getString(R.string.zone_both));
+        Zone lab = ZoneManager.load(ctx, 4);
+        assertEquals(ctx.getString(R.string.zone_both), lab.getType());
     }
 
     public void testItem() throws Exception {
@@ -107,12 +107,7 @@ public class DbTest extends AndroidTestCase {
         item.insert("stuffs", "Other Stuffs", ctx.getString(R.string.zone_both));
         assertEquals(4, item.count().intValue());
 
-        item.update("stuffs", "X Rayed Keyboard", ctx.getString(R.string.zone_both));
-        Item stuff = ItemManager.load(getContext(), "stuffs");
-        assertEquals("stuffs", stuff.getCode());
-        assertEquals("X Rayed Keyboard", stuff.getName());
-
-        item.delete("stuffs");
+        item.delete("paper");
         assertEquals(3, item.count().intValue());
 
         ArrayList<Item> alitem = item.getItems();
@@ -123,6 +118,11 @@ public class DbTest extends AndroidTestCase {
         assertEquals("keyboard", posItem.getCode());
         assertEquals(ctx.getString(R.string.zone_lab), posItem.getType());
         assertEquals("KeyB", posItem.getName());
+
+        item.update("stuffs", "X Rayed Keyboard", ctx.getString(R.string.zone_both));
+        Item stuff = ItemManager.load(ctx, "stuffs");
+        assertEquals("stuffs", stuff.getCode());
+        assertEquals("X Rayed Keyboard", stuff.getName());
     }
 
     public void testStock() throws Exception {
@@ -134,11 +134,7 @@ public class DbTest extends AndroidTestCase {
         stock.insert(2, ctx.getString(R.string.zone_admin), ctx.getString(R.string.stock_active), "ancho", 1);
         assertEquals(2, stock.count().intValue());
 
-        stock.update(1, ctx.getString(R.string.zone_admin), ctx.getString(R.string.stock_confirmed), "ancho", 1);
-        Stock stockNr1 = StockManager.load(getContext(), 1);
-        assertEquals(ctx.getString(R.string.stock_confirmed), stockNr1.getStatus());
-
-        stock.delete(1);
+        stock.delete(2);
         assertEquals(1, stock.count().intValue());
 
         ArrayList<Stock> alstock = stock.getStocks();
@@ -153,6 +149,10 @@ public class DbTest extends AndroidTestCase {
         assertEquals(ctx.getString(R.string.zone_admin), posStock.getType());
         assertEquals(1, posStock.getZone_sernr().intValue());
         assertEquals("liz", posStock.getUser_code());
+
+        stock.update(1, ctx.getString(R.string.zone_admin), ctx.getString(R.string.stock_confirmed), "ancho", 1);
+        Stock stockNr1 = StockManager.load(ctx, 1);
+        assertEquals(ctx.getString(R.string.stock_confirmed), stockNr1.getStatus());
     }
 
     public void testStockDetail() throws Exception{
@@ -168,10 +168,6 @@ public class DbTest extends AndroidTestCase {
         stockDetail.insert(200, 1, "paper", 1f);
         assertEquals(4, stockDetail.count().intValue());
 
-        stockDetail.update(100, 2, "paper", 30f);
-        StockDetail paperStockDetail = StockDetailManager.load(getContext(), 100, 2);
-        assertEquals(30f, paperStockDetail.getQty());
-
         stockDetail.delete(100);
         assertEquals(1, stockDetail.count().intValue());
 
@@ -185,6 +181,10 @@ public class DbTest extends AndroidTestCase {
         assertEquals(1, posStockDetail.getLinenr().intValue());
         assertEquals("keyboard", posStockDetail.getItem_code());
         assertEquals(2f, posStockDetail.getQty());
+
+        stockDetail.update(200, 2, "paper", 30f);
+        StockDetail paperStockDetail = StockDetailManager.load(ctx, 200, 2);
+        assertEquals(30f, paperStockDetail.getQty());
     }
 
     public void testUpdateDB(){
