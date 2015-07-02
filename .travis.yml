@@ -70,11 +70,11 @@ notifications:
 
 sudo: false
 
-cache:
-  gradlew: true
-  gradle: true
-  directories:
-    - $HOME/.gradle
+#cache:
+#  gradlew: true
+#  gradle: true
+#  directories:
+#    - $HOME/.gradle
 
 after_success:
 - ./gradlew jacocoTestReport coveralls
