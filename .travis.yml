@@ -3,6 +3,7 @@
 # COVERITY SCAN: https://scan.coverity.com/travis_ci
 # list of available components https://github.com/travis-ci/travis-ci/issues/2301
 # For a full list, run `android list sdk -a --extended`
+# TEST THIS FILE http://yaml.travis-ci.org/
 
 language: android
 jdk:
@@ -83,6 +84,6 @@ addons:
     project:
       name: "ancho85/geostock"
     notification_email: ancho.corp@gmail.com
-    build_command_prepend: "./gradlew clean --console=plain"
-    build_command:   "./gradlew assembleDebug --console=plain"
+    build_command_prepend: "./gradlew clean"
+    build_command: "./gradlew build"
     branch_pattern: master
