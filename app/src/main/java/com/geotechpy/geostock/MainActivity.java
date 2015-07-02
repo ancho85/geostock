@@ -13,7 +13,6 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -24,7 +23,6 @@ import com.geotechpy.geostock.models.User;
 
 public class MainActivity extends AppCompatActivity {
 
-    DBHelper dbh; // by some reason, I cannot instantiate here as final
     EditText etUserName;
     EditText etPassword;
 
@@ -94,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
                         DBHelper dbh = DBHelper.getInstance(getActivity());
                         SQLiteDatabase db = dbh.getWritableDatabase();
                         dbh.recreateDB(db);
+                        db.close();
                         Toast.makeText(getActivity(), R.string.db_reset, Toast.LENGTH_SHORT).show();
                     }
                     else if (btnId == R.id.btn_sync){

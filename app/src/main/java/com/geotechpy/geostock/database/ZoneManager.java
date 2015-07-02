@@ -85,6 +85,7 @@ public class ZoneManager {
             zone.setType(c.getString(2));
         }
         c.close();
+        db.close();
         return zone;
     }
 }

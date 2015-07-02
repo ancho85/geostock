@@ -91,6 +91,7 @@ public class StockDetailManager {
             stockDetail.setQty(Float.valueOf(c.getString(3)));
         }
         c.close();
+        db.close();
         return stockDetail;
     }
 }

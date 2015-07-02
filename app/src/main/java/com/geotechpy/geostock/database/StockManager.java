@@ -93,6 +93,7 @@ public class StockManager {
             stock.setZone_sernr(Integer.valueOf(c.getString(4)));
         }
         c.close();
+        db.close();
         return stock;
     }
 }

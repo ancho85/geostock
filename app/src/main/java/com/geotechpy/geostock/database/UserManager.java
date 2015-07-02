@@ -85,6 +85,7 @@ public class UserManager {
             user.setType(c.getString(2));
         }
         c.close();
+        db.close();
         return user;
     }
 }

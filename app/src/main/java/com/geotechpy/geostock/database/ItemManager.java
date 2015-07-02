@@ -85,6 +85,7 @@ public class ItemManager {
             item.setType(c.getString(2));
         }
         c.close();
+        db.close();
         return item;
     }
 }
