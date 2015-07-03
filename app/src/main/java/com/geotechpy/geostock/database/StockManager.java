@@ -56,16 +56,14 @@ public class StockManager {
     public ArrayList<Stock> getStocks() {
         String[] columns = new String[]{CN_SERNR, CN_TYPE, CN_STATUS, CN_USERCODE, CN_ZONESERNR};
         Cursor c = db.query(TABLE_NAME, columns, null, null, null, null, null);
-        ArrayList<Stock> alstock = new ArrayList<>();
-        if (c.moveToFirst()) {
-            do {
-                Integer position = c.getPosition();
-                Stock stock = new Stock(Integer.valueOf(c.getString(0)), c.getString(1), c.getString(2), c.getString(3), Integer.valueOf(c.getString(4)));
-                alstock.add(position, stock);
-            } while (c.moveToNext());
+        ArrayList<Stock> al_stock = new ArrayList<>();
+        while (c.moveToNext()) {
+            Integer position = c.getPosition();
+            Stock stock = new Stock(Integer.valueOf(c.getString(0)), c.getString(1), c.getString(2), c.getString(3), Integer.valueOf(c.getString(4)));
+            al_stock.add(position, stock);
         }
         c.close();
-        return alstock;
+        return al_stock;
     }
 
     public Integer count() {
