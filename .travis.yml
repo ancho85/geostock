@@ -60,7 +60,7 @@ before_script:
   - adb shell input keyevent 82 &
 
 script:
-    - ./gradlew clean test connectedAndroidTest
+    - ./gradlew clean test connectedAndroidTest -PdisablePreDex
     # cleanup a little for better caching reuse
     - rm $HOME/.gradle/daemon/2.4/*.*
     - rm $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -77,13 +77,13 @@ cache:
     - $HOME/.gradle
 
 after_success:
-- ./gradlew jacocoTestReport coveralls
+- ./gradlew jacocoTestReport coveralls -PdisablePreDex
 
 addons:
   coverity_scan:
     project:
       name: "ancho85/geostock"
     notification_email: ancho.corp@gmail.com
-    build_command_prepend: "./gradlew clean --no-daemon"
-    build_command: "./gradlew build --no-daemon"
+    build_command_prepend: "./gradlew clean --no-daemon -PdisablePreDex"
+    build_command: "./gradlew build --no-daemon -PdisablePreDex"
     branch_pattern: master
