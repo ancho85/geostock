@@ -83,6 +83,6 @@ addons:
     project:
       name: "ancho85/geostock"
     notification_email: ancho.corp@gmail.com
-    build_command_prepend: "./gradlew clean"
-    build_command: "./gradlew build"
+    build_command_prepend: "./gradlew clean --no-daemon"
+    build_command: "./gradlew build --no-daemon"
     branch_pattern: master
