@@ -97,7 +97,8 @@ task findbugs(type: FindBugs) {
     excludeFilter = new File("${project.projectDir}/findbugs-filter.xml")
     classes = fileTree(dir:
             "${project.projectDir}/build/intermediates/classes")
-    source = fileTree('src/main/java/')
+    source = fileTree(dir:
+            "${project.projectDir}/src/main/java/")
     classpath = files()
     reports {
         xml.enabled = false
