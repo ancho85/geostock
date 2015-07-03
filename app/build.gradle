@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'jacoco'
 apply plugin: 'com.github.kt3k.coveralls'
+apply plugin: 'findbugs'
 
 android {
     compileSdkVersion 22
@@ -87,4 +88,23 @@ project.afterEvaluate {
     testDebug.jvmArgs "-javaagent:$buildDir/intermediates/jacoco/jacocoagent.jar=$append,$destFile"
 
     createDebugCoverageReport.dependsOn testDebug
+}
+
+task findbugs(type: FindBugs) {
+    ignoreFailures = false
+    effort = "default"
+    reportLevel = "medium"
+    excludeFilter = new File("${project.projectDir}/findbugs-filter.xml")
+    classes = fileTree(dir:
+            "${project.projectDir}/build/intermediates/classes")
+    source = fileTree(dir:
+            "${project.projectDir}/src/main/java/")
+    classpath = files()
+    reports {
+        xml.enabled = false
+        html.enabled = true
+        html {
+            destination "$buildDir/outputs/findbugs/findbugs-output.html"
+        }
+    }
 }
