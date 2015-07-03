@@ -49,16 +49,20 @@ public class UserManager {
 
     public ArrayList<User> getUsers() {
         String[] columns = new String[]{CN_CODE, CN_PASSWORD, CN_TYPE};
-        Cursor c = db.query(TABLE_NAME, columns, null, null, null, null, null);
+        Cursor c = null;
         ArrayList<User> aluser = new ArrayList<>();
-        if (c.moveToFirst()) {
-            do {
+        try{
+            c = db.query(TABLE_NAME, columns, null, null, null, null, null);
+            while (c.moveToNext()){
                 Integer position = c.getPosition();
                 User user = new User(c.getString(0), c.getString(1), c.getString(2));
                 aluser.add(position, user);
-            } while (c.moveToNext());
+            }
+        }finally {
+            if (c != null){
+                c.close();
+            }
         }
-        c.close();
         return aluser;
     }
 
@@ -78,13 +82,19 @@ public class UserManager {
         User user = new User();
         String[] columns = new String[]{CN_CODE, CN_PASSWORD, CN_TYPE};
         String where = "code = '" + code + "'";
-        Cursor c = db.query(TABLE_NAME, columns, where, null, null, null, null);
-        if (c.moveToFirst()) {
-            user.setCode(c.getString(0));
-            user.setPassword(c.getString(1));
-            user.setType(c.getString(2));
+        Cursor c = null;
+        try{
+            c = db.query(TABLE_NAME, columns, where, null, null, null, null);
+            if (c.moveToFirst()) {
+                user.setCode(c.getString(0));
+                user.setPassword(c.getString(1));
+                user.setType(c.getString(2));
+            }
+        }finally {
+            if (c != null){
+                c.close();
+            }
         }
-        c.close();
         db.close();
         return user;
     }

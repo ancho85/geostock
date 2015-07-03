@@ -49,16 +49,20 @@ public class ZoneManager {
 
     public ArrayList<Zone> getZones() {
         String[] columns = new String[]{CN_SERNR, CN_NAME, CN_TYPE};
-        Cursor c = db.query(TABLE_NAME, columns, null, null, null, null, null);
+        Cursor c = null;
         ArrayList<Zone> alzone = new ArrayList<>();
-        if (c.moveToFirst()) {
-            do {
+        try{
+            c = db.query(TABLE_NAME, columns, null, null, null, null, null);
+            while (c.moveToNext()){
                 Integer position = c.getPosition();
                 Zone zone = new Zone(Integer.valueOf(c.getString(0)), c.getString(1), c.getString(2));
                 alzone.add(position, zone);
-            } while (c.moveToNext());
+            }
+        }finally {
+            if (c != null){
+                c.close();
+            }
         }
-        c.close();
         return alzone;
     }
 
@@ -78,13 +82,19 @@ public class ZoneManager {
         Zone zone = new Zone();
         String[] columns = new String[]{CN_SERNR, CN_NAME, CN_TYPE};
         String where = "sernr = '" + sernr.toString() + "'";
-        Cursor c = db.query(TABLE_NAME, columns, where, null, null, null, null);
-        if (c.moveToFirst()) {
-            zone.setSernr(Integer.valueOf(c.getString(0)));
-            zone.setName(c.getString(1));
-            zone.setType(c.getString(2));
+        Cursor c = null;
+        try{
+            c = db.query(TABLE_NAME, columns, where, null, null, null, null);
+            if (c.moveToFirst()) {
+                zone.setSernr(Integer.valueOf(c.getString(0)));
+                zone.setName(c.getString(1));
+                zone.setType(c.getString(2));
+            }
+        }finally {
+            if (c != null){
+                c.close();
+            }
         }
-        c.close();
         db.close();
         return zone;
     }

@@ -53,16 +53,20 @@ public class StockDetailManager {
 
     public ArrayList<StockDetail> getStockDetails() {
         String[] columns = new String[]{CN_STOCKSERNR, CN_LINENR, CN_ITEMCODE, CN_QTY};
-        Cursor c = db.query(TABLE_NAME, columns, null, null, null, null, null);
+        Cursor c = null;
         ArrayList<StockDetail> alstockDetails = new ArrayList<>();
-        if (c.moveToFirst()) {
-            do {
+        try{
+            c = db.query(TABLE_NAME, columns, null, null, null, null, null);
+            while (c.moveToNext()){
                 Integer position = c.getPosition();
                 StockDetail stockDetail= new StockDetail(Integer.valueOf(c.getString(0)), Integer.valueOf(c.getString(1)), c.getString(2), Float.valueOf(c.getString(3)));
                 alstockDetails.add(position, stockDetail);
-            } while (c.moveToNext());
+            }
+        }finally {
+            if (c != null){
+                c.close();
+            }
         }
-        c.close();
         return alstockDetails;
     }
 
@@ -83,14 +87,20 @@ public class StockDetailManager {
         String[] columns = new String[]{CN_STOCKSERNR, CN_LINENR, CN_ITEMCODE, CN_QTY};
         String where = "stock_sernr = '" + stock_sernr.toString() + "'" +
                 " AND linenr = '" + linenr.toString() + "'";
-        Cursor c = db.query(TABLE_NAME, columns, where, null, null, null, null);
-        if (c.moveToFirst()) {
-            stockDetail.setStock_sernr(Integer.valueOf(c.getString(0)));
-            stockDetail.setLinenr(Integer.valueOf(c.getString(1)));
-            stockDetail.setItem_code(c.getString(2));
-            stockDetail.setQty(Float.valueOf(c.getString(3)));
+        Cursor c = null;
+        try{
+            c = db.query(TABLE_NAME, columns, where, null, null, null, null);
+            if (c.moveToFirst()) {
+                stockDetail.setStock_sernr(Integer.valueOf(c.getString(0)));
+                stockDetail.setLinenr(Integer.valueOf(c.getString(1)));
+                stockDetail.setItem_code(c.getString(2));
+                stockDetail.setQty(Float.valueOf(c.getString(3)));
+            }
+        }finally {
+            if (c != null){
+                c.close();
+            }
         }
-        c.close();
         db.close();
         return stockDetail;
     }

@@ -87,15 +87,21 @@ public class StockManager {
         Stock stock = new Stock();
         String[] columns = new String[]{CN_SERNR, CN_TYPE, CN_STATUS, CN_USERCODE, CN_ZONESERNR};
         String where = "sernr = '" + sernr.toString() + "'";
-        Cursor c = db.query(TABLE_NAME, columns, where, null, null, null, null);
-        if (c.moveToFirst()) {
-            stock.setSernr(Integer.valueOf(c.getString(0)));
-            stock.setType(c.getString(1));
-            stock.setStatus(c.getString(2));
-            stock.setUser_code(c.getString(3));
-            stock.setZone_sernr(Integer.valueOf(c.getString(4)));
+        Cursor c = null;
+        try{
+            c = db.query(TABLE_NAME, columns, where, null, null, null, null);
+            if (c.moveToFirst()) {
+                stock.setSernr(Integer.valueOf(c.getString(0)));
+                stock.setType(c.getString(1));
+                stock.setStatus(c.getString(2));
+                stock.setUser_code(c.getString(3));
+                stock.setZone_sernr(Integer.valueOf(c.getString(4)));
+            }
+        } finally{
+            if (c != null){
+                c.close();
+            }
         }
-        c.close();
         db.close();
         return stock;
     }

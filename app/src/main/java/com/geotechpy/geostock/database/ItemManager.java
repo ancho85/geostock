@@ -49,16 +49,20 @@ public class ItemManager {
 
     public ArrayList<Item> getItems() {
         String[] columns = new String[]{CN_CODE, CN_NAME, CN_TYPE};
-        Cursor c = db.query(TABLE_NAME, columns, null, null, null, null, null);
+        Cursor c = null;
         ArrayList<Item> alitem = new ArrayList<>();
-        if (c.moveToFirst()) {
-            do {
+        try{
+            c = db.query(TABLE_NAME, columns, null, null, null, null, null);
+            while (c.moveToNext()){
                 Integer position = c.getPosition();
                 Item item = new Item(c.getString(0), c.getString(1), c.getString(2));
                 alitem.add(position, item);
-            } while (c.moveToNext());
+            }
+        }finally {
+            if (c != null){
+                c.close();
+            }
         }
-        c.close();
         return alitem;
     }
 
@@ -78,13 +82,19 @@ public class ItemManager {
         Item item = new Item();
         String[] columns = new String[]{CN_CODE, CN_NAME, CN_TYPE};
         String where = "code = '" + code + "'";
-        Cursor c = db.query(TABLE_NAME, columns, where, null, null, null, null);
-        if (c.moveToFirst()) {
-            item.setCode(c.getString(0));
-            item.setName(c.getString(1));
-            item.setType(c.getString(2));
+        Cursor c = null;
+        try{
+            c = db.query(TABLE_NAME, columns, where, null, null, null, null);
+            if (c.moveToFirst()) {
+                item.setCode(c.getString(0));
+                item.setName(c.getString(1));
+                item.setType(c.getString(2));
+            }
+        }finally {
+            if (c != null){
+                c.close();
+            }
         }
-        c.close();
         db.close();
         return item;
     }
