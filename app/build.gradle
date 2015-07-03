@@ -90,7 +90,9 @@ project.afterEvaluate {
     createDebugCoverageReport.dependsOn testDebug
 }
 
-task findbugs(type: FindBugs) {
+task findBugs(type: FindBugs) {
+    group = "Reporting"
+    description = "Generate FindBugs reports"
     ignoreFailures = false
     effort = "default"
     reportLevel = "medium"
