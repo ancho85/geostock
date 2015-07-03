@@ -10,7 +10,7 @@ import com.geotechpy.geostock.models.Zone;
 import java.util.ArrayList;
 
 /**
- * Created by ancho on 27/06/15.
+ * Manages connections to table Zone
  */
 public class ZoneManager {
     public static final String TABLE_NAME = "Zone";
@@ -18,12 +18,11 @@ public class ZoneManager {
     public static final String CN_NAME = "name";
     public static final String CN_TYPE = "type";
 
-    private DBHelper helper;
     private SQLiteDatabase db;
 
 
     public ZoneManager(Context ctx){
-        helper = DBHelper.getInstance(ctx);
+        DBHelper helper = DBHelper.getInstance(ctx);
         db = helper.getWritableDatabase();
     }
 
@@ -78,24 +77,30 @@ public class ZoneManager {
 
     public static Zone load(Context ctx, Integer sernr) {
         DBHelper sdb = DBHelper.getInstance(ctx);
-        SQLiteDatabase db = sdb.getReadableDatabase();
+        SQLiteDatabase db = null;
         Zone zone = new Zone();
-        String[] columns = new String[]{CN_SERNR, CN_NAME, CN_TYPE};
-        String where = "sernr = '" + sernr.toString() + "'";
-        Cursor c = null;
         try{
-            c = db.query(TABLE_NAME, columns, where, null, null, null, null);
-            if (c.moveToFirst()) {
-                zone.setSernr(Integer.valueOf(c.getString(0)));
-                zone.setName(c.getString(1));
-                zone.setType(c.getString(2));
+            db = sdb.getReadableDatabase();
+            String[] columns = new String[]{CN_SERNR, CN_NAME, CN_TYPE};
+            String where = "sernr = '" + sernr.toString() + "'";
+            Cursor c = null;
+            try{
+                c = db.query(TABLE_NAME, columns, where, null, null, null, null);
+                if (c.moveToFirst()) {
+                    zone.setSernr(Integer.valueOf(c.getString(0)));
+                    zone.setName(c.getString(1));
+                    zone.setType(c.getString(2));
+                }
+            }finally {
+                if (c != null){
+                    c.close();
+                }
             }
         }finally {
-            if (c != null){
-                c.close();
+            if (db != null){
+                db.close();
             }
         }
-        db.close();
         return zone;
     }
 }

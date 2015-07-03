@@ -10,7 +10,7 @@ import com.geotechpy.geostock.models.User;
 import java.util.ArrayList;
 
 /**
- * Created by ancho on 27/06/15.
+ * Manages connections to table User
  */
 public class UserManager {
     public static final String TABLE_NAME = "User";
@@ -18,12 +18,11 @@ public class UserManager {
     public static final String CN_PASSWORD = "password";
     public static final String CN_TYPE = "type";
 
-    private DBHelper helper;
     private SQLiteDatabase db;
 
 
     public UserManager(Context ctx){
-        helper = DBHelper.getInstance(ctx);
+        DBHelper helper = DBHelper.getInstance(ctx);
         db = helper.getWritableDatabase();
     }
 
@@ -78,24 +77,30 @@ public class UserManager {
 
     public static User load(Context ctx, String code) {
         DBHelper sdb = DBHelper.getInstance(ctx);
-        SQLiteDatabase db = sdb.getReadableDatabase();
+        SQLiteDatabase db = null;
         User user = new User();
-        String[] columns = new String[]{CN_CODE, CN_PASSWORD, CN_TYPE};
-        String where = "code = '" + code + "'";
-        Cursor c = null;
         try{
-            c = db.query(TABLE_NAME, columns, where, null, null, null, null);
-            if (c.moveToFirst()) {
-                user.setCode(c.getString(0));
-                user.setPassword(c.getString(1));
-                user.setType(c.getString(2));
+            db = sdb.getReadableDatabase();
+            String[] columns = new String[]{CN_CODE, CN_PASSWORD, CN_TYPE};
+            String where = "code = '" + code + "'";
+            Cursor c = null;
+            try{
+                c = db.query(TABLE_NAME, columns, where, null, null, null, null);
+                if (c.moveToFirst()) {
+                    user.setCode(c.getString(0));
+                    user.setPassword(c.getString(1));
+                    user.setType(c.getString(2));
+                }
+            }finally {
+                if (c != null){
+                    c.close();
+                }
             }
         }finally {
-            if (c != null){
-                c.close();
+            if (db != null){
+                db.close();
             }
         }
-        db.close();
         return user;
     }
 }

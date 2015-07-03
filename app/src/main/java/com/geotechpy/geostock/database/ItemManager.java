@@ -10,7 +10,7 @@ import com.geotechpy.geostock.models.Item;
 import java.util.ArrayList;
 
 /**
- * Created by ancho on 27/06/15.
+ * Manages connections to table Item
  */
 public class ItemManager {
     public static final String TABLE_NAME = "Item";
@@ -18,12 +18,11 @@ public class ItemManager {
     public static final String CN_NAME = "name";
     public static final String CN_TYPE = "type";
 
-    private DBHelper helper;
     private SQLiteDatabase db;
 
 
     public ItemManager(Context ctx){
-        helper = DBHelper.getInstance(ctx);
+        DBHelper helper = DBHelper.getInstance(ctx);
         db = helper.getWritableDatabase();
     }
 
@@ -78,24 +77,30 @@ public class ItemManager {
 
     public static Item load(Context ctx, String code) {
         DBHelper sdb = DBHelper.getInstance(ctx);
-        SQLiteDatabase db = sdb.getReadableDatabase();
+        SQLiteDatabase db = null;
         Item item = new Item();
-        String[] columns = new String[]{CN_CODE, CN_NAME, CN_TYPE};
-        String where = "code = '" + code + "'";
-        Cursor c = null;
         try{
-            c = db.query(TABLE_NAME, columns, where, null, null, null, null);
-            if (c.moveToFirst()) {
-                item.setCode(c.getString(0));
-                item.setName(c.getString(1));
-                item.setType(c.getString(2));
+            db = sdb.getReadableDatabase();
+            String[] columns = new String[]{CN_CODE, CN_NAME, CN_TYPE};
+            String where = "code = '" + code + "'";
+            Cursor c = null;
+            try{
+                c = db.query(TABLE_NAME, columns, where, null, null, null, null);
+                if (c.moveToFirst()) {
+                    item.setCode(c.getString(0));
+                    item.setName(c.getString(1));
+                    item.setType(c.getString(2));
+                }
+            }finally {
+                if (c != null){
+                    c.close();
+                }
             }
         }finally {
-            if (c != null){
-                c.close();
+            if (db != null){
+                db.close();
             }
         }
-        db.close();
         return item;
     }
 }

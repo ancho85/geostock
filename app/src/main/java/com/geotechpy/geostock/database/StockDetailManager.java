@@ -10,7 +10,7 @@ import com.geotechpy.geostock.models.StockDetail;
 import java.util.ArrayList;
 
 /**
- * Created by ancho on 27/06/15.
+ * Manages connections to table StockDetail
  */
 public class StockDetailManager {
     public static final String TABLE_NAME = "StockDetail";
@@ -19,12 +19,11 @@ public class StockDetailManager {
     public static final String CN_ITEMCODE = "item_code";
     public static final String CN_QTY = "qty";
 
-    private DBHelper helper;
     private SQLiteDatabase db;
 
 
     public StockDetailManager(Context ctx){
-        helper = DBHelper.getInstance(ctx);
+        DBHelper helper = DBHelper.getInstance(ctx);
         db = helper.getWritableDatabase();
     }
 
@@ -82,26 +81,32 @@ public class StockDetailManager {
 
     public static StockDetail load(Context ctx, Integer stock_sernr, Integer linenr) {
         DBHelper sdb = DBHelper.getInstance(ctx);
-        SQLiteDatabase db = sdb.getReadableDatabase();
+        SQLiteDatabase db = null;
         StockDetail stockDetail = new StockDetail();
-        String[] columns = new String[]{CN_STOCKSERNR, CN_LINENR, CN_ITEMCODE, CN_QTY};
-        String where = "stock_sernr = '" + stock_sernr.toString() + "'" +
-                " AND linenr = '" + linenr.toString() + "'";
-        Cursor c = null;
         try{
-            c = db.query(TABLE_NAME, columns, where, null, null, null, null);
-            if (c.moveToFirst()) {
-                stockDetail.setStock_sernr(Integer.valueOf(c.getString(0)));
-                stockDetail.setLinenr(Integer.valueOf(c.getString(1)));
-                stockDetail.setItem_code(c.getString(2));
-                stockDetail.setQty(Float.valueOf(c.getString(3)));
+            db = sdb.getReadableDatabase();
+            String[] columns = new String[]{CN_STOCKSERNR, CN_LINENR, CN_ITEMCODE, CN_QTY};
+            String where = "stock_sernr = '" + stock_sernr.toString() + "'" +
+                    " AND linenr = '" + linenr.toString() + "'";
+            Cursor c = null;
+            try{
+                c = db.query(TABLE_NAME, columns, where, null, null, null, null);
+                if (c.moveToFirst()) {
+                    stockDetail.setStock_sernr(Integer.valueOf(c.getString(0)));
+                    stockDetail.setLinenr(Integer.valueOf(c.getString(1)));
+                    stockDetail.setItem_code(c.getString(2));
+                    stockDetail.setQty(Float.valueOf(c.getString(3)));
+                }
+            }finally {
+                if (c != null){
+                    c.close();
+                }
             }
         }finally {
-            if (c != null){
-                c.close();
+            if (db != null){
+                db.close();
             }
         }
-        db.close();
         return stockDetail;
     }
 }
