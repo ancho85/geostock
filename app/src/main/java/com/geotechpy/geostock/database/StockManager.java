@@ -10,7 +10,7 @@ import com.geotechpy.geostock.models.Stock;
 import java.util.ArrayList;
 
 /**
- * Created by ancho on 27/06/15.
+ * Manages connections to table Stock
  */
 public class StockManager {
     public static final String TABLE_NAME = "Stock";
@@ -20,12 +20,11 @@ public class StockManager {
     public static final String CN_USERCODE = "user_code";
     public static final String CN_ZONESERNR = "zone_sernr";
 
-    private DBHelper helper;
     private SQLiteDatabase db;
 
 
     public StockManager(Context ctx){
-        helper = DBHelper.getInstance(ctx);
+        DBHelper helper = DBHelper.getInstance(ctx);
         db = helper.getWritableDatabase();
     }
 
@@ -55,14 +54,20 @@ public class StockManager {
 
     public ArrayList<Stock> getStocks() {
         String[] columns = new String[]{CN_SERNR, CN_TYPE, CN_STATUS, CN_USERCODE, CN_ZONESERNR};
-        Cursor c = db.query(TABLE_NAME, columns, null, null, null, null, null);
+        Cursor c = null;
         ArrayList<Stock> al_stock = new ArrayList<>();
-        while (c.moveToNext()) {
-            Integer position = c.getPosition();
-            Stock stock = new Stock(Integer.valueOf(c.getString(0)), c.getString(1), c.getString(2), c.getString(3), Integer.valueOf(c.getString(4)));
-            al_stock.add(position, stock);
+        try{
+            c = db.query(TABLE_NAME, columns, null, null, null, null, null);
+            while (c.moveToNext()) {
+                Integer position = c.getPosition();
+                Stock stock = new Stock(Integer.valueOf(c.getString(0)), c.getString(1), c.getString(2), c.getString(3), Integer.valueOf(c.getString(4)));
+                al_stock.add(position, stock);
+            }
+        }finally {
+            if (c != null){
+                c.close();
+            }
         }
-        c.close();
         return al_stock;
     }
 
