@@ -104,7 +104,7 @@ task findbugs(type: FindBugs) {
         xml.enabled = false
         html.enabled = true
         html {
-            destination "$buildDir/outputs/findbugs/findbugs-output.html"
+            destination "$buildDir/reports/findbugs/findbugs-output.html"
         }
     }
 }
