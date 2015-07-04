@@ -12,7 +12,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.geotechpy.geostock.R;
 import com.geotechpy.geostock.database.StockManager;
 import com.geotechpy.geostock.models.Stock;
 
@@ -35,7 +34,18 @@ public class StockListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stock_list);
+    }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        tvUserName = (TextView) findViewById(R.id.tv_stocklist_username);
+        Intent intent = getIntent();
+        tvUserName.setText(intent.getStringExtra("username"));
+        showStocks();
+    }
+
+    public void showStocks(){
         StockManager stockManager = new StockManager(this);
         al_stocks = stockManager.getStocks();
 
@@ -78,14 +88,6 @@ public class StockListActivity extends AppCompatActivity {
         StockAdapter stockAdapter = new StockAdapter(this);
         ListView lvOptions = (ListView) findViewById(R.id.lv_options);
         lvOptions.setAdapter(stockAdapter);
-    }
-
-    @Override
-    public void onResume(){
-        super.onResume();
-        tvUserName = (TextView) findViewById(R.id.tv_stocklist_username);
-        Intent intent = getIntent();
-        tvUserName.setText(intent.getStringExtra("username"));
     }
 
     @Override
