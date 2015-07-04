@@ -1,6 +1,7 @@
 package com.geotechpy.geostock;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -17,7 +18,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.geotechpy.geostock.database.DBHelper;
+import com.geotechpy.geostock.database.StockManager;
 import com.geotechpy.geostock.database.UserManager;
+import com.geotechpy.geostock.database.ZoneManager;
 import com.geotechpy.geostock.models.User;
 
 
@@ -96,8 +99,15 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(getActivity(), R.string.db_reset, Toast.LENGTH_SHORT).show();
                     }
                     else if (btnId == R.id.btn_sync){
-                        UserManager um = new UserManager(getActivity());
-                        um.insert("ancho", "666", getString(R.string.zone_admin));
+                        Context ctx = getActivity();
+                        UserManager um = new UserManager(ctx);
+                        um.insert("ancho", "666", getString(R.string.zone_deposit));
+                        ZoneManager zm = new ZoneManager(ctx);
+                        zm.insert(1, "Deposit", getString(R.string.zone_deposit));
+                        StockManager sm = new StockManager(ctx);
+                        sm.insert(1, getString(R.string.zone_deposit), getString(R.string.stock_active), "ancho", 1);
+                        sm.insert(2, getString(R.string.zone_deposit), getString(R.string.stock_active), "ancho", 1);
+
                         Toast.makeText(getActivity(), R.string.db_sync, Toast.LENGTH_SHORT).show();
                     }
                 }

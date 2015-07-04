@@ -21,9 +21,7 @@ import java.util.ArrayList;
 public class StockListActivity extends AppCompatActivity {
 
     TextView tvUserName;
-    StockManager stockManager = new StockManager(StockListActivity.this);
-    ArrayList<Stock> al_stocks = stockManager.getStocks();
-
+    private ArrayList<Stock> al_stocks = new ArrayList<>();
 
     static class ViewHolder {
         // A ViewHolder keeps references to children views to avoid unneccessary calls
@@ -38,7 +36,10 @@ public class StockListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stock_list);
 
-        class StockAdapter extends ArrayAdapter<Stock> {
+        StockManager stockManager = new StockManager(this);
+        al_stocks = stockManager.getStocks();
+
+        class StockAdapter extends ArrayAdapter {
             AppCompatActivity context;
 
             StockAdapter(AppCompatActivity context) {
@@ -56,12 +57,12 @@ public class StockListActivity extends AppCompatActivity {
 
                 if (convertView == null) {
                     LayoutInflater inflater = context.getLayoutInflater();
-                    View item = inflater.inflate(R.layout.listitem_stock, parent, false);
+                    View stock = inflater.inflate(R.layout.listitem_stock, parent, false);
                     holder = new ViewHolder();
-                    holder.tvStockSerNr = (TextView) item.findViewById(R.id.tv_stock_sernr);
-                    holder.tvZoneCode = (TextView) item.findViewById(R.id.tv_zone_code);
-                    holder.tvStatusCode = (TextView) item.findViewById(R.id.tv_status_code);
-                    item.setTag(holder);
+                    holder.tvStockSerNr = (TextView) stock.findViewById(R.id.tv_stock_sernr);
+                    holder.tvZoneCode = (TextView) stock.findViewById(R.id.tv_zone_code);
+                    holder.tvStatusCode = (TextView) stock.findViewById(R.id.tv_status_code);
+                    stock.setTag(holder);
                 }
                 else {
                     holder = (ViewHolder) convertView.getTag();
