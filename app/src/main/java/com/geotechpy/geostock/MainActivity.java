@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.geotechpy.geostock.database.DBHelper;
+import com.geotechpy.geostock.database.ItemManager;
 import com.geotechpy.geostock.database.StockManager;
 import com.geotechpy.geostock.database.UserManager;
 import com.geotechpy.geostock.database.ZoneManager;
@@ -102,11 +103,23 @@ public class MainActivity extends AppCompatActivity {
                         Context ctx = getActivity();
                         UserManager um = new UserManager(ctx);
                         um.insert("ancho", "666", getString(R.string.zone_deposit));
+                        um.insert("alex", "777", getString(R.string.zone_lab));
+
                         ZoneManager zm = new ZoneManager(ctx);
-                        zm.insert(1, "Deposit", getString(R.string.zone_deposit));
+                        zm.insert(1, "Deposit Nr. 1", getString(R.string.zone_deposit));
+                        zm.insert(2, "Deposit Nr. 2", getString(R.string.zone_deposit));
+                        zm.insert(3, "Deposit Nr. 3", getString(R.string.zone_deposit));
+                        zm.insert(4, "Lab Nr. 1", getString(R.string.zone_lab));
+                        zm.insert(5, "Lab Nr. 2", getString(R.string.zone_lab));
+
+                        ItemManager it = new ItemManager(ctx);
+                        it.insert("keyboard", "Keyboard", getString(R.string.zone_deposit));
+                        it.insert("engine", "Fusion Engine", getString(R.string.zone_lab));
+
                         StockManager sm = new StockManager(ctx);
                         sm.insert(1, getString(R.string.zone_deposit), getString(R.string.stock_active), "ancho", 1);
-                        sm.insert(2, getString(R.string.zone_deposit), getString(R.string.stock_confirmed), "ancho", 1);
+                        sm.insert(2, getString(R.string.zone_deposit), getString(R.string.stock_confirmed), "ancho", 3);
+                        sm.insert(3, getString(R.string.zone_lab), getString(R.string.stock_confirmed), "alex", 4);
 
                         Toast.makeText(getActivity(), R.string.db_sync, Toast.LENGTH_SHORT).show();
                     }
