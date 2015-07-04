@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
                         zm.insert(1, "Deposit", getString(R.string.zone_deposit));
                         StockManager sm = new StockManager(ctx);
                         sm.insert(1, getString(R.string.zone_deposit), getString(R.string.stock_active), "ancho", 1);
-                        sm.insert(2, getString(R.string.zone_deposit), getString(R.string.stock_active), "ancho", 1);
+                        sm.insert(2, getString(R.string.zone_deposit), getString(R.string.stock_confirmed), "ancho", 1);
 
                         Toast.makeText(getActivity(), R.string.db_sync, Toast.LENGTH_SHORT).show();
                     }
