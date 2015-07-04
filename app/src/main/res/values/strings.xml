@@ -28,4 +28,7 @@
     <string name="laboratory">Laboratory</string>
     <string name="title_activity_stock_list">Stock List</string>
     <string name="new_stock">New</string>
+    <string name="sync_stock">Sync to Server</string>
+    <string name="edit_stock">Edit stock</string>
+    <string name="delete_stock">Delete stock</string>
 </resources>

@@ -21,4 +21,7 @@
     <string name="laboratory">Laboratorio</string>
     <string name="title_activity_stock_list">Inventarios</string>
     <string name="new_stock">Nuevo</string>
+    <string name="sync_stock">Sincronizar al Servidor</string>
+    <string name="delete_stock">Borrar Inventario</string>
+    <string name="edit_stock">Editar Inventario</string>
 </resources>

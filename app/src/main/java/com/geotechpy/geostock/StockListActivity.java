@@ -3,20 +3,80 @@ package com.geotechpy.geostock;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.geotechpy.geostock.R;
+import com.geotechpy.geostock.database.StockManager;
+import com.geotechpy.geostock.models.Stock;
+
+import java.util.ArrayList;
 
 public class StockListActivity extends AppCompatActivity {
 
     TextView tvUserName;
+    StockManager stockManager = new StockManager(StockListActivity.this);
+    ArrayList<Stock> al_stocks = stockManager.getStocks();
+
+
+    static class ViewHolder {
+        // A ViewHolder keeps references to children views to avoid unneccessary calls
+        // to findViewById() on each row.
+        TextView tvStockSerNr;
+        TextView tvZoneCode;
+        TextView tvStatusCode;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stock_list);
+
+        class StockAdapter extends ArrayAdapter<Stock> {
+            AppCompatActivity context;
+
+            StockAdapter(AppCompatActivity context) {
+                super(context, R.layout.listitem_stock, al_stocks);
+                this.context = context;
+            }
+
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+
+                ViewHolder holder;
+                // When convertView is not null, we can reuse it directly, there is no need
+                // to re inflate it. We only inflate a new View when the convertView supplied
+                // by ListView is null.
+
+                if (convertView == null) {
+                    LayoutInflater inflater = context.getLayoutInflater();
+                    View item = inflater.inflate(R.layout.listitem_stock, parent, false);
+                    holder = new ViewHolder();
+                    holder.tvStockSerNr = (TextView) item.findViewById(R.id.tv_stock_sernr);
+                    holder.tvZoneCode = (TextView) item.findViewById(R.id.tv_zone_code);
+                    holder.tvStatusCode = (TextView) item.findViewById(R.id.tv_status_code);
+                    item.setTag(holder);
+                }
+                else {
+                    holder = (ViewHolder) convertView.getTag();
+                }
+                holder.tvStockSerNr.setText(al_stocks.get(position).getSernr().toString());
+                holder.tvZoneCode.setText(al_stocks.get(position).getZone_sernr().toString());
+                holder.tvStatusCode.setText(al_stocks.get(position).getStatus());
+
+                return (convertView);
+            }
+        }
+
+        StockAdapter stockAdapter = new StockAdapter(this);
+        ListView lvOptions = (ListView) findViewById(R.id.lv_options);
+        lvOptions.setAdapter(stockAdapter);
     }
 
     @Override
