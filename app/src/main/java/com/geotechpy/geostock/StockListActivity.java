@@ -57,12 +57,12 @@ public class StockListActivity extends AppCompatActivity {
 
                 if (convertView == null) {
                     LayoutInflater inflater = context.getLayoutInflater();
-                    View stock = inflater.inflate(R.layout.listitem_stock, parent, false);
+                    convertView = inflater.inflate(R.layout.listitem_stock, parent, false);
                     holder = new ViewHolder();
-                    holder.tvStockSerNr = (TextView) stock.findViewById(R.id.tv_stock_sernr);
-                    holder.tvZoneCode = (TextView) stock.findViewById(R.id.tv_zone_code);
-                    holder.tvStatusCode = (TextView) stock.findViewById(R.id.tv_status_code);
-                    stock.setTag(holder);
+                    holder.tvStockSerNr = (TextView) convertView.findViewById(R.id.tv_stock_sernr);
+                    holder.tvZoneCode = (TextView) convertView.findViewById(R.id.tv_zone_code);
+                    holder.tvStatusCode = (TextView) convertView.findViewById(R.id.tv_status_code);
+                    convertView.setTag(holder);
                 }
                 else {
                     holder = (ViewHolder) convertView.getTag();
