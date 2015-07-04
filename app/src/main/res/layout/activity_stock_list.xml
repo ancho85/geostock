@@ -36,6 +36,7 @@
         android:layout_above="@+id/lv_options"
         android:layout_alignEnd="@+id/lv_options"
         android:layout_alignRight="@+id/lv_options"
+        android:onClick="onClickNew"
         android:text="@string/new_stock"/>
 
     <ListView

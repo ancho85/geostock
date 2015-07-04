@@ -24,4 +24,5 @@
     <string name="sync_stock">Sincronizar al Servidor</string>
     <string name="delete_stock">Borrar Inventario</string>
     <string name="edit_stock">Editar Inventario</string>
+    <string name="title_activity_stock_zone_list">Zonas</string>
 </resources>

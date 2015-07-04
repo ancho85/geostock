@@ -12,48 +12,47 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.geotechpy.geostock.database.StockManager;
-import com.geotechpy.geostock.models.Stock;
+import com.geotechpy.geostock.database.ZoneManager;
+import com.geotechpy.geostock.models.Zone;
 
 import java.util.ArrayList;
 
-public class StockListActivity extends AppCompatActivity {
+public class StockZoneListActivity extends AppCompatActivity {
 
     TextView tvUserName;
-    private ArrayList<Stock> al_stocks = new ArrayList<>();
+    private ArrayList<Zone> al_zones = new ArrayList<>();
 
     static class ViewHolder {
         // A ViewHolder keeps references to children views to avoid unneccessary calls
         // to findViewById() on each row.
-        TextView tvStockSerNr;
         TextView tvZoneCode;
-        TextView tvStatusCode;
+        TextView tvZoneName;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_stock_list);
+        setContentView(R.layout.activity_stock_zone_list);
     }
 
     @Override
     public void onResume(){
         super.onResume();
-        tvUserName = (TextView) findViewById(R.id.tv_stocklist_username);
+        tvUserName = (TextView) findViewById(R.id.tv_stockzonelist_username);
         Intent intent = getIntent();
         tvUserName.setText(intent.getStringExtra("username"));
-        showStocks();
+        showZones();
     }
 
-    public void showStocks(){
-        StockManager stockManager = new StockManager(this);
-        al_stocks = stockManager.getStocks();
+    public void showZones(){
+        ZoneManager zoneManager = new ZoneManager(this);
+        al_zones = zoneManager.getZones();
 
-        class StockAdapter extends ArrayAdapter {
+        class ZoneAdapter extends ArrayAdapter {
             AppCompatActivity context;
 
-            StockAdapter(AppCompatActivity context) {
-                super(context, R.layout.listitem_stock, al_stocks);
+            ZoneAdapter(AppCompatActivity context) {
+                super(context, R.layout.listitem_stock, al_zones);
                 this.context = context;
             }
 
@@ -67,33 +66,31 @@ public class StockListActivity extends AppCompatActivity {
 
                 if (convertView == null) {
                     LayoutInflater inflater = context.getLayoutInflater();
-                    convertView = inflater.inflate(R.layout.listitem_stock, parent, false);
+                    convertView = inflater.inflate(R.layout.listitem_zone, parent, false);
                     holder = new ViewHolder();
-                    holder.tvStockSerNr = (TextView) convertView.findViewById(R.id.tv_stock_sernr);
-                    holder.tvZoneCode = (TextView) convertView.findViewById(R.id.tv_zone_code);
-                    holder.tvStatusCode = (TextView) convertView.findViewById(R.id.tv_status_code);
+                    holder.tvZoneCode = (TextView) convertView.findViewById(R.id.tv_lizone_code);
+                    holder.tvZoneName = (TextView) convertView.findViewById(R.id.tv_lizone_name);
                     convertView.setTag(holder);
                 }
                 else {
                     holder = (ViewHolder) convertView.getTag();
                 }
-                holder.tvStockSerNr.setText(al_stocks.get(position).getSernr().toString());
-                holder.tvZoneCode.setText(al_stocks.get(position).getZone_sernr().toString());
-                holder.tvStatusCode.setText(al_stocks.get(position).getStatus());
+                holder.tvZoneCode.setText(al_zones.get(position).getSernr().toString());
+                holder.tvZoneName.setText(al_zones.get(position).getName());
 
                 return (convertView);
             }
         }
 
-        StockAdapter stockAdapter = new StockAdapter(this);
-        ListView lvOptions = (ListView) findViewById(R.id.lv_options);
-        lvOptions.setAdapter(stockAdapter);
+        ZoneAdapter zoneAdapter = new ZoneAdapter(this);
+        ListView lvZones = (ListView) findViewById(R.id.lv_zones);
+        lvZones.setAdapter(zoneAdapter);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_stock_list, menu);
+        getMenuInflater().inflate(R.menu.menu_stock_zone_list, menu);
         return true;
     }
 
@@ -112,10 +109,7 @@ public class StockListActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void onClickNew(View view){
-        tvUserName = (TextView) findViewById(R.id.tv_stocklist_username);
-        Intent stockZoneList = new Intent(this, StockZoneListActivity.class);
-        stockZoneList.putExtra("username", tvUserName.getText());
-        startActivity(stockZoneList);
+    public void onClickCancel(View view){
+        finish();
     }
 }
