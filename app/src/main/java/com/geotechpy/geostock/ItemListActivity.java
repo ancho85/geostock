@@ -24,6 +24,8 @@ import java.util.ArrayList;
 public class ItemListActivity extends AppCompatActivity {
 
     TextView tvUserName;
+    TextView tvStockSerNr;
+    TextView tvZoneCode;
     private ArrayList<StockDetail> al_stockDetail = new ArrayList<>();
 
     static class ViewHolder {
@@ -45,8 +47,12 @@ public class ItemListActivity extends AppCompatActivity {
     public void onResume(){
         super.onResume();
         tvUserName = (TextView) findViewById(R.id.tv_itemlist_username);
+        tvStockSerNr = (TextView) findViewById(R.id.tv_itemlist_stock_sernr);
+        tvZoneCode = (TextView) findViewById(R.id.tv_itemlist_stock_zone_code);
         Intent intent = getIntent();
         tvUserName.setText(intent.getStringExtra("username"));
+        tvStockSerNr.setText(intent.getStringExtra("stockSerNr"));
+        tvZoneCode.setText(intent.getStringExtra("zoneCode"));
         showItems();
     }
 

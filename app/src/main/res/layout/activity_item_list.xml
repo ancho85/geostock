@@ -26,6 +26,24 @@
         android:text="@string/title_activity_item_list"
         android:textAppearance="?android:attr/textAppearanceLarge"/>
 
+    <TextView
+        android:id="@+id/tv_itemlist_stock_sernr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tv_itemlist_items"
+        android:layout_alignLeft="@+id/tv_itemlist_stock_zone_code"
+        android:layout_alignStart="@+id/tv_itemlist_stock_zone_code"
+        android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+    <TextView
+        android:id="@+id/tv_itemlist_stock_zone_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/lv_itemlist_items"
+        android:layout_alignRight="@+id/lv_itemlist_items"
+        android:layout_below="@+id/tv_itemlist_stock_sernr"
+        android:textAppearance="?android:attr/textAppearanceSmall"/>
+
     <ListView
         android:id="@+id/lv_itemlist_items"
         android:layout_width="wrap_content"

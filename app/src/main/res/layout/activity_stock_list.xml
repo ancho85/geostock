@@ -41,14 +41,14 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/lv_options"
-        android:layout_alignEnd="@+id/lv_options"
-        android:layout_alignRight="@+id/lv_options"
+        android:layout_above="@+id/lv_stocks"
+        android:layout_alignEnd="@+id/lv_stocks"
+        android:layout_alignRight="@+id/lv_stocks"
         android:onClick="onClickNew"
         android:text="@string/new_stock"/>
 
     <ListView
-        android:id="@+id/lv_options"
+        android:id="@+id/lv_stocks"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"

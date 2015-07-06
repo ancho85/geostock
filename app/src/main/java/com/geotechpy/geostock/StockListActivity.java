@@ -9,8 +9,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.geotechpy.geostock.database.StockManager;
 import com.geotechpy.geostock.models.Stock;
@@ -29,6 +31,9 @@ public class StockListActivity extends AppCompatActivity {
         TextView tvStockSerNr;
         TextView tvZoneCode;
         TextView tvStatusCode;
+        ImageButton ibSync;
+        ImageButton ibEdit;
+        ImageButton ibDelete;
     }
 
     @Override
@@ -63,7 +68,7 @@ public class StockListActivity extends AppCompatActivity {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
 
-                ViewHolder holder;
+                final ViewHolder holder;
                 // When convertView is not null, we can reuse it directly, there is no need
                 // to re inflate it. We only inflate a new View when the convertView supplied
                 // by ListView is null.
@@ -75,6 +80,9 @@ public class StockListActivity extends AppCompatActivity {
                     holder.tvStockSerNr = (TextView) convertView.findViewById(R.id.tv_stock_sernr);
                     holder.tvZoneCode = (TextView) convertView.findViewById(R.id.tv_zone_code);
                     holder.tvStatusCode = (TextView) convertView.findViewById(R.id.tv_status_code);
+                    holder.ibSync = (ImageButton) convertView.findViewById(R.id.ib_sync);
+                    holder.ibEdit = (ImageButton) convertView.findViewById(R.id.ib_edit);
+                    holder.ibDelete = (ImageButton) convertView.findViewById(R.id.ib_delete);
                     convertView.setTag(holder);
                 }
                 else {
@@ -84,13 +92,26 @@ public class StockListActivity extends AppCompatActivity {
                 holder.tvZoneCode.setText(al_stocks.get(position).getZone_sernr().toString());
                 holder.tvStatusCode.setText(al_stocks.get(position).getStatus());
 
+                holder.ibEdit.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        tvUserName = (TextView) findViewById(R.id.tv_stocklist_username);
+                        Intent itemList = new Intent(context, ItemListActivity.class);
+                        itemList.putExtra("username", tvUserName.getText());
+                        itemList.putExtra("stockSerNr", holder.tvStockSerNr.getText());
+                        itemList.putExtra("zoneCode", holder.tvZoneCode.getText());
+                        startActivity(itemList);
+                    }
+                });
+
                 return (convertView);
             }
         }
 
         StockAdapter stockAdapter = new StockAdapter(this);
-        ListView lvOptions = (ListView) findViewById(R.id.lv_options);
-        lvOptions.setAdapter(stockAdapter);
+        ListView lvStocks = (ListView) findViewById(R.id.lv_stocks);
+        lvStocks.setAdapter(stockAdapter);
     }
 
     @Override
