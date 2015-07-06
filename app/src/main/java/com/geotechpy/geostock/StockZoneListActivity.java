@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.geotechpy.geostock.database.ZoneManager;
 import com.geotechpy.geostock.models.Zone;
@@ -116,11 +117,15 @@ public class StockZoneListActivity extends AppCompatActivity {
     public void onClickOk(View view){
         ListView lvZones = (ListView) findViewById(R.id.lv_zones);
         Integer position = lvZones.getCheckedItemPosition();
-        Zone zone = (Zone) lvZones.getItemAtPosition(position);
-        tvUserName = (TextView) findViewById(R.id.tv_stockzonelist_username);
-        Intent stockList = new Intent(this, StockListActivity.class);
-        stockList.putExtra("zone", zone.getSernr().toString());
-        stockList.putExtra("username", tvUserName.getText());
-        startActivity(stockList);
+        if (position > -1) {
+            Zone zone = (Zone) lvZones.getItemAtPosition(position);
+            tvUserName = (TextView) findViewById(R.id.tv_stockzonelist_username);
+            Intent stockList = new Intent(this, StockListActivity.class);
+            stockList.putExtra("zone", zone.getSernr().toString());
+            stockList.putExtra("username", tvUserName.getText());
+            startActivity(stockList);
+        }else{
+            Toast.makeText(getApplicationContext(), R.string.must_select_zone, Toast.LENGTH_SHORT).show();
+        }
     }
 }

@@ -40,4 +40,5 @@
     <string name="item_updated">Producto Actualizado</string>
     <string name="stockSerNr">Inventario Nro:</string>
     <string name="zoneCode">Zona Nro:</string>
+    <string name="must_select_zone">Debe elegir una Zona</string>
 </resources>
