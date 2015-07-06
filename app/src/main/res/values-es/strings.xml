@@ -25,4 +25,7 @@
     <string name="delete_stock">Borrar Inventario</string>
     <string name="edit_stock">Editar Inventario</string>
     <string name="title_activity_stock_zone_list">Zonas</string>
+    <string name="title_activity_item_list">Productos</string>
+    <string name="delete_item">Borrar Producto</string>
+    <string name="edit_item">Editar Producto</string>
 </resources>

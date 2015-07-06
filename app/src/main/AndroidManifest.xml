@@ -28,6 +28,10 @@
             android:name=".StockZoneListActivity"
             android:label="@string/title_activity_stock_zone_list" >
         </activity>
+        <activity
+            android:name=".ItemListActivity"
+            android:label="@string/title_activity_item_list" >
+        </activity>
     </application>
 
 </manifest>

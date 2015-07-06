@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.geotechpy.geostock.database.DBHelper;
 import com.geotechpy.geostock.database.ItemManager;
+import com.geotechpy.geostock.database.StockDetailManager;
 import com.geotechpy.geostock.database.StockManager;
 import com.geotechpy.geostock.database.UserManager;
 import com.geotechpy.geostock.database.ZoneManager;
@@ -115,11 +116,19 @@ public class MainActivity extends AppCompatActivity {
                         ItemManager it = new ItemManager(ctx);
                         it.insert("keyboard", "Keyboard", getString(R.string.zone_deposit));
                         it.insert("engine", "Fusion Engine", getString(R.string.zone_lab));
+                        it.insert("quantum", "Quantum Engine", getString(R.string.zone_lab));
 
                         StockManager sm = new StockManager(ctx);
                         sm.insert(1, getString(R.string.zone_deposit), getString(R.string.stock_active), "ancho", 1);
                         sm.insert(2, getString(R.string.zone_deposit), getString(R.string.stock_confirmed), "ancho", 3);
                         sm.insert(3, getString(R.string.zone_lab), getString(R.string.stock_confirmed), "alex", 4);
+
+                        StockDetailManager sdm = new StockDetailManager(ctx);
+                        sdm.insert(1, 1, "keyboard", 10f);
+                        sdm.insert(1, 2, "engine", 1f);
+                        sdm.insert(2, 1, "keyboard", 2f);
+                        sdm.insert(3, 1, "engine", 20f);
+                        sdm.insert(3, 2, "quantum", 1f);
 
                         Toast.makeText(getActivity(), R.string.db_sync, Toast.LENGTH_SHORT).show();
                     }

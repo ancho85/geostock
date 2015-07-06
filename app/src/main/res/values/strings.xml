@@ -32,5 +32,8 @@
     <string name="edit_stock">Edit stock</string>
     <string name="delete_stock">Delete stock</string>
     <string name="title_activity_stock_zone_list">Zones</string>
+    <string name="title_activity_item_list">Items</string>
+    <string name="edit_item">Edit Item</string>
+    <string name="delete_item">Delete Item</string>
 
 </resources>
