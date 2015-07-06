@@ -126,4 +126,21 @@ public class ItemListActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public void onClickCancel(View view){
+        finish();
+    }
+
+    public void onClickNew(View view){
+        tvUserName = (TextView) findViewById(R.id.tv_itemlist_username);
+        tvStockSerNr = (TextView) findViewById(R.id.tv_itemlist_stock_sernr);
+        tvZoneCode = (TextView) findViewById(R.id.tv_itemlist_stock_zone_code);
+        Intent itemActivity = new Intent(this, ItemActivity.class);
+        itemActivity.putExtra("username", tvUserName.getText().toString());
+        itemActivity.putExtra("stockSerNr", tvStockSerNr.getText().toString());
+        itemActivity.putExtra("zoneCode", tvZoneCode.getText().toString());
+        itemActivity.putExtra("editMode", false);
+        startActivity(itemActivity);
+
+    }
 }

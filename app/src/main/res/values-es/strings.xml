@@ -28,4 +28,12 @@
     <string name="title_activity_item_list">Productos</string>
     <string name="delete_item">Borrar Producto</string>
     <string name="edit_item">Editar Producto</string>
+    <string name="new_item">Nuevo Producto</string>
+    <string name="title_activity_item">Producto</string>
+    <string name="item_code">Código</string>
+    <string name="item_name">Descripción</string>
+    <string name="item_qty">Cantidad</string>
+    <string name="invalid_item_code">Codigo no válido</string>
+    <string name="invalid_item_name">Descripción no válida</string>
+    <string name="invalid_item_qty">Cantidad no válida</string>
 </resources>

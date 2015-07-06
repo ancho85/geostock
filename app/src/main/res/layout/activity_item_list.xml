@@ -60,14 +60,16 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:text="@string/cancel"/>
+        android:text="@string/cancel"
+        android:onClick="onClickCancel"/>
 
     <Button
-        android:id="@+id/btn_ok"
+        android:id="@+id/btn_new"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/btn_cancel"
-        android:text="@string/ok"/>
+        android:text="@string/new_item"
+        android:onClick="onClickNew"/>
 </RelativeLayout>

@@ -35,5 +35,15 @@
     <string name="title_activity_item_list">Items</string>
     <string name="edit_item">Edit Item</string>
     <string name="delete_item">Delete Item</string>
+    <string name="new_item">New Item</string>
+    <string name="title_activity_item">Item</string>
+    <string name="item_code">Code</string>
+    <string name="item_name">Name</string>
+    <string name="item_qty">Qty</string>
+    <string name="invalid_item_code">Invalid Item Code</string>
+    <string name="invalid_item_name">Invalid Item Name</string>
+    <string name="invalid_item_qty">Invalid Item Qty</string>
+    <string name="item_created">Item Created</string>
+    <string name="item_updated">Item Updated</string>
 
 </resources>
