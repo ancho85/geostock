@@ -7,18 +7,21 @@
 
     <TextView
         android:id="@+id/tv_stock_sernr"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
 
     <TextView
         android:id="@+id/tv_zone_code"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
 
     <TextView
         android:id="@+id/tv_status_code"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
 
     <ImageButton
         android:id="@+id/ib_sync"

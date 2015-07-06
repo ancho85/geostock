@@ -7,13 +7,15 @@
 
     <TextView
         android:id="@+id/tv_lizone_code"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
 
     <CheckedTextView
         android:id="@+id/tv_lizone_name"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:checkMark="?android:attr/listChoiceIndicatorSingle"
         android:ellipsize="marquee"
         android:singleLine="true"/>
