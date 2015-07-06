@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -35,6 +36,8 @@ public class ItemListActivity extends AppCompatActivity {
         TextView tvItemName;
         TextView tvItemLineNr;
         TextView tvItemQty;
+        ImageButton ibEdit;
+        ImageButton ibDelete;
     }
 
     @Override
@@ -71,7 +74,7 @@ public class ItemListActivity extends AppCompatActivity {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
 
-                ViewHolder holder;
+                final ViewHolder holder;
                 // When convertView is not null, we can reuse it directly, there is no need
                 // to re inflate it. We only inflate a new View when the convertView supplied
                 // by ListView is null.
@@ -84,6 +87,8 @@ public class ItemListActivity extends AppCompatActivity {
                     holder.tvItemName = (TextView) convertView.findViewById(R.id.tv_items_name);
                     holder.tvItemLineNr = (TextView) convertView.findViewById(R.id.tv_items_linenr);
                     holder.tvItemQty = (TextView) convertView.findViewById(R.id.tv_items_qty);
+                    holder.ibEdit = (ImageButton) convertView.findViewById(R.id.ib_items_edit);
+                    holder.ibDelete = (ImageButton) convertView.findViewById(R.id.ib_items_delete);
                     convertView.setTag(holder);
                 }
                 else {
@@ -95,6 +100,27 @@ public class ItemListActivity extends AppCompatActivity {
                 holder.tvItemName.setText(item.getName());
                 holder.tvItemQty.setText(al_stockDetail.get(position).getQty().toString());
                 holder.tvItemLineNr.setText(al_stockDetail.get(position).getLinenr().toString());
+
+                holder.ibEdit.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        tvUserName = (TextView) findViewById(R.id.tv_itemlist_username);
+                        tvStockSerNr = (TextView) findViewById(R.id.tv_itemlist_stock_sernr);
+                        tvZoneCode = (TextView) findViewById(R.id.tv_itemlist_stock_zone_code);
+                        Intent itemEditActivity = new Intent(context, ItemActivity.class);
+
+                        itemEditActivity.putExtra("username", tvUserName.getText().toString());
+                        itemEditActivity.putExtra("stockSerNr", tvStockSerNr.getText().toString());
+                        itemEditActivity.putExtra("zoneCode", tvZoneCode.getText().toString());
+                        itemEditActivity.putExtra("itemCode", holder.tvItemCode.getText().toString());
+                        itemEditActivity.putExtra("itemName", holder.tvItemName.getText().toString());
+                        itemEditActivity.putExtra("itemLineNr", holder.tvItemLineNr.getText().toString());
+                        itemEditActivity.putExtra("itemQty", holder.tvItemQty.getText().toString());
+                        itemEditActivity.putExtra("editMode", true);
+                        startActivity(itemEditActivity);
+                    }
+                });
 
                 return (convertView);
             }

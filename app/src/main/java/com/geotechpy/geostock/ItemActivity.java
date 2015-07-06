@@ -25,6 +25,8 @@ public class ItemActivity extends AppCompatActivity {
     EditText etName;
     EditText etQty;
 
+    Integer lineNr;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,11 +39,23 @@ public class ItemActivity extends AppCompatActivity {
         tvUserName = (TextView) findViewById(R.id.tv_item_username);
         tvStockSerNr = (TextView) findViewById(R.id.tv_item_stock_sernr);
         tvZoneCode = (TextView) findViewById(R.id.tv_item_stock_zone_code);
+        etCode = (EditText) findViewById(R.id.et_item_code);
+        etName = (EditText) findViewById(R.id.et_item_name);
+        etQty = (EditText) findViewById(R.id.et_item_qty);
         Intent intent = getIntent();
         tvUserName.setText(intent.getStringExtra("username"));
         tvStockSerNr.setText(intent.getStringExtra("stockSerNr"));
         tvZoneCode.setText(intent.getStringExtra("zoneCode"));
         editMode = intent.getBooleanExtra("editMode", false);
+
+        if (editMode){
+            etCode.setText(intent.getStringExtra("itemCode"));
+            etCode.setKeyListener(null);
+            etName.setText(intent.getStringExtra("itemName"));
+            etName.requestFocus();
+            etQty.setText(intent.getStringExtra("itemQty"));
+            lineNr = Integer.valueOf(intent.getStringExtra("itemLineNr"));
+        }
     }
 
     @Override
@@ -102,7 +116,7 @@ public class ItemActivity extends AppCompatActivity {
             displayMessage(getString(R.string.item_created));
         }else{
             sdm.update(Integer.valueOf(tvStockSerNr.getText().toString()),
-                    1,
+                    lineNr,
                     code,
                     Float.valueOf(qty));
             displayMessage(getString(R.string.item_updated));
