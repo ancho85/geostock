@@ -125,10 +125,10 @@ public class MainActivity extends AppCompatActivity {
 
                         StockDetailManager sdm = new StockDetailManager(ctx);
                         sdm.insert(1, 1, "keyboard", 10f);
-                        sdm.insert(1, 2, "engine", 1f);
-                        sdm.insert(2, 1, "keyboard", 2f);
-                        sdm.insert(3, 1, "engine", 20f);
-                        sdm.insert(3, 2, "quantum", 1f);
+                        sdm.insert(1, 2, "engine", 20f);
+                        sdm.insert(2, 1, "keyboard", 30f);
+                        sdm.insert(3, 1, "engine", 40f);
+                        sdm.insert(3, 2, "quantum", 50f);
 
                         Toast.makeText(getActivity(), R.string.db_sync, Toast.LENGTH_SHORT).show();
                     }
