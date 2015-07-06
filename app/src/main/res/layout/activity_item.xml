@@ -44,6 +44,29 @@
         android:layout_below="@+id/tv_item_stock_sernr"
         android:textAppearance="?android:attr/textAppearanceSmall"/>
 
+
+    <TextView
+        android:id="@+id/tv_item_i"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tv_item_stock_zone_code"
+        android:layout_toLeftOf="@+id/tv_item_stock_sernr"
+        android:layout_toStartOf="@+id/tv_item_stock_sernr"
+        android:text="@string/stockSerNr"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/tv_item_z"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_item_i"
+        android:layout_toLeftOf="@+id/tv_item_stock_zone_code"
+        android:layout_toStartOf="@+id/tv_item_stock_zone_code"
+        android:text="@string/zoneCode"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textStyle="bold"/>
+
     <TextView
         android:id="@+id/tv_item_code"
         android:layout_width="wrap_content"

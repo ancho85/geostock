@@ -44,6 +44,28 @@
         android:layout_below="@+id/tv_itemlist_stock_sernr"
         android:textAppearance="?android:attr/textAppearanceSmall"/>
 
+    <TextView
+        android:id="@+id/tv_itemlist_i"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tv_itemlist_stock_zone_code"
+        android:layout_toLeftOf="@+id/tv_itemlist_stock_sernr"
+        android:layout_toStartOf="@+id/tv_itemlist_stock_sernr"
+        android:text="@string/stockSerNr"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/tv_itemlist_z"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_itemlist_i"
+        android:layout_toLeftOf="@+id/tv_itemlist_stock_zone_code"
+        android:layout_toStartOf="@+id/tv_itemlist_stock_zone_code"
+        android:text="@string/zoneCode"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textStyle="bold"/>
+
     <ListView
         android:id="@+id/lv_itemlist_items"
         android:layout_width="wrap_content"
@@ -60,8 +82,8 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:text="@string/cancel"
-        android:onClick="onClickCancel"/>
+        android:onClick="onClickCancel"
+        android:text="@string/cancel"/>
 
     <Button
         android:id="@+id/btn_new"
@@ -70,6 +92,6 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/btn_cancel"
-        android:text="@string/new_item"
-        android:onClick="onClickNew"/>
+        android:onClick="onClickNew"
+        android:text="@string/new_item"/>
 </RelativeLayout>

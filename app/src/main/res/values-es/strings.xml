@@ -36,4 +36,8 @@
     <string name="invalid_item_code">Codigo no válido</string>
     <string name="invalid_item_name">Descripción no válida</string>
     <string name="invalid_item_qty">Cantidad no válida</string>
+    <string name="item_created">Producto Creado</string>
+    <string name="item_updated">Producto Actualizado</string>
+    <string name="stockSerNr">Inventario Nro:</string>
+    <string name="zoneCode">Zona Nro:</string>
 </resources>

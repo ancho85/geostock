@@ -45,5 +45,7 @@
     <string name="invalid_item_qty">Invalid Item Qty</string>
     <string name="item_created">Item Created</string>
     <string name="item_updated">Item Updated</string>
+    <string name="stockSerNr">Stock Nr:</string>
+    <string name="zoneCode">Zone Code:</string>
 
 </resources>
