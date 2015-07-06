@@ -117,5 +117,10 @@ public class StockZoneListActivity extends AppCompatActivity {
         ListView lvZones = (ListView) findViewById(R.id.lv_zones);
         Integer position = lvZones.getCheckedItemPosition();
         Zone zone = (Zone) lvZones.getItemAtPosition(position);
+        tvUserName = (TextView) findViewById(R.id.tv_stockzonelist_username);
+        Intent stockList = new Intent(this, StockListActivity.class);
+        stockList.putExtra("zone", zone.getSernr().toString());
+        stockList.putExtra("username", tvUserName.getText());
+        startActivity(stockList);
     }
 }

@@ -20,6 +20,7 @@ import java.util.ArrayList;
 public class StockListActivity extends AppCompatActivity {
 
     TextView tvUserName;
+    TextView tvZone;
     private ArrayList<Stock> al_stocks = new ArrayList<>();
 
     static class ViewHolder {
@@ -40,8 +41,10 @@ public class StockListActivity extends AppCompatActivity {
     public void onResume(){
         super.onResume();
         tvUserName = (TextView) findViewById(R.id.tv_stocklist_username);
+        tvZone = (TextView) findViewById(R.id.tv_stocklist_zone);
         Intent intent = getIntent();
         tvUserName.setText(intent.getStringExtra("username"));
+        tvZone.setText(intent.getStringExtra("zone"));
         showStocks();
     }
 
