@@ -112,4 +112,10 @@ public class StockZoneListActivity extends AppCompatActivity {
     public void onClickCancel(View view){
         finish();
     }
+
+    public void onClickOk(View view){
+        ListView lvZones = (ListView) findViewById(R.id.lv_zones);
+        Integer position = lvZones.getCheckedItemPosition();
+        Zone zone = (Zone) lvZones.getItemAtPosition(position);
+    }
 }
