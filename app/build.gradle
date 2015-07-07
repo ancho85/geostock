@@ -37,7 +37,7 @@ android {
         }
     }
     jacoco {
-        version = "0.7.1.201405082137"
+        version = "0.7.5.201505241946"
     }
 }
 
@@ -47,7 +47,7 @@ dependencies {
 }
 
 jacoco {
-    toolVersion "0.7.1.201405082137"
+    toolVersion "0.7.5.201505241946"
 }
 
 task jacocoTestReport(type:JacocoReport, dependsOn: "testDebug") {
