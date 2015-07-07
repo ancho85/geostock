@@ -117,8 +117,8 @@ public class StockZoneListActivity extends AppCompatActivity {
     public void onClickOk(View view){
         ListView lvZones = (ListView) findViewById(R.id.lv_zones);
         Integer position = lvZones.getCheckedItemPosition();
-        if (position > -1) {
-            Zone zone = (Zone) lvZones.getItemAtPosition(position);
+        Zone zone = (Zone) lvZones.getItemAtPosition(position);
+        if (zone != null){
             tvUserName = (TextView) findViewById(R.id.tv_stockzonelist_username);
             Intent stockList = new Intent(this, StockListActivity.class);
             stockList.putExtra("zone", zone.getSernr().toString());
