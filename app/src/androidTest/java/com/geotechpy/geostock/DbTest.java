@@ -166,10 +166,11 @@ public class DbTest extends AndroidTestCase {
         stockDetail.insert(100, 2, "paper", 3f);
         stockDetail.insert(100, 3, "paper", 1000f);
         stockDetail.insert(200, 1, "paper", 1f);
-        assertEquals(4, stockDetail.count().intValue());
+        stockDetail.insert(200, 2, "paper", 2f);
+        assertEquals(5, stockDetail.count().intValue());
 
         stockDetail.delete(100);
-        assertEquals(1, stockDetail.count().intValue());
+        assertEquals(2, stockDetail.count().intValue());
 
         ArrayList<StockDetail> alstockDetail = stockDetail.getStockDetails();
         StockDetail posStockDetail = alstockDetail.get(0);
@@ -185,6 +186,8 @@ public class DbTest extends AndroidTestCase {
         stockDetail.update(200, 2, "paper", 30f);
         StockDetail paperStockDetail = StockDetailManager.load(ctx, 200, 2);
         assertEquals(30f, paperStockDetail.getQty());
+        StockDetail paperStockDetail2 = StockDetailManager.load(ctx, 200, 1);
+        assertEquals(1f, paperStockDetail2.getQty());
     }
 
     public void testUpdateDB(){

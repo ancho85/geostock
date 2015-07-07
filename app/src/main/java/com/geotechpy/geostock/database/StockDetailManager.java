@@ -47,7 +47,8 @@ public class StockDetailManager {
     public void update(Integer stock_sernr, Integer linenr, String item_code, Float qty) {
         db.update(TABLE_NAME,
                 setContentValues(stock_sernr, linenr, item_code, qty),
-                CN_STOCKSERNR + "=? AND " + CN_LINENR + "=?", new String[]{stock_sernr.toString(), linenr.toString()});
+                CN_STOCKSERNR + "=? AND " + CN_LINENR + "=?",
+                new String[]{stock_sernr.toString(), linenr.toString()});
     }
 
     public ArrayList<StockDetail> getStockDetails() {
