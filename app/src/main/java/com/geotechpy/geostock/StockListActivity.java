@@ -57,7 +57,7 @@ public class StockListActivity extends AppCompatActivity {
         StockManager stockManager = new StockManager(this);
         al_stocks = stockManager.getStocks();
 
-        class StockAdapter extends ArrayAdapter {
+        class StockAdapter extends ArrayAdapter<Stock> {
             AppCompatActivity context;
 
             StockAdapter(AppCompatActivity context) {

@@ -63,7 +63,7 @@ public class ItemListActivity extends AppCompatActivity {
         StockDetailManager stockDetailManager = new StockDetailManager(this);
         al_stockDetail = stockDetailManager.getStockDetails();
 
-        class ItemAdapter extends ArrayAdapter {
+        class ItemAdapter extends ArrayAdapter<StockDetail> {
             AppCompatActivity context;
 
             ItemAdapter(AppCompatActivity context) {

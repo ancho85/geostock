@@ -49,7 +49,7 @@ public class StockZoneListActivity extends AppCompatActivity {
         ZoneManager zoneManager = new ZoneManager(this);
         al_zones = zoneManager.getZones();
 
-        class ZoneAdapter extends ArrayAdapter {
+        class ZoneAdapter extends ArrayAdapter<Zone> {
             AppCompatActivity context;
 
             ZoneAdapter(AppCompatActivity context) {
