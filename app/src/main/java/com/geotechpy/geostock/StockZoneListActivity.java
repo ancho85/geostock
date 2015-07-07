@@ -119,11 +119,10 @@ public class StockZoneListActivity extends AppCompatActivity {
         Integer position = lvZones.getCheckedItemPosition();
         Zone zone = (Zone) lvZones.getItemAtPosition(position);
         if (zone != null){
-            tvUserName = (TextView) findViewById(R.id.tv_stockzonelist_username);
-            Intent stockList = new Intent(this, StockListActivity.class);
-            stockList.putExtra("zone", zone.getSernr().toString());
-            stockList.putExtra("username", tvUserName.getText());
-            startActivity(stockList);
+            Intent resultIntent = new Intent();
+            resultIntent.putExtra("zone", zone.getSernr().toString());
+            setResult(AppCompatActivity.RESULT_OK, resultIntent);
+            finish();
         }else{
             Toast.makeText(getApplicationContext(), R.string.must_select_zone, Toast.LENGTH_SHORT).show();
         }

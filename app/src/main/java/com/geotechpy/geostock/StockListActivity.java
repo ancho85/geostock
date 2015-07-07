@@ -49,8 +49,20 @@ public class StockListActivity extends AppCompatActivity {
         tvZone = (TextView) findViewById(R.id.tv_stocklist_zone);
         Intent intent = getIntent();
         tvUserName.setText(intent.getStringExtra("username"));
-        tvZone.setText(intent.getStringExtra("zone"));
         showStocks();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode) {
+            case (100) : {
+                if (resultCode == AppCompatActivity.RESULT_OK) {
+                    tvZone.setText(data.getStringExtra("zone"));
+                }
+                break;
+            }
+        }
     }
 
     public void showStocks(){
@@ -140,6 +152,6 @@ public class StockListActivity extends AppCompatActivity {
         tvUserName = (TextView) findViewById(R.id.tv_stocklist_username);
         Intent stockZoneList = new Intent(this, StockZoneListActivity.class);
         stockZoneList.putExtra("username", tvUserName.getText());
-        startActivity(stockZoneList);
+        startActivityForResult(stockZoneList, 100);
     }
 }
