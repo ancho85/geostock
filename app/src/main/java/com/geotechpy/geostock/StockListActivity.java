@@ -135,6 +135,13 @@ public class StockListActivity extends AppCompatActivity {
                     }
                 });
 
+                holder.ibSync.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(getApplicationContext(), R.string.db_sync, Toast.LENGTH_SHORT).show();
+                    }
+                });
+
                 return (convertView);
             }
         }
