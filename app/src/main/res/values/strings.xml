@@ -49,5 +49,6 @@
     <string name="zoneCode">Zone Code:</string>
     <string name="must_select_zone">Must select a Zone</string>
     <string name="stock_detail_deleted">Stock Detail Deleted</string>
+    <string name="stock_deleted">Stock Deleted</string>
 
 </resources>
