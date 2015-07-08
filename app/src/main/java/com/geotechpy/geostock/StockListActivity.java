@@ -64,6 +64,8 @@ public class StockListActivity extends AppCompatActivity {
                 }
                 break;
             }
+            default:
+                break;
         }
     }
 

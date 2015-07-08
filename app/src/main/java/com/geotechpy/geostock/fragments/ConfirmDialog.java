@@ -80,9 +80,13 @@ public class ConfirmDialog extends DialogFragment {
                         break;
                     case R.id.ib_delete:
                         Integer stockNr = Integer.valueOf(getArguments().getString("stockSerNr"));
+                        StockDetailManager sdmdb = new StockDetailManager(getActivity());
+                        sdmdb.deleteBySerNr(stockNr);
                         StockManager smd = new StockManager(getActivity());
                         smd.delete(stockNr);
                         Toast.makeText(getActivity(), R.string.stock_deleted, Toast.LENGTH_SHORT).show();
+                        break;
+                    default:
                         break;
                 }
             }
