@@ -40,8 +40,10 @@ public class StockDetailManager {
         db.insert(TABLE_NAME, null, setContentValues(stock_sernr, linenr, item_code, qty));
     }
 
-    public void delete(Integer stock_sernr) {
-        db.delete(TABLE_NAME, CN_STOCKSERNR + "=?", new String[]{stock_sernr.toString()});
+    public void delete(Integer stock_sernr, Integer linenr) {
+        db.delete(TABLE_NAME,
+                CN_STOCKSERNR + "=? AND " + CN_LINENR + "=?",
+                new String[]{stock_sernr.toString(), linenr.toString()});
     }
 
     public void update(Integer stock_sernr, Integer linenr, String item_code, Float qty) {

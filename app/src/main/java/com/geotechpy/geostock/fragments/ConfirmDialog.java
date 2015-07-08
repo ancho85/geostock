@@ -70,6 +70,13 @@ public class ConfirmDialog extends DialogFragment {
 
                     Toast.makeText(getActivity(), R.string.db_sync, Toast.LENGTH_SHORT).show();
                 }
+                else if (btnId == R.id.ib_items_delete){
+                    Integer stockSerNr = Integer.valueOf(getArguments().getString("stockSerNr"));
+                    Integer lineNr = Integer.valueOf(getArguments().getString("lineNr"));
+                    StockDetailManager sdm = new StockDetailManager(getActivity());
+                    sdm.delete(stockSerNr, lineNr);
+                    Toast.makeText(getActivity(), R.string.stock_detail_deleted, Toast.LENGTH_SHORT).show();
+                }
             }
         });
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {

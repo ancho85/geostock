@@ -2,6 +2,7 @@ package com.geotechpy.geostock;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 
 import com.geotechpy.geostock.database.ItemManager;
 import com.geotechpy.geostock.database.StockDetailManager;
+import com.geotechpy.geostock.fragments.ConfirmDialog;
 import com.geotechpy.geostock.models.Item;
 import com.geotechpy.geostock.models.StockDetail;
 
@@ -119,6 +121,21 @@ public class ItemListActivity extends AppCompatActivity {
                         itemEditActivity.putExtra("itemQty", holder.tvItemQty.getText().toString());
                         itemEditActivity.putExtra("editMode", true);
                         startActivity(itemEditActivity);
+                    }
+                });
+
+                holder.ibDelete.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        FragmentManager fragmentManager = ItemListActivity.this.getSupportFragmentManager();
+                        ConfirmDialog confirmDialog = new ConfirmDialog();
+                        Bundle args = new Bundle();
+                        args.putInt("btnId", R.id.ib_items_delete);
+                        args.putString("stockSerNr", tvStockSerNr.getText().toString());
+                        args.putString("lineNr", holder.tvItemLineNr.getText().toString());
+                        confirmDialog.setArguments(args);
+                        confirmDialog.show(fragmentManager, "");
                     }
                 });
 

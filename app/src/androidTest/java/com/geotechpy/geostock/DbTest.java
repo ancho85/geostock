@@ -169,8 +169,8 @@ public class DbTest extends AndroidTestCase {
         stockDetail.insert(200, 2, "paper", 2f);
         assertEquals(5, stockDetail.count().intValue());
 
-        stockDetail.delete(100);
-        assertEquals(2, stockDetail.count().intValue());
+        stockDetail.delete(100, 3);
+        assertEquals(4, stockDetail.count().intValue());
 
         ArrayList<StockDetail> alstockDetail = stockDetail.getStockDetails();
         StockDetail posStockDetail = alstockDetail.get(0);
