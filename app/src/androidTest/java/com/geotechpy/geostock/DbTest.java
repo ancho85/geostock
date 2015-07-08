@@ -188,6 +188,10 @@ public class DbTest extends AndroidTestCase {
         assertEquals(30f, paperStockDetail.getQty());
         StockDetail paperStockDetail2 = StockDetailManager.load(ctx, 200, 1);
         assertEquals(1f, paperStockDetail2.getQty());
+
+        stockDetail.deleteBySerNr(200);
+        assertEquals(2, stockDetail.count().intValue());
+
     }
 
     public void testUpdateDB(){

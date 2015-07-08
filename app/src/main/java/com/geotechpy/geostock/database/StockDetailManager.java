@@ -46,6 +46,10 @@ public class StockDetailManager {
                 new String[]{stock_sernr.toString(), linenr.toString()});
     }
 
+    public void deleteBySerNr(Integer stock_sernr) {
+        db.delete(TABLE_NAME, CN_STOCKSERNR + "=?", new String[]{stock_sernr.toString()});
+    }
+
     public void update(Integer stock_sernr, Integer linenr, String item_code, Float qty) {
         db.update(TABLE_NAME,
                 setContentValues(stock_sernr, linenr, item_code, qty),
