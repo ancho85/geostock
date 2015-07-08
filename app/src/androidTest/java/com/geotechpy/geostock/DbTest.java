@@ -172,6 +172,9 @@ public class DbTest extends AndroidTestCase {
         stockDetail.delete(100, 3);
         assertEquals(4, stockDetail.count().intValue());
 
+        stockDetail.deleteBySerNr(100);
+        assertEquals(2, stockDetail.count().intValue());
+
         ArrayList<StockDetail> alstockDetail = stockDetail.getStockDetails();
         StockDetail posStockDetail = alstockDetail.get(0);
         posStockDetail.setStock_sernr(300);
@@ -189,8 +192,7 @@ public class DbTest extends AndroidTestCase {
         StockDetail paperStockDetail2 = StockDetailManager.load(ctx, 200, 1);
         assertEquals(1f, paperStockDetail2.getQty());
 
-        stockDetail.deleteBySerNr(200);
-        assertEquals(2, stockDetail.count().intValue());
+
 
     }
 
