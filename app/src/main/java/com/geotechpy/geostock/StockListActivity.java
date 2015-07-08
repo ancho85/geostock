@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.geotechpy.geostock.adapters.StockAdapter;
 import com.geotechpy.geostock.database.StockManager;
 import com.geotechpy.geostock.fragments.ConfirmDialog;
 import com.geotechpy.geostock.models.Stock;
@@ -73,80 +74,8 @@ public class StockListActivity extends AppCompatActivity {
         StockManager stockManager = new StockManager(this);
         al_stocks = stockManager.getStocks();
 
-        class StockAdapter extends ArrayAdapter<Stock> {
-            AppCompatActivity context;
-
-            StockAdapter(AppCompatActivity context) {
-                super(context, R.layout.listitem_stock, al_stocks);
-                this.context = context;
-            }
-
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-
-                final ViewHolder holder;
-                // When convertView is not null, we can reuse it directly, there is no need
-                // to re inflate it. We only inflate a new View when the convertView supplied
-                // by ListView is null.
-
-                if (convertView == null) {
-                    LayoutInflater inflater = context.getLayoutInflater();
-                    convertView = inflater.inflate(R.layout.listitem_stock, parent, false);
-                    holder = new ViewHolder();
-                    holder.tvStockSerNr = (TextView) convertView.findViewById(R.id.tv_stock_sernr);
-                    holder.tvZoneCode = (TextView) convertView.findViewById(R.id.tv_zone_code);
-                    holder.tvStatusCode = (TextView) convertView.findViewById(R.id.tv_status_code);
-                    holder.ibSync = (ImageButton) convertView.findViewById(R.id.ib_sync);
-                    holder.ibEdit = (ImageButton) convertView.findViewById(R.id.ib_edit);
-                    holder.ibDelete = (ImageButton) convertView.findViewById(R.id.ib_delete);
-                    convertView.setTag(holder);
-                }
-                else {
-                    holder = (ViewHolder) convertView.getTag();
-                }
-                holder.tvStockSerNr.setText(al_stocks.get(position).getSernr().toString());
-                holder.tvZoneCode.setText(al_stocks.get(position).getZone_sernr().toString());
-                holder.tvStatusCode.setText(al_stocks.get(position).getStatus());
-
-                holder.ibEdit.setOnClickListener(new View.OnClickListener() {
-
-                    @Override
-                    public void onClick(View v) {
-                        tvUserName = (TextView) findViewById(R.id.tv_stocklist_username);
-                        Intent itemList = new Intent(context, ItemListActivity.class);
-                        itemList.putExtra("username", tvUserName.getText());
-                        itemList.putExtra("stockSerNr", holder.tvStockSerNr.getText());
-                        itemList.putExtra("zoneCode", holder.tvZoneCode.getText());
-                        startActivity(itemList);
-                    }
-                });
-
-                holder.ibDelete.setOnClickListener(new View.OnClickListener() {
-
-                    @Override
-                    public void onClick(View v) {
-                        FragmentManager fragmentManager = StockListActivity.this.getSupportFragmentManager();
-                        ConfirmDialog confirmDialog = new ConfirmDialog();
-                        Bundle args = new Bundle();
-                        args.putInt("btnId", R.id.ib_delete);
-                        args.putString("stockSerNr", holder.tvStockSerNr.getText().toString());
-                        confirmDialog.setArguments(args);
-                        confirmDialog.show(fragmentManager, "");
-                    }
-                });
-
-                holder.ibSync.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Toast.makeText(getApplicationContext(), R.string.db_sync, Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-                return (convertView);
-            }
-        }
-
         StockAdapter stockAdapter = new StockAdapter(this);
+        stockAdapter.updateStocks(al_stocks);
         ListView lvStocks = (ListView) findViewById(R.id.lv_stocks);
         lvStocks.setAdapter(stockAdapter);
     }
