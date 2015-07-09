@@ -162,11 +162,11 @@ public class DbTest extends AndroidTestCase {
         stock.insert(100, ctx.getString(R.string.zone_deposit), ctx.getString(R.string.stock_active), "alex", 2);
         stock.insert(200, ctx.getString(R.string.zone_deposit), ctx.getString(R.string.stock_active), "alex", 2);
 
-        stockDetail.insert(100, 1, "paper", 20f);
-        stockDetail.insert(100, 2, "paper", 3f);
-        stockDetail.insert(100, 3, "paper", 1000f);
-        stockDetail.insert(200, 1, "paper", 1f);
-        stockDetail.insert(200, 2, "paper", 2f);
+        stockDetail.insert(100, "paper", 20f);
+        stockDetail.insert(100, "paper", 3f);
+        stockDetail.insert(100, "paper", 1000f);
+        stockDetail.insert(200, "paper", 1f);
+        stockDetail.insert(200, "paper", 2f);
         assertEquals(5, stockDetail.count().intValue());
 
         stockDetail.delete(100, 3);
@@ -186,14 +186,14 @@ public class DbTest extends AndroidTestCase {
         assertEquals("keyboard", posStockDetail.getItem_code());
         assertEquals(2f, posStockDetail.getQty());
 
+        int nextRow = stockDetail.getNextStockRowNr(200);
+        assertEquals(3, nextRow);
+
         stockDetail.update(200, 2, "paper", 30f);
         StockDetail paperStockDetail = StockDetailManager.load(ctx, 200, 2);
         assertEquals(30f, paperStockDetail.getQty());
         StockDetail paperStockDetail2 = StockDetailManager.load(ctx, 200, 1);
         assertEquals(1f, paperStockDetail2.getQty());
-
-
-
     }
 
     public void testUpdateDB(){

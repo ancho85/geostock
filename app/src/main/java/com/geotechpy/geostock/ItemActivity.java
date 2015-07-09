@@ -91,6 +91,8 @@ public class ItemActivity extends AppCompatActivity {
         String code = etCode.getText().toString();
         String name = etName.getText().toString();
         String qty = etQty.getText().toString();
+        Integer stockSerNr = Integer.valueOf(tvStockSerNr.getText().toString());
+        Float fQty = Float.valueOf(qty);
         if (!editMode) {
             if (TextUtils.isEmpty(code)){
                 displayMessage(getString(R.string.invalid_item_code));
@@ -109,16 +111,10 @@ public class ItemActivity extends AppCompatActivity {
         if (!editMode){
             ItemManager im = new ItemManager(this);
             im.insert(code, name, getString(R.string.zone_deposit));
-            sdm.insert(Integer.valueOf(tvStockSerNr.getText().toString()),
-                    1,
-                    code,
-                    Float.valueOf(qty));
+            sdm.insert(stockSerNr, code, fQty);
             displayMessage(getString(R.string.item_created));
         }else{
-            sdm.update(Integer.valueOf(tvStockSerNr.getText().toString()),
-                    lineNr,
-                    code,
-                    Float.valueOf(qty));
+            sdm.update(stockSerNr, lineNr, code, fQty);
             displayMessage(getString(R.string.item_updated));
         }
         finish();

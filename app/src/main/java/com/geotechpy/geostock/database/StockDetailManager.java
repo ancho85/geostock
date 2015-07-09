@@ -36,7 +36,8 @@ public class StockDetailManager {
         return values;
     }
 
-    public void insert(Integer stock_sernr, Integer linenr, String item_code, Float qty) {
+    public void insert(Integer stock_sernr, String item_code, Float qty) {
+        Integer linenr = getNextStockRowNr(stock_sernr);
         db.insert(TABLE_NAME, null, setContentValues(stock_sernr, linenr, item_code, qty));
     }
 
@@ -84,6 +85,19 @@ public class StockDetailManager {
         }
         c.close();
         return count;
+    }
+
+    public Integer getNextStockRowNr(Integer stock_sernr) {
+        Integer next = 1;
+        Cursor c = db.rawQuery("SELECT COUNT(*) AS count FROM "
+                + TABLE_NAME
+                + " WHERE "
+                + CN_STOCKSERNR + " = '" + String.valueOf(stock_sernr) + "'", null);
+        if (c.moveToFirst()) {
+            next += c.getInt(0);
+        }
+        c.close();
+        return next;
     }
 
     public static StockDetail load(Context ctx, Integer stock_sernr, Integer linenr) {

@@ -63,11 +63,11 @@ public class ConfirmDialog extends DialogFragment {
                         sm.insert(3, getString(R.string.zone_lab), getString(R.string.stock_confirmed), "alex", 4);
 
                         StockDetailManager sdm = new StockDetailManager(ctx);
-                        sdm.insert(1, 1, "keyboard", 10f);
-                        sdm.insert(1, 2, "engine", 20f);
-                        sdm.insert(2, 1, "keyboard", 30f);
-                        sdm.insert(3, 1, "engine", 40f);
-                        sdm.insert(3, 2, "quantum", 50f);
+                        sdm.insert(1, "keyboard", 10f);
+                        sdm.insert(1, "engine", 20f);
+                        sdm.insert(2, "keyboard", 30f);
+                        sdm.insert(3, "engine", 40f);
+                        sdm.insert(3, "quantum", 50f);
 
                         Toast.makeText(getActivity(), R.string.db_sync, Toast.LENGTH_SHORT).show();
                         break;
