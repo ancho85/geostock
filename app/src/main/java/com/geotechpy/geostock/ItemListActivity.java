@@ -2,24 +2,16 @@ package com.geotechpy.geostock;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
 
 import com.geotechpy.geostock.adapters.ItemAdapter;
-import com.geotechpy.geostock.database.ItemManager;
 import com.geotechpy.geostock.database.StockDetailManager;
-import com.geotechpy.geostock.fragments.ConfirmDialog;
-import com.geotechpy.geostock.models.Item;
 import com.geotechpy.geostock.models.StockDetail;
 
 import java.util.ArrayList;
@@ -30,7 +22,6 @@ public class ItemListActivity extends AppCompatActivity {
     TextView tvUserName;
     TextView tvStockSerNr;
     TextView tvZoneCode;
-    private ArrayList<StockDetail> al_stockDetail = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +44,7 @@ public class ItemListActivity extends AppCompatActivity {
 
     public void showItems(){
         StockDetailManager stockDetailManager = new StockDetailManager(this);
-        al_stockDetail = stockDetailManager.getStockDetails();
+        ArrayList<StockDetail> al_stockDetail = stockDetailManager.getStockDetails();
         ItemAdapter itemAdapter = new ItemAdapter(this);
         itemAdapter.updateItems(al_stockDetail);
         itemAdapter.setUserStockZone(tvUserName.getText().toString(),

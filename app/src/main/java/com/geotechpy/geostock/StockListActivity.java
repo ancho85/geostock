@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -20,7 +19,6 @@ public class StockListActivity extends AppCompatActivity{
 
     TextView tvUserName;
     TextView tvZone;
-    private ArrayList<Stock> al_stocks = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +53,7 @@ public class StockListActivity extends AppCompatActivity{
 
     public void showStocks(){
         StockManager stockManager = new StockManager(this);
-        al_stocks = stockManager.getStocks();
-
+        ArrayList<Stock> al_stocks = stockManager.getStocks();
         StockAdapter stockAdapter = new StockAdapter(this);
         stockAdapter.updateStocks(al_stocks);
         stockAdapter.setUserName(tvUserName.getText().toString());

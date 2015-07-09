@@ -8,8 +8,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.geotechpy.geostock.R;
-
 public class StockTypeActivity extends AppCompatActivity {
 
     TextView tvUserName;
