@@ -6,7 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+
+import com.geotechpy.geostock.database.UserManager;
+import com.geotechpy.geostock.models.User;
 
 public class StockTypeActivity extends AppCompatActivity {
 
@@ -24,6 +28,19 @@ public class StockTypeActivity extends AppCompatActivity {
         tvUserName = (TextView) findViewById(R.id.tv_stocktype_username);
         Intent intent = getIntent();
         tvUserName.setText(intent.getStringExtra("username"));
+        User user = UserManager.load(this, tvUserName.getText().toString());
+        String userType = user.getType();
+        if (!userType.equals(getString(R.string.zone_admin))){
+            if (!userType.equals(getString(R.string.zone_both))){
+                if (userType.equals(getString(R.string.zone_deposit))){
+                    Button btnLab = (Button) findViewById(R.id.btn_laboratory);
+                    btnLab.setVisibility(View.INVISIBLE);
+                }else if (userType.equals(getString(R.string.zone_lab))){
+                    Button btnDep = (Button) findViewById(R.id.btn_deposit);
+                    btnDep.setVisibility(View.INVISIBLE);
+                }
+            }
+        }
     }
 
     @Override
