@@ -1,7 +1,9 @@
 package com.geotechpy.geostock.adapters;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,7 @@ import android.widget.Toast;
 
 import com.geotechpy.geostock.R;
 import com.geotechpy.geostock.ItemListActivity;
+import com.geotechpy.geostock.StockListActivity;
 import com.geotechpy.geostock.database.StockDetailManager;
 import com.geotechpy.geostock.database.StockManager;
 import com.geotechpy.geostock.models.Stock;
@@ -100,13 +103,30 @@ public class StockAdapter extends BaseAdapter{
         holder.ibDelete.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Integer stockNr = Integer.valueOf(holder.tvStockSerNr.getText().toString());
-                StockDetailManager stockDetailManager = new StockDetailManager(mContext);
-                stockDetailManager.deleteBySerNr(stockNr);
-                StockManager smd = new StockManager(mContext);
-                smd.delete(stockNr);
-                deleteStock(holder.position);
-                Toast.makeText(mContext, R.string.stock_deleted, Toast.LENGTH_SHORT).show();
+                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                builder.setMessage(R.string.confirm_action);
+                builder.setTitle(R.string.confirm_title);
+                builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int id) {
+                        Integer stockNr = Integer.valueOf(holder.tvStockSerNr.getText().toString());
+                        StockDetailManager stockDetailManager = new StockDetailManager(mContext);
+                        stockDetailManager.deleteBySerNr(stockNr);
+                        StockManager smd = new StockManager(mContext);
+                        smd.delete(stockNr);
+                        deleteStock(holder.position);
+                        Toast.makeText(mContext, R.string.stock_deleted, Toast.LENGTH_SHORT).show();
+                    }
+                });
+                builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+                builder.create();
+                builder.show();
+
             }
         });
 
