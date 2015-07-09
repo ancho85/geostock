@@ -4,7 +4,9 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.text.TextUtils;
 
+import com.geotechpy.geostock.R;
 import com.geotechpy.geostock.models.Stock;
 
 import java.util.ArrayList;
@@ -52,12 +54,16 @@ public class StockManager {
                 new String[]{sernr.toString()});
     }
 
-    public ArrayList<Stock> getStocks() {
+    public ArrayList<Stock> getStocks(String type) {
         String[] columns = new String[]{CN_SERNR, CN_TYPE, CN_STATUS, CN_USERCODE, CN_ZONESERNR};
+        String where = "";
+        if (!TextUtils.isEmpty(type)){
+            where = CN_TYPE + "= '" + type + "'";
+        }
         Cursor c = null;
         ArrayList<Stock> al_stock = new ArrayList<>();
         try{
-            c = db.query(TABLE_NAME, columns, null, null, null, null, null);
+            c = db.query(TABLE_NAME, columns, where, null, null, null, null);
             while (c.moveToNext()) {
                 Integer position = c.getPosition();
                 Stock stock = new Stock(Integer.valueOf(c.getString(0)), c.getString(1), c.getString(2), c.getString(3), Integer.valueOf(c.getString(4)));

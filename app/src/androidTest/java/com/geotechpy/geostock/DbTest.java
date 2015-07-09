@@ -137,7 +137,7 @@ public class DbTest extends AndroidTestCase {
         stock.delete(2);
         assertEquals(1, stock.count().intValue());
 
-        ArrayList<Stock> alstock = stock.getStocks();
+        ArrayList<Stock> alstock = stock.getStocks(ctx.getString(R.string.zone_admin));
         Stock posStock = alstock.get(0);
         posStock.setSernr(1);
         posStock.setStatus(ctx.getString(R.string.stock_confirmed));

@@ -11,7 +11,9 @@ import android.widget.TextView;
 
 import com.geotechpy.geostock.adapters.StockAdapter;
 import com.geotechpy.geostock.database.StockManager;
+import com.geotechpy.geostock.database.UserManager;
 import com.geotechpy.geostock.models.Stock;
+import com.geotechpy.geostock.models.User;
 
 import java.util.ArrayList;
 
@@ -52,8 +54,13 @@ public class StockListActivity extends AppCompatActivity{
     }
 
     public void showStocks(){
+        User user = UserManager.load(this, tvUserName.getText().toString());
+        String typeFilter = "";
+        if (!user.getType().equals(getString(R.string.zone_admin)) || !user.getType().equals(getString(R.string.zone_both))){
+            typeFilter = user.getType();
+        }
         StockManager stockManager = new StockManager(this);
-        ArrayList<Stock> al_stocks = stockManager.getStocks();
+        ArrayList<Stock> al_stocks = stockManager.getStocks(typeFilter);
         StockAdapter stockAdapter = new StockAdapter(this);
         stockAdapter.updateStocks(al_stocks);
         stockAdapter.setUserName(tvUserName.getText().toString());
