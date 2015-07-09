@@ -60,6 +60,7 @@ public class StockListActivity extends AppCompatActivity implements AdapterView.
 
         StockAdapter stockAdapter = new StockAdapter(this);
         stockAdapter.updateStocks(al_stocks);
+        stockAdapter.setUserName(tvUserName.getText().toString());
         ListView lvStocks = (ListView) findViewById(R.id.lv_stocks);
         lvStocks.setAdapter(stockAdapter);
         lvStocks.setOnItemClickListener(this);
