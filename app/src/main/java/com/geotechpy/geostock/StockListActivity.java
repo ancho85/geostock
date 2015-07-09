@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.geotechpy.geostock.adapters.StockAdapter;
 import com.geotechpy.geostock.database.StockManager;
@@ -17,7 +16,7 @@ import com.geotechpy.geostock.models.Stock;
 
 import java.util.ArrayList;
 
-public class StockListActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
+public class StockListActivity extends AppCompatActivity{
 
     TextView tvUserName;
     TextView tvZone;
@@ -63,7 +62,6 @@ public class StockListActivity extends AppCompatActivity implements AdapterView.
         stockAdapter.setUserName(tvUserName.getText().toString());
         ListView lvStocks = (ListView) findViewById(R.id.lv_stocks);
         lvStocks.setAdapter(stockAdapter);
-        lvStocks.setOnItemClickListener(this);
     }
 
     @Override
@@ -93,11 +91,5 @@ public class StockListActivity extends AppCompatActivity implements AdapterView.
         Intent stockZoneList = new Intent(this, StockZoneListActivity.class);
         stockZoneList.putExtra("username", tvUserName.getText());
         startActivityForResult(stockZoneList, 100);
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int id, long l) {
-        System.out.println(id);
-        System.out.println(l);
     }
 }
