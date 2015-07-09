@@ -3,16 +3,14 @@ package com.geotechpy.geostock;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.geotechpy.geostock.adapters.ZoneAdapter;
 import com.geotechpy.geostock.database.ZoneManager;
 import com.geotechpy.geostock.models.Zone;
 
@@ -21,14 +19,6 @@ import java.util.ArrayList;
 public class StockZoneListActivity extends AppCompatActivity {
 
     TextView tvUserName;
-    private ArrayList<Zone> al_zones = new ArrayList<>();
-
-    static class ViewHolder {
-        // A ViewHolder keeps references to children views to avoid unneccessary calls
-        // to findViewById() on each row.
-        TextView tvZoneCode;
-        TextView tvZoneName;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,43 +37,9 @@ public class StockZoneListActivity extends AppCompatActivity {
 
     public void showZones(){
         ZoneManager zoneManager = new ZoneManager(this);
-        al_zones = zoneManager.getZones();
-
-        class ZoneAdapter extends ArrayAdapter<Zone> {
-            AppCompatActivity context;
-
-            ZoneAdapter(AppCompatActivity context) {
-                super(context, R.layout.listitem_stock, al_zones);
-                this.context = context;
-            }
-
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-
-                ViewHolder holder;
-                // When convertView is not null, we can reuse it directly, there is no need
-                // to re inflate it. We only inflate a new View when the convertView supplied
-                // by ListView is null.
-
-                if (convertView == null) {
-                    LayoutInflater inflater = context.getLayoutInflater();
-                    convertView = inflater.inflate(R.layout.listitem_zone, parent, false);
-                    holder = new ViewHolder();
-                    holder.tvZoneCode = (TextView) convertView.findViewById(R.id.tv_lizone_code);
-                    holder.tvZoneName = (TextView) convertView.findViewById(R.id.tv_lizone_name);
-                    convertView.setTag(holder);
-                }
-                else {
-                    holder = (ViewHolder) convertView.getTag();
-                }
-                holder.tvZoneCode.setText(al_zones.get(position).getSernr().toString());
-                holder.tvZoneName.setText(al_zones.get(position).getName());
-
-                return (convertView);
-            }
-        }
-
+        ArrayList<Zone> al_zones = zoneManager.getZones();
         ZoneAdapter zoneAdapter = new ZoneAdapter(this);
+        zoneAdapter.updateZones(al_zones);
         ListView lvZones = (ListView) findViewById(R.id.lv_zones);
         lvZones.setAdapter(zoneAdapter);
     }
