@@ -2,42 +2,26 @@ package com.geotechpy.geostock;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.geotechpy.geostock.adapters.StockAdapter;
 import com.geotechpy.geostock.database.StockManager;
-import com.geotechpy.geostock.fragments.ConfirmDialog;
 import com.geotechpy.geostock.models.Stock;
 
 import java.util.ArrayList;
 
-public class StockListActivity extends AppCompatActivity {
+public class StockListActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
 
     TextView tvUserName;
     TextView tvZone;
     private ArrayList<Stock> al_stocks = new ArrayList<>();
-
-    static class ViewHolder {
-        // A ViewHolder keeps references to children views to avoid unneccessary calls
-        // to findViewById() on each row.
-        TextView tvStockSerNr;
-        TextView tvZoneCode;
-        TextView tvStatusCode;
-        ImageButton ibSync;
-        ImageButton ibEdit;
-        ImageButton ibDelete;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +62,7 @@ public class StockListActivity extends AppCompatActivity {
         stockAdapter.updateStocks(al_stocks);
         ListView lvStocks = (ListView) findViewById(R.id.lv_stocks);
         lvStocks.setAdapter(stockAdapter);
+        lvStocks.setOnItemClickListener(this);
     }
 
     @Override
@@ -107,5 +92,11 @@ public class StockListActivity extends AppCompatActivity {
         Intent stockZoneList = new Intent(this, StockZoneListActivity.class);
         stockZoneList.putExtra("username", tvUserName.getText());
         startActivityForResult(stockZoneList, 100);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int id, long l) {
+        System.out.println(id);
+        System.out.println(l);
     }
 }

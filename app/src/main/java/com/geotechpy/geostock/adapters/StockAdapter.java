@@ -1,7 +1,6 @@
 package com.geotechpy.geostock.adapters;
 
 import android.content.Context;
-import android.support.v7.internal.widget.AdapterViewCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,7 @@ import java.util.ArrayList;
 /**
  * BaseAdapterTest
  */
-public class StockAdapter extends BaseAdapter implements AdapterViewCompat.OnItemClickListener{
+public class StockAdapter extends BaseAdapter{
     private ArrayList<Stock> al_stocks = new ArrayList<>();
     private Context mContext;
 
@@ -77,10 +76,6 @@ public class StockAdapter extends BaseAdapter implements AdapterViewCompat.OnIte
         return convertView;
     }
 
-    @Override
-    public void onItemClick(AdapterViewCompat<?> parent, View view, int position, long id) {
-
-    }
 }
 
 class ViewHolder {
