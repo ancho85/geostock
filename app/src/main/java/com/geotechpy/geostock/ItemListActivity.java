@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 
+import com.geotechpy.geostock.adapters.ItemAdapter;
 import com.geotechpy.geostock.database.ItemManager;
 import com.geotechpy.geostock.database.StockDetailManager;
 import com.geotechpy.geostock.fragments.ConfirmDialog;
@@ -30,17 +31,6 @@ public class ItemListActivity extends AppCompatActivity {
     TextView tvStockSerNr;
     TextView tvZoneCode;
     private ArrayList<StockDetail> al_stockDetail = new ArrayList<>();
-
-    static class ViewHolder {
-        // A ViewHolder keeps references to children views to avoid unneccessary calls
-        // to findViewById() on each row.
-        TextView tvItemCode;
-        TextView tvItemName;
-        TextView tvItemLineNr;
-        TextView tvItemQty;
-        ImageButton ibEdit;
-        ImageButton ibDelete;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,86 +54,11 @@ public class ItemListActivity extends AppCompatActivity {
     public void showItems(){
         StockDetailManager stockDetailManager = new StockDetailManager(this);
         al_stockDetail = stockDetailManager.getStockDetails();
-
-        class ItemAdapter extends ArrayAdapter<StockDetail> {
-            AppCompatActivity context;
-
-            ItemAdapter(AppCompatActivity context) {
-                super(context, R.layout.listitem_stock, al_stockDetail);
-                this.context = context;
-            }
-
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-
-                final ViewHolder holder;
-                // When convertView is not null, we can reuse it directly, there is no need
-                // to re inflate it. We only inflate a new View when the convertView supplied
-                // by ListView is null.
-
-                if (convertView == null) {
-                    LayoutInflater inflater = context.getLayoutInflater();
-                    convertView = inflater.inflate(R.layout.listitem_item, parent, false);
-                    holder = new ViewHolder();
-                    holder.tvItemCode = (TextView) convertView.findViewById(R.id.tv_items_code);
-                    holder.tvItemName = (TextView) convertView.findViewById(R.id.tv_items_name);
-                    holder.tvItemLineNr = (TextView) convertView.findViewById(R.id.tv_items_linenr);
-                    holder.tvItemQty = (TextView) convertView.findViewById(R.id.tv_items_qty);
-                    holder.ibEdit = (ImageButton) convertView.findViewById(R.id.ib_items_edit);
-                    holder.ibDelete = (ImageButton) convertView.findViewById(R.id.ib_items_delete);
-                    convertView.setTag(holder);
-                }
-                else {
-                    holder = (ViewHolder) convertView.getTag();
-                }
-                String itemCode = al_stockDetail.get(position).getItem_code();
-                holder.tvItemCode.setText(itemCode);
-                Item item = ItemManager.load(context, itemCode);
-                holder.tvItemName.setText(item.getName());
-                holder.tvItemQty.setText(al_stockDetail.get(position).getQty().toString());
-                holder.tvItemLineNr.setText(al_stockDetail.get(position).getLinenr().toString());
-
-                holder.ibEdit.setOnClickListener(new View.OnClickListener() {
-
-                    @Override
-                    public void onClick(View v) {
-                        tvUserName = (TextView) findViewById(R.id.tv_itemlist_username);
-                        tvStockSerNr = (TextView) findViewById(R.id.tv_itemlist_stock_sernr);
-                        tvZoneCode = (TextView) findViewById(R.id.tv_itemlist_stock_zone_code);
-                        Intent itemEditActivity = new Intent(context, ItemActivity.class);
-
-                        itemEditActivity.putExtra("username", tvUserName.getText().toString());
-                        itemEditActivity.putExtra("stockSerNr", tvStockSerNr.getText().toString());
-                        itemEditActivity.putExtra("zoneCode", tvZoneCode.getText().toString());
-                        itemEditActivity.putExtra("itemCode", holder.tvItemCode.getText().toString());
-                        itemEditActivity.putExtra("itemName", holder.tvItemName.getText().toString());
-                        itemEditActivity.putExtra("itemLineNr", holder.tvItemLineNr.getText().toString());
-                        itemEditActivity.putExtra("itemQty", holder.tvItemQty.getText().toString());
-                        itemEditActivity.putExtra("editMode", true);
-                        startActivity(itemEditActivity);
-                    }
-                });
-
-                holder.ibDelete.setOnClickListener(new View.OnClickListener() {
-
-                    @Override
-                    public void onClick(View v) {
-                        FragmentManager fragmentManager = ItemListActivity.this.getSupportFragmentManager();
-                        ConfirmDialog confirmDialog = new ConfirmDialog();
-                        Bundle args = new Bundle();
-                        args.putInt("btnId", R.id.ib_items_delete);
-                        args.putString("stockSerNr", tvStockSerNr.getText().toString());
-                        args.putString("lineNr", holder.tvItemLineNr.getText().toString());
-                        confirmDialog.setArguments(args);
-                        confirmDialog.show(fragmentManager, "");
-                    }
-                });
-
-                return (convertView);
-            }
-        }
-
         ItemAdapter itemAdapter = new ItemAdapter(this);
+        itemAdapter.updateItems(al_stockDetail);
+        itemAdapter.setUserStockZone(tvUserName.getText().toString(),
+                tvStockSerNr.getText().toString(),
+                tvZoneCode.getText().toString());
         ListView lvItems = (ListView) findViewById(R.id.lv_itemlist_items);
         lvItems.setAdapter(itemAdapter);
     }
