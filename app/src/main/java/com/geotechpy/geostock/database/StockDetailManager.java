@@ -58,23 +58,24 @@ public class StockDetailManager {
                 new String[]{stock_sernr.toString(), linenr.toString()});
     }
 
-    public ArrayList<StockDetail> getStockDetails() {
+    public ArrayList<StockDetail> getStockDetails(Integer stock_sernr) {
         String[] columns = new String[]{CN_STOCKSERNR, CN_LINENR, CN_ITEMCODE, CN_QTY};
+        String where = "stock_sernr = '" + stock_sernr.toString() + "'";
         Cursor c = null;
-        ArrayList<StockDetail> alstockDetails = new ArrayList<>();
+        ArrayList<StockDetail> al_stockDetails = new ArrayList<>();
         try{
-            c = db.query(TABLE_NAME, columns, null, null, null, null, null);
+            c = db.query(TABLE_NAME, columns, where, null, null, null, null);
             while (c.moveToNext()){
                 Integer position = c.getPosition();
                 StockDetail stockDetail= new StockDetail(Integer.valueOf(c.getString(0)), Integer.valueOf(c.getString(1)), c.getString(2), Float.valueOf(c.getString(3)));
-                alstockDetails.add(position, stockDetail);
+                al_stockDetails.add(position, stockDetail);
             }
         }finally {
             if (c != null){
                 c.close();
             }
         }
-        return alstockDetails;
+        return al_stockDetails;
     }
 
     public Integer count() {

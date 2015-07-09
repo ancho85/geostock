@@ -175,8 +175,10 @@ public class DbTest extends AndroidTestCase {
         stockDetail.deleteBySerNr(100);
         assertEquals(2, stockDetail.count().intValue());
 
-        ArrayList<StockDetail> alstockDetail = stockDetail.getStockDetails();
-        StockDetail posStockDetail = alstockDetail.get(0);
+        ArrayList<StockDetail> al_stockDetail = stockDetail.getStockDetails(200);
+        assertEquals(2, al_stockDetail.size());
+
+        StockDetail posStockDetail = al_stockDetail.get(0);
         posStockDetail.setStock_sernr(300);
         posStockDetail.setLinenr(1);
         posStockDetail.setItem_code("keyboard");

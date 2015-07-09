@@ -43,13 +43,15 @@ public class ItemListActivity extends AppCompatActivity {
     }
 
     public void showItems(){
+        String userName = tvUserName.getText().toString();
+        String stockSerNr = tvStockSerNr.getText().toString();
+        String zoneCode = tvZoneCode.getText().toString();
+
         StockDetailManager stockDetailManager = new StockDetailManager(this);
-        ArrayList<StockDetail> al_stockDetail = stockDetailManager.getStockDetails();
+        ArrayList<StockDetail> al_stockDetail = stockDetailManager.getStockDetails(Integer.valueOf(stockSerNr));
         ItemAdapter itemAdapter = new ItemAdapter(this);
         itemAdapter.updateItems(al_stockDetail);
-        itemAdapter.setUserStockZone(tvUserName.getText().toString(),
-                tvStockSerNr.getText().toString(),
-                tvZoneCode.getText().toString());
+        itemAdapter.setUserStockZone(userName, stockSerNr, zoneCode);
         ListView lvItems = (ListView) findViewById(R.id.lv_itemlist_items);
         lvItems.setAdapter(itemAdapter);
     }
