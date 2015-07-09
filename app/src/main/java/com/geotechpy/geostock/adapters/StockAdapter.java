@@ -21,7 +21,7 @@ import com.geotechpy.geostock.models.Stock;
 import java.util.ArrayList;
 
 /**
- * BaseAdapterTest
+ * Stock Adapter
  */
 public class StockAdapter extends BaseAdapter{
     private ArrayList<Stock> al_stocks = new ArrayList<>();
@@ -30,6 +30,18 @@ public class StockAdapter extends BaseAdapter{
 
     public StockAdapter(Context context){
         this.mContext = context;
+    }
+
+    static class StockViewHolder {
+        // A ViewHolder keeps references to children views to avoid unnecessary calls
+        // to findViewById() on each row.
+        TextView tvStockSerNr;
+        TextView tvZoneCode;
+        TextView tvStatusCode;
+        ImageButton ibSync;
+        ImageButton ibEdit;
+        ImageButton ibDelete;
+        int position;
     }
 
     public void updateStocks(ArrayList<Stock> al_stocks){
@@ -63,14 +75,14 @@ public class StockAdapter extends BaseAdapter{
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final ViewHolder holder;
+        final StockViewHolder holder;
         // When convertView is not null, we can reuse it directly, there is no need
         // to re inflate it. We only inflate a new View when the convertView supplied
         // by ListView is null.
 
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.listitem_stock, parent, false);
-            holder = new ViewHolder();
+            holder = new StockViewHolder();
             holder.tvStockSerNr = (TextView) convertView.findViewById(R.id.tv_stock_sernr);
             holder.tvZoneCode = (TextView) convertView.findViewById(R.id.tv_zone_code);
             holder.tvStatusCode = (TextView) convertView.findViewById(R.id.tv_status_code);
@@ -81,7 +93,7 @@ public class StockAdapter extends BaseAdapter{
             convertView.setTag(holder);
         }
         else {
-            holder = (ViewHolder) convertView.getTag();
+            holder = (StockViewHolder) convertView.getTag();
         }
         holder.tvStockSerNr.setText(al_stocks.get(position).getSernr().toString());
         holder.tvZoneCode.setText(al_stocks.get(position).getZone_sernr().toString());
@@ -139,16 +151,4 @@ public class StockAdapter extends BaseAdapter{
         return convertView;
     }
 
-}
-
-class ViewHolder {
-    // A ViewHolder keeps references to children views to avoid unnecessary calls
-    // to findViewById() on each row.
-    TextView tvStockSerNr;
-    TextView tvZoneCode;
-    TextView tvStatusCode;
-    ImageButton ibSync;
-    ImageButton ibEdit;
-    ImageButton ibDelete;
-    int position;
 }

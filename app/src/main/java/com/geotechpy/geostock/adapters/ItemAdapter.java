@@ -35,6 +35,18 @@ public class ItemAdapter extends BaseAdapter {
         this.mContext = context;
     }
 
+    static class ItemViewHolder {
+        // A ViewHolder keeps references to children views to avoid unnecessary calls
+        // to findViewById() on each row.
+        TextView tvItemCode;
+        TextView tvItemName;
+        TextView tvItemLineNr;
+        TextView tvItemQty;
+        ImageButton ibEdit;
+        ImageButton ibDelete;
+        int position;
+    }
+
     public void updateItems(ArrayList<StockDetail> al_items){
         this.al_items = al_items;
         notifyDataSetChanged();
@@ -144,16 +156,4 @@ public class ItemAdapter extends BaseAdapter {
 
         return (convertView);
     }
-}
-
-class ItemViewHolder {
-    // A ViewHolder keeps references to children views to avoid unnecessary calls
-    // to findViewById() on each row.
-    TextView tvItemCode;
-    TextView tvItemName;
-    TextView tvItemLineNr;
-    TextView tvItemQty;
-    ImageButton ibEdit;
-    ImageButton ibDelete;
-    int position;
 }
