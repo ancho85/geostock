@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import com.geotechpy.geostock.R;
 import com.geotechpy.geostock.ItemListActivity;
-import com.geotechpy.geostock.StockListActivity;
 import com.geotechpy.geostock.database.StockDetailManager;
 import com.geotechpy.geostock.database.StockManager;
 import com.geotechpy.geostock.models.Stock;
