@@ -85,7 +85,7 @@ public class StockZoneListActivity extends AppCompatActivity {
         User user = UserManager.load(this, tvUserName.getText().toString());
         if (zone != null){
             StockManager stockManager = new StockManager(this);
-            stockManager.insert(stockManager.count() + 1, user.getType(),
+            stockManager.insert(stockManager.getNextSerNr(), user.getType(),
                     getString(R.string.stock_active), user.getCode(), zone.getSernr());
             finish();
         }else{

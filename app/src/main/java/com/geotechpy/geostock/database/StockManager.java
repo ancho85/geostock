@@ -87,6 +87,16 @@ public class StockManager {
         return count;
     }
 
+    public Integer getNextSerNr() {
+        Integer next = 1;
+        Cursor c = db.rawQuery("SELECT MAX(sernr) AS next FROM " + TABLE_NAME, null);
+        if (c.moveToFirst()) {
+            next = c.getInt(0) + 1;
+        }
+        c.close();
+        return next;
+    }
+
     public static Stock load(Context ctx, Integer sernr) {
         DBHelper sdb = DBHelper.getInstance(ctx);
         SQLiteDatabase db = null;

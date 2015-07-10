@@ -131,7 +131,7 @@ public class DbTest extends AndroidTestCase {
         item.insert("keyboard", "Keyboard", ctx.getString(R.string.zone_admin));
 
         stock.insert(1, ctx.getString(R.string.zone_admin), ctx.getString(R.string.stock_active), "ancho", 1);
-        stock.insert(2, ctx.getString(R.string.zone_admin), ctx.getString(R.string.stock_active), "ancho", 1);
+        stock.insert(stock.getNextSerNr(), ctx.getString(R.string.zone_admin), ctx.getString(R.string.stock_active), "ancho", 1);
         assertEquals(2, stock.count().intValue());
 
         stock.delete(2);

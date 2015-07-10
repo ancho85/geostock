@@ -90,12 +90,12 @@ public class StockDetailManager {
 
     public Integer getNextStockRowNr(Integer stock_sernr) {
         Integer next = 1;
-        Cursor c = db.rawQuery("SELECT COUNT(*) AS count FROM "
+        Cursor c = db.rawQuery("SELECT MAX(linenr) AS next FROM "
                 + TABLE_NAME
                 + " WHERE "
                 + CN_STOCKSERNR + " = '" + String.valueOf(stock_sernr) + "'", null);
         if (c.moveToFirst()) {
-            next += c.getInt(0);
+            next = c.getInt(0) + 1;
         }
         c.close();
         return next;
