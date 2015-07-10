@@ -3,6 +3,7 @@ package com.geotechpy.geostock;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,6 +14,8 @@ import android.widget.Toast;
 
 import com.geotechpy.geostock.database.ItemManager;
 import com.geotechpy.geostock.database.StockDetailManager;
+import com.geotechpy.geostock.database.StockManager;
+import com.geotechpy.geostock.models.Stock;
 
 
 public class ItemActivity extends AppCompatActivity {
@@ -47,6 +50,12 @@ public class ItemActivity extends AppCompatActivity {
         tvStockSerNr.setText(intent.getStringExtra("stockSerNr"));
         tvZoneCode.setText(intent.getStringExtra("zoneCode"));
         editMode = intent.getBooleanExtra("editMode", false);
+
+        Stock stock = StockManager.load(this, Integer.valueOf(tvStockSerNr.getText().toString()));
+        if (stock.getType().equals(getString(R.string.zone_deposit))) {
+            etCode.setInputType(InputType.TYPE_CLASS_NUMBER);
+            etQty.setInputType(InputType.TYPE_CLASS_NUMBER);
+        }
 
         if (editMode){
             etCode.setText(intent.getStringExtra("itemCode"));

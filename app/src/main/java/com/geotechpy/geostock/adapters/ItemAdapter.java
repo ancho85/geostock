@@ -16,7 +16,9 @@ import com.geotechpy.geostock.ItemActivity;
 import com.geotechpy.geostock.R;
 import com.geotechpy.geostock.database.ItemManager;
 import com.geotechpy.geostock.database.StockDetailManager;
+import com.geotechpy.geostock.database.StockManager;
 import com.geotechpy.geostock.models.Item;
+import com.geotechpy.geostock.models.Stock;
 import com.geotechpy.geostock.models.StockDetail;
 
 import java.util.ArrayList;
@@ -105,8 +107,15 @@ public class ItemAdapter extends BaseAdapter {
         holder.tvItemCode.setText(itemCode);
         Item item = ItemManager.load(mContext, itemCode);
         holder.tvItemName.setText(item.getName());
-        holder.tvItemQty.setText(al_items.get(position).getQty().toString());
         holder.tvItemLineNr.setText(al_items.get(position).getLinenr().toString());
+
+        holder.tvItemQty.setText(al_items.get(position).getQty().toString());
+
+        Stock stock = StockManager.load(mContext, Integer.valueOf(stockSerNr));
+        if (stock.getType().equals(mContext.getString(R.string.zone_deposit))) {
+            holder.tvItemQty.setText(String.valueOf(al_items.get(position).getQty().intValue()));
+        }
+
 
         holder.ibEdit.setOnClickListener(new View.OnClickListener() {
 
