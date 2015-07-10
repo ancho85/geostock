@@ -14,7 +14,6 @@ import com.geotechpy.geostock.adapters.ZoneAdapter;
 import com.geotechpy.geostock.database.StockManager;
 import com.geotechpy.geostock.database.UserManager;
 import com.geotechpy.geostock.database.ZoneManager;
-import com.geotechpy.geostock.models.Stock;
 import com.geotechpy.geostock.models.User;
 import com.geotechpy.geostock.models.Zone;
 
@@ -85,9 +84,6 @@ public class StockZoneListActivity extends AppCompatActivity {
         Zone zone = (Zone) lvZones.getItemAtPosition(position);
         User user = UserManager.load(this, tvUserName.getText().toString());
         if (zone != null){
-            /*Intent resultIntent = new Intent();
-            resultIntent.putExtra("zone", zone.getSernr().toString());
-            setResult(AppCompatActivity.RESULT_OK, resultIntent);*/
             StockManager stockManager = new StockManager(this);
             stockManager.insert(stockManager.count() + 1, user.getType(),
                     getString(R.string.stock_active), user.getCode(), zone.getSernr());

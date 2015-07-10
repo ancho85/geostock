@@ -20,7 +20,6 @@ import java.util.ArrayList;
 public class StockListActivity extends AppCompatActivity{
 
     TextView tvUserName;
-    TextView tvZone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,26 +31,10 @@ public class StockListActivity extends AppCompatActivity{
     public void onResume(){
         super.onResume();
         tvUserName = (TextView) findViewById(R.id.tv_stocklist_username);
-        tvZone = (TextView) findViewById(R.id.tv_stocklist_zone);
         Intent intent = getIntent();
         tvUserName.setText(intent.getStringExtra("username"));
         showStocks();
     }
-
-    /*@Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch(requestCode) {
-            case (100) : {
-                if (resultCode == AppCompatActivity.RESULT_OK) {
-                    tvZone.setText(data.getStringExtra("zone"));
-                }
-                break;
-            }
-            default:
-                break;
-        }
-    }*/
 
     public void showStocks(){
         User user = UserManager.load(this, tvUserName.getText().toString());
@@ -94,7 +77,6 @@ public class StockListActivity extends AppCompatActivity{
         tvUserName = (TextView) findViewById(R.id.tv_stocklist_username);
         Intent stockZoneList = new Intent(this, StockZoneListActivity.class);
         stockZoneList.putExtra("username", tvUserName.getText());
-        //startActivityForResult(stockZoneList, 100);
         startActivity(stockZoneList);
     }
 }
