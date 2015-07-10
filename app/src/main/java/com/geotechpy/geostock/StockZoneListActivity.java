@@ -11,7 +11,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.geotechpy.geostock.adapters.ZoneAdapter;
+import com.geotechpy.geostock.database.UserManager;
 import com.geotechpy.geostock.database.ZoneManager;
+import com.geotechpy.geostock.models.User;
 import com.geotechpy.geostock.models.Zone;
 
 import java.util.ArrayList;
@@ -36,8 +38,13 @@ public class StockZoneListActivity extends AppCompatActivity {
     }
 
     public void showZones(){
+        User user = UserManager.load(this, tvUserName.getText().toString());
+        String typeFilter = "";
+        if (!user.getType().equals(getString(R.string.zone_admin)) || !user.getType().equals(getString(R.string.zone_both))){
+            typeFilter = user.getType();
+        }
         ZoneManager zoneManager = new ZoneManager(this);
-        ArrayList<Zone> al_zones = zoneManager.getZones();
+        ArrayList<Zone> al_zones = zoneManager.getZones(typeFilter);
         ZoneAdapter zoneAdapter = new ZoneAdapter(this);
         zoneAdapter.updateZones(al_zones);
         ListView lvZones = (ListView) findViewById(R.id.lv_zones);

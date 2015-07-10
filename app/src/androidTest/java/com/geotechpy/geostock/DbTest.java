@@ -86,8 +86,8 @@ public class DbTest extends AndroidTestCase {
         zone.delete(1);
         assertEquals(3, zone.count().intValue());
 
-        ArrayList<Zone> alzone = zone.getZones();
-        Zone posZone = alzone.get(2);
+        ArrayList<Zone> alzone = zone.getZones(ctx.getString(R.string.zone_deposit));
+        Zone posZone = alzone.get(0);
         posZone.setSernr(5);
         posZone.setType(ctx.getString(R.string.zone_both));
         posZone.setName("Other");

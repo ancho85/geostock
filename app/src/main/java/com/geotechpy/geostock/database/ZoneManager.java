@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.text.TextUtils;
 
 import com.geotechpy.geostock.models.Zone;
 
@@ -46,12 +47,16 @@ public class ZoneManager {
         db.update(TABLE_NAME, setContentValues(sernr, name, type), CN_SERNR + "=?", new String[]{sernr.toString()});
     }
 
-    public ArrayList<Zone> getZones() {
+    public ArrayList<Zone> getZones(String type) {
         String[] columns = new String[]{CN_SERNR, CN_NAME, CN_TYPE};
+        String where = "";
+        if (!TextUtils.isEmpty(type)){
+            where = CN_TYPE + "= '" + type + "'";
+        }
         Cursor c = null;
         ArrayList<Zone> alzone = new ArrayList<>();
         try{
-            c = db.query(TABLE_NAME, columns, null, null, null, null, null);
+            c = db.query(TABLE_NAME, columns, where, null, null, null, null);
             while (c.moveToNext()){
                 Integer position = c.getPosition();
                 Zone zone = new Zone(Integer.valueOf(c.getString(0)), c.getString(1), c.getString(2));
