@@ -43,8 +43,6 @@
         android:layout_height="wrap_content"
         android:onClick="onClickLaboratory"
         android:text="@string/laboratory"
-        android:layout_below="@+id/btn_deposit"
-        android:layout_toRightOf="@+id/tv_stocktype_username"
-        android:layout_toEndOf="@+id/tv_stocktype_username"/>
+        android:layout_below="@+id/btn_deposit"/>
 
 </RelativeLayout>
