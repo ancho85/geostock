@@ -16,6 +16,7 @@ import com.geotechpy.geostock.database.StockDetailManager;
 import com.geotechpy.geostock.database.StockManager;
 import com.geotechpy.geostock.database.UserManager;
 import com.geotechpy.geostock.database.ZoneManager;
+import com.geotechpy.geostock.network.SyncFromServer;
 
 /**
  * Confirmation Dialog Fragment
@@ -41,36 +42,8 @@ public class ConfirmDialog extends DialogFragment {
                         break;
                     case R.id.btn_sync:
                         Context ctx = getActivity();
-                        UserManager um = new UserManager(ctx);
-                        um.insert("ancho", "666", getString(R.string.zone_deposit));
-                        um.insert("alex", "777", getString(R.string.zone_lab));
-                        um.insert("liz", "liz", getString(R.string.zone_both));
-
-                        ZoneManager zm = new ZoneManager(ctx);
-                        zm.insert(1, "Deposit Nr. 1", getString(R.string.zone_deposit));
-                        zm.insert(2, "Deposit Nr. 2", getString(R.string.zone_deposit));
-                        zm.insert(3, "Deposit Nr. 3", getString(R.string.zone_deposit));
-                        zm.insert(4, "Lab Nr. 1", getString(R.string.zone_lab));
-                        zm.insert(5, "Lab Nr. 2", getString(R.string.zone_lab));
-
-                        ItemManager it = new ItemManager(ctx);
-                        it.insert("keyboard", "Keyboard", getString(R.string.zone_deposit));
-                        it.insert("engine", "Fusion Engine", getString(R.string.zone_lab));
-                        it.insert("quantum", "Quantum Engine", getString(R.string.zone_lab));
-
-                        StockManager sm = new StockManager(ctx);
-                        sm.insert(1, getString(R.string.zone_deposit), getString(R.string.stock_active), "ancho", 1);
-                        sm.insert(2, getString(R.string.zone_deposit), getString(R.string.stock_confirmed), "ancho", 3);
-                        sm.insert(3, getString(R.string.zone_lab), getString(R.string.stock_confirmed), "alex", 4);
-
-                        StockDetailManager sdm = new StockDetailManager(ctx);
-                        sdm.insert(1, "keyboard", 10f);
-                        sdm.insert(1, "engine", 20f);
-                        sdm.insert(2, "keyboard", 30f);
-                        sdm.insert(3, "engine", 40f);
-                        sdm.insert(3, "quantum", 50f);
-
-                        Toast.makeText(getActivity(), R.string.db_sync, Toast.LENGTH_SHORT).show();
+                        SyncFromServer sync = new SyncFromServer(ctx);
+                        sync.syncMasters();
                         break;
                     default:
                         break;

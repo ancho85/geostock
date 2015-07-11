@@ -11,8 +11,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.geotechpy.geostock.MainActivity;
 import com.geotechpy.geostock.R;
+import com.geotechpy.geostock.database.ItemManager;
+import com.geotechpy.geostock.database.StockDetailManager;
+import com.geotechpy.geostock.database.StockManager;
+import com.geotechpy.geostock.database.UserManager;
+import com.geotechpy.geostock.database.ZoneManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,21 +36,49 @@ public class SyncFromServer {
     public void syncMasters() {
         final ProgressDialog progressDialog = ProgressDialog.show(mContext, "please wait", "requesting data");
 
-        String URL = "http://192.168.1.91/stocksurvey/RESTful/";
+        String URL = "http://validate.jsontest.com/";
         JSONObject obj = new JSONObject();
         try {
-            obj.put("all", "yes");
+            obj.put("key", "value");
         } catch (JSONException e) {
             e.printStackTrace();
         }
         RequestQueue queue = Volley.newRequestQueue(mContext);
 
-        JsonObjectRequest jsonArrayRequest = new JsonObjectRequest(
-                Request.Method.POST, URL, obj,
+        JsonObjectRequest jsonArrayRequest = new JsonObjectRequest(Request.Method.POST, URL, obj,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Toast.makeText(mContext, "sync ok", Toast.LENGTH_LONG).show();
+                        UserManager um = new UserManager(mContext);
+                        um.insert("ancho", "666", mContext.getString(R.string.zone_deposit));
+                        um.insert("alex", "777", mContext.getString(R.string.zone_lab));
+                        um.insert("liz", "liz", mContext.getString(R.string.zone_both));
+
+                        ZoneManager zm = new ZoneManager(mContext);
+                        zm.insert(1, "Deposit Nr. 1", mContext.getString(R.string.zone_deposit));
+                        zm.insert(2, "Deposit Nr. 2", mContext.getString(R.string.zone_deposit));
+                        zm.insert(3, "Deposit Nr. 3", mContext.getString(R.string.zone_deposit));
+                        zm.insert(4, "Lab Nr. 1", mContext.getString(R.string.zone_lab));
+                        zm.insert(5, "Lab Nr. 2", mContext.getString(R.string.zone_lab));
+
+                        ItemManager it = new ItemManager(mContext);
+                        it.insert("keyboard", "Keyboard", mContext.getString(R.string.zone_deposit));
+                        it.insert("engine", "Fusion Engine", mContext.getString(R.string.zone_lab));
+                        it.insert("quantum", "Quantum Engine", mContext.getString(R.string.zone_lab));
+
+                        StockManager sm = new StockManager(mContext);
+                        sm.insert(1, mContext.getString(R.string.zone_deposit), mContext.getString(R.string.stock_active), "ancho", 1);
+                        sm.insert(2, mContext.getString(R.string.zone_deposit), mContext.getString(R.string.stock_confirmed), "ancho", 3);
+                        sm.insert(3, mContext.getString(R.string.zone_lab), mContext.getString(R.string.stock_confirmed), "alex", 4);
+
+                        StockDetailManager sdm = new StockDetailManager(mContext);
+                        sdm.insert(1, "keyboard", 10f);
+                        sdm.insert(1, "engine", 20f);
+                        sdm.insert(2, "keyboard", 30f);
+                        sdm.insert(3, "engine", 40f);
+                        sdm.insert(3, "quantum", 50f);
+
+                        Toast.makeText(mContext, R.string.db_sync, Toast.LENGTH_SHORT).show();
                         progressDialog.cancel();
                     }
                 }, new Response.ErrorListener() {
