@@ -9,13 +9,13 @@
         android:id="@+id/tv_lizone_code"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"/>
+        android:layout_weight=".5"/>
 
     <CheckedTextView
         android:id="@+id/tv_lizone_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:checkMark="?android:attr/listChoiceIndicatorSingle"
         android:ellipsize="marquee"
         android:singleLine="true"/>
