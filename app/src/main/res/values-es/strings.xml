@@ -44,4 +44,8 @@
     <string name="stock_detail_deleted">Detalle de Inventario Borrado</string>
     <string name="stock_deleted">Inventario Borrado</string>
     <string name="confirm_exit">¿Esta seguro de cerrar la aplicación?</string>
+    <string name="sync_please_wait">Por favor espere</string>
+    <string name="sync_requesting_data">Solicitando datos</string>
+    <string name="sync_unknown_error">Error desconocido</string>
+    <string name="sync_wscomm_error">Error de comunicacion con el WS</string>
 </resources>

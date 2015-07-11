@@ -34,7 +34,7 @@ public class SyncFromServer {
     }
 
     public void syncMasters() {
-        final ProgressDialog progressDialog = ProgressDialog.show(mContext, "please wait", "requesting data");
+        final ProgressDialog progressDialog = ProgressDialog.show(mContext, mContext.getString(R.string.sync_please_wait), mContext.getString(R.string.sync_requesting_data));
 
         String URL = "http://validate.jsontest.com/";
         JSONObject obj = new JSONObject();
@@ -78,8 +78,8 @@ public class SyncFromServer {
                         sdm.insert(3, "engine", 40f);
                         sdm.insert(3, "quantum", 50f);
 
-                        Toast.makeText(mContext, R.string.db_sync, Toast.LENGTH_SHORT).show();
                         progressDialog.cancel();
+                        Toast.makeText(mContext, R.string.db_sync, Toast.LENGTH_SHORT).show();
                     }
                 }, new Response.ErrorListener() {
                     @Override
@@ -93,7 +93,7 @@ public class SyncFromServer {
         queue.add(jsonArrayRequest);
     }
 
-    public static String webServiceErrorParser(VolleyError error) {
+    public String webServiceErrorParser(VolleyError error) {
         String messageError = "";
         NetworkResponse response = error.networkResponse;
         if (response != null && response.data != null) {
@@ -106,14 +106,14 @@ public class SyncFromServer {
                     messageError += message.getString("dsc") + "\n";
                 }
                 if (messageError.length() <= 0) {
-                    messageError = "unknown error";
+                    messageError = mContext.getString(R.string.sync_unknown_error);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
         if (messageError.length() <= 0) {
-            messageError = "ws comm error";
+            messageError = mContext.getString(R.string.sync_wscomm_error);
         }
 
         return messageError;
