@@ -41,7 +41,7 @@ public class StockZoneListActivity extends AppCompatActivity {
     public void showZones(){
         User user = UserManager.load(this, tvUserName.getText().toString());
         String typeFilter = "";
-        if (!user.getType().equals(getString(R.string.zone_admin)) || !user.getType().equals(getString(R.string.zone_both))){
+        if (!user.getType().equals(getString(R.string.zone_admin)) && !user.getType().equals(getString(R.string.zone_both))){
             typeFilter = user.getType();
         }
         ZoneManager zoneManager = new ZoneManager(this);

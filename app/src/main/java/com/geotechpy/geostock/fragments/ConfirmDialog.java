@@ -44,6 +44,7 @@ public class ConfirmDialog extends DialogFragment {
                         UserManager um = new UserManager(ctx);
                         um.insert("ancho", "666", getString(R.string.zone_deposit));
                         um.insert("alex", "777", getString(R.string.zone_lab));
+                        um.insert("liz", "liz", getString(R.string.zone_both));
 
                         ZoneManager zm = new ZoneManager(ctx);
                         zm.insert(1, "Deposit Nr. 1", getString(R.string.zone_deposit));
