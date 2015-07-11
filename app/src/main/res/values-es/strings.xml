@@ -43,4 +43,5 @@
     <string name="must_select_zone">Debe elegir una Zona</string>
     <string name="stock_detail_deleted">Detalle de Inventario Borrado</string>
     <string name="stock_deleted">Inventario Borrado</string>
+    <string name="confirm_exit">¿Esta seguro de cerrar la aplicación?</string>
 </resources>

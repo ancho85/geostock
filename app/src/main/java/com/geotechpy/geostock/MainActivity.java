@@ -29,6 +29,9 @@ public class MainActivity extends AppCompatActivity {
         if (BuildConfig.DEBUG){ //api22 lock screen issue with espresso and travis ci
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
         }
+        if (getIntent().getBooleanExtra("EXIT", false)) {
+            finish();
+        }
     }
 
     @Override
