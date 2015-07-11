@@ -94,7 +94,7 @@ public class SyncFromServer {
     }
 
     public String webServiceErrorParser(VolleyError error) {
-        String messageError = "";
+        StringBuilder messageError = new StringBuilder();
         NetworkResponse response = error.networkResponse;
         if (response != null && response.data != null) {
             String json = new String(response.data);
@@ -103,19 +103,20 @@ public class SyncFromServer {
                 JSONArray messagesObject = new JSONArray(responseWS.getString("messages"));
                 for (int i = 0; i < messagesObject.length(); i++) {
                     JSONObject message = (JSONObject) messagesObject.get(i);
-                    messageError += message.getString("dsc") + "\n";
+                    messageError.append(message.getString("dsc"));
+                    messageError.append("\n");
                 }
                 if (messageError.length() <= 0) {
-                    messageError = mContext.getString(R.string.sync_unknown_error);
+                    messageError.append(mContext.getString(R.string.sync_unknown_error));
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
         if (messageError.length() <= 0) {
-            messageError = mContext.getString(R.string.sync_wscomm_error);
+            messageError.append(mContext.getString(R.string.sync_wscomm_error));
         }
 
-        return messageError;
+        return messageError.toString();
     }
 }
