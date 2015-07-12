@@ -5,6 +5,7 @@ import android.content.Context;
 import android.widget.Toast;
 
 import com.android.volley.NetworkResponse;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -21,6 +22,8 @@ import com.geotechpy.geostock.database.ZoneManager;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 
 /**
  * Get Data from Main Server
@@ -97,8 +100,8 @@ public class SyncFromServer {
         StringBuilder messageError = new StringBuilder();
         NetworkResponse response = error.networkResponse;
         if (response != null && response.data != null) {
-            String json = new String(response.data);
             try {
+                String json = new String(response.data, "UTF-8");
                 JSONObject responseWS = new JSONObject(json);
                 JSONArray messagesObject = new JSONArray(responseWS.getString("messages"));
                 for (int i = 0; i < messagesObject.length(); i++) {
@@ -109,9 +112,12 @@ public class SyncFromServer {
                 if (messageError.length() <= 0) {
                     messageError.append(mContext.getString(R.string.sync_unknown_error));
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
+            } catch (UnsupportedEncodingException e) {
+                return Response.error(new ParseError(e)).toString();
+            } catch (JSONException je) {
+                return Response.error(new ParseError(je)).toString();
             }
+
         }
         if (messageError.length() <= 0) {
             messageError.append(mContext.getString(R.string.sync_wscomm_error));
