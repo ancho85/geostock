@@ -31,17 +31,15 @@
 
     <ImageButton
         android:id="@+id/ib_items_edit"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight=".5"
         android:background="@android:drawable/ic_menu_edit"
         android:contentDescription="@string/edit_item"/>
 
     <ImageButton
         android:id="@+id/ib_items_delete"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight=".5"
         android:background="@android:drawable/ic_menu_delete"
         android:contentDescription="@string/delete_item"/>
 

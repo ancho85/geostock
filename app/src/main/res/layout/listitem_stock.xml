@@ -25,25 +25,22 @@
 
     <ImageButton
         android:id="@+id/ib_sync"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight=".5"
         android:background="@android:drawable/ic_menu_save"
         android:contentDescription="@string/sync_stock"/>
 
     <ImageButton
         android:id="@+id/ib_edit"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight=".5"
         android:background="@android:drawable/ic_menu_edit"
         android:contentDescription="@string/edit_stock"/>
 
     <ImageButton
         android:id="@+id/ib_delete"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight=".5"
         android:background="@android:drawable/ic_menu_delete"
         android:contentDescription="@string/delete_stock"/>
 </LinearLayout>
