@@ -1,6 +1,7 @@
 package com.geotechpy.geostock;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.geotechpy.geostock.app.GeotechpyStockApp;
@@ -22,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     EditText etUserName;
     EditText etPassword;
+    TextView tvMainStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +36,9 @@ public class MainActivity extends AppCompatActivity {
         if (getIntent().getBooleanExtra("EXIT", false)) {
             finish();
         }
+        tvMainStatus = (TextView) findViewById(R.id.tv_mainstatus);
+        tvMainStatus.setText("");
+        tvMainStatus.setTextColor(Color.RED);
     }
 
     @Override
@@ -108,5 +114,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void displayMessage(String toastString){
         Toast.makeText(getApplicationContext(), toastString, Toast.LENGTH_LONG).show();
+        tvMainStatus.setText(toastString);
+
     }
 }
