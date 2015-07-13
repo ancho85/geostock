@@ -12,6 +12,7 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.geotechpy.geostock.app.GeotechpyStockApp;
 import com.geotechpy.geostock.database.UserManager;
 import com.geotechpy.geostock.fragments.ConfirmDialog;
 import com.geotechpy.geostock.models.User;
@@ -98,8 +99,8 @@ public class MainActivity extends AppCompatActivity {
             }else if (!user.getPassword().equals(passText)) {
                 displayMessage(getString(R.string.invalid_password));
                 } else{
+                    ((GeotechpyStockApp)getApplication()).setUserName(userText);
                     Intent stockTypeActivity = new Intent(this, StockTypeActivity.class);
-                    stockTypeActivity.putExtra("username", userText);
                     startActivity(stockTypeActivity);
                 }
             }

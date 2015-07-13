@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 
 import com.geotechpy.geostock.adapters.ItemAdapter;
+import com.geotechpy.geostock.app.GeotechpyStockApp;
 import com.geotechpy.geostock.database.StockDetailManager;
 import com.geotechpy.geostock.models.StockDetail;
 
@@ -22,6 +23,7 @@ public class ItemListActivity extends AppCompatActivity {
     TextView tvUserName;
     TextView tvStockSerNr;
     TextView tvZoneCode;
+    String userName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,14 +38,14 @@ public class ItemListActivity extends AppCompatActivity {
         tvStockSerNr = (TextView) findViewById(R.id.tv_itemlist_stock_sernr);
         tvZoneCode = (TextView) findViewById(R.id.tv_itemlist_stock_zone_code);
         Intent intent = getIntent();
-        tvUserName.setText(intent.getStringExtra("username"));
+        userName = ((GeotechpyStockApp)getApplication()).getUserName();
+        tvUserName.setText(userName);
         tvStockSerNr.setText(intent.getStringExtra("stockSerNr"));
         tvZoneCode.setText(intent.getStringExtra("zoneCode"));
         showItems();
     }
 
     public void showItems(){
-        String userName = tvUserName.getText().toString();
         String stockSerNr = tvStockSerNr.getText().toString();
         String zoneCode = tvZoneCode.getText().toString();
 
@@ -83,11 +85,9 @@ public class ItemListActivity extends AppCompatActivity {
     }
 
     public void onClickNew(View view){
-        tvUserName = (TextView) findViewById(R.id.tv_itemlist_username);
         tvStockSerNr = (TextView) findViewById(R.id.tv_itemlist_stock_sernr);
         tvZoneCode = (TextView) findViewById(R.id.tv_itemlist_stock_zone_code);
         Intent itemActivity = new Intent(this, ItemActivity.class);
-        itemActivity.putExtra("username", tvUserName.getText().toString());
         itemActivity.putExtra("stockSerNr", tvStockSerNr.getText().toString());
         itemActivity.putExtra("zoneCode", tvZoneCode.getText().toString());
         itemActivity.putExtra("editMode", false);

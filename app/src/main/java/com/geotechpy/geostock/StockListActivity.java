@@ -10,6 +10,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.geotechpy.geostock.adapters.StockAdapter;
+import com.geotechpy.geostock.app.GeotechpyStockApp;
 import com.geotechpy.geostock.database.StockManager;
 import com.geotechpy.geostock.database.UserManager;
 import com.geotechpy.geostock.models.Stock;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 public class StockListActivity extends AppCompatActivity{
 
     TextView tvUserName;
+    String userName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,13 +33,13 @@ public class StockListActivity extends AppCompatActivity{
     public void onResume(){
         super.onResume();
         tvUserName = (TextView) findViewById(R.id.tv_stocklist_username);
-        Intent intent = getIntent();
-        tvUserName.setText(intent.getStringExtra("username"));
+        userName = ((GeotechpyStockApp)getApplication()).getUserName();
+        tvUserName.setText(userName);
         showStocks();
     }
 
     public void showStocks(){
-        User user = UserManager.load(this, tvUserName.getText().toString());
+        User user = UserManager.load(this, userName);
         String typeFilter = "";
         if (!user.getType().equals(getString(R.string.zone_admin)) || !user.getType().equals(getString(R.string.zone_both))){
             typeFilter = user.getType();
@@ -46,7 +48,7 @@ public class StockListActivity extends AppCompatActivity{
         ArrayList<Stock> al_stocks = stockManager.getStocks(typeFilter);
         StockAdapter stockAdapter = new StockAdapter(this);
         stockAdapter.updateStocks(al_stocks);
-        stockAdapter.setUserName(tvUserName.getText().toString());
+        stockAdapter.setUserName(userName);
         ListView lvStocks = (ListView) findViewById(R.id.lv_stocks);
         lvStocks.setAdapter(stockAdapter);
     }
@@ -74,9 +76,7 @@ public class StockListActivity extends AppCompatActivity{
     }
 
     public void onClickNew(View view){
-        tvUserName = (TextView) findViewById(R.id.tv_stocklist_username);
         Intent stockZoneList = new Intent(this, StockZoneListActivity.class);
-        stockZoneList.putExtra("username", tvUserName.getText());
         startActivity(stockZoneList);
     }
 }

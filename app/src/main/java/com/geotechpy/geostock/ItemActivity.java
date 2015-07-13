@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.geotechpy.geostock.app.GeotechpyStockApp;
 import com.geotechpy.geostock.database.ItemManager;
 import com.geotechpy.geostock.database.StockDetailManager;
 import com.geotechpy.geostock.database.StockManager;
@@ -27,8 +28,8 @@ public class ItemActivity extends AppCompatActivity {
     EditText etCode;
     EditText etName;
     EditText etQty;
-
     Integer lineNr;
+    String userName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +46,9 @@ public class ItemActivity extends AppCompatActivity {
         etCode = (EditText) findViewById(R.id.et_item_code);
         etName = (EditText) findViewById(R.id.et_item_name);
         etQty = (EditText) findViewById(R.id.et_item_qty);
+        userName = ((GeotechpyStockApp)getApplication()).getUserName();
         Intent intent = getIntent();
-        tvUserName.setText(intent.getStringExtra("username"));
+        tvUserName.setText(userName);
         tvStockSerNr.setText(intent.getStringExtra("stockSerNr"));
         tvZoneCode.setText(intent.getStringExtra("zoneCode"));
         editMode = intent.getBooleanExtra("editMode", false);

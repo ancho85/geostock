@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.geotechpy.geostock.app.GeotechpyStockApp;
 import com.geotechpy.geostock.database.UserManager;
 import com.geotechpy.geostock.models.User;
 
@@ -28,9 +29,9 @@ public class StockTypeActivity extends AppCompatActivity {
     public void onResume(){
         super.onResume();
         tvUserName = (TextView) findViewById(R.id.tv_stocktype_username);
-        Intent intent = getIntent();
-        tvUserName.setText(intent.getStringExtra("username"));
-        User user = UserManager.load(this, tvUserName.getText().toString());
+        String userName = ((GeotechpyStockApp)getApplication()).getUserName();
+        tvUserName.setText(userName);
+        User user = UserManager.load(this, userName);
         String userType = user.getType();
         if (!userType.equals(getString(R.string.zone_admin))){
             if (!userType.equals(getString(R.string.zone_both))){
@@ -86,16 +87,12 @@ public class StockTypeActivity extends AppCompatActivity {
     }
 
     public void onClickDeposit(View view){
-        tvUserName = (TextView) findViewById(R.id.tv_stocktype_username);
         Intent stockList = new Intent(this, StockListActivity.class);
-        stockList.putExtra("username", tvUserName.getText());
         startActivity(stockList);
     }
 
     public void onClickLaboratory(View view){
-        tvUserName = (TextView) findViewById(R.id.tv_stocktype_username);
         Intent stockList = new Intent(this, StockListActivity.class);
-        stockList.putExtra("username", tvUserName.getText());
         startActivity(stockList);
     }
 }
