@@ -39,7 +39,7 @@ public class SyncFromServer {
     public void syncMasters() {
         final ProgressDialog progressDialog = ProgressDialog.show(mContext, mContext.getString(R.string.sync_please_wait), mContext.getString(R.string.sync_requesting_data));
 
-        String URL = "http://validate.jsontest.com/";
+        String URL = "http://jsonplaceholder.typicode.com/users";
         JSONObject obj = new JSONObject();
         try {
             obj.put("key", "value");
