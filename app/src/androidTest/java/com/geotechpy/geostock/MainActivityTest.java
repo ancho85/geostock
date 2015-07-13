@@ -2,7 +2,6 @@ package com.geotechpy.geostock;
 
 
 import android.support.test.runner.AndroidJUnit4;
-import android.widget.Toast;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -33,6 +32,9 @@ public class MainActivityTest {
     public void shouldBeAbleToLaunchMainScreen() {
         onView(withText(R.string.username)).check(matches(isDisplayed()));
         onView(withText(R.string.password)).check(matches(isDisplayed()));
+        onView(withId(R.id.btn_reset)).check(matches(isDisplayed()));
+        onView(withId(R.id.btn_sync)).check(matches(isDisplayed()));
+        onView(withId(R.id.btn_login)).check(matches(isDisplayed()));
 
     }
 
