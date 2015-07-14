@@ -13,6 +13,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.geotechpy.geostock.R;
+import com.geotechpy.geostock.app.GeotechpyStockApp;
 import com.geotechpy.geostock.database.ItemManager;
 import com.geotechpy.geostock.database.StockDetailManager;
 import com.geotechpy.geostock.database.StockManager;
@@ -46,7 +47,8 @@ public class SyncFromServer {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        RequestQueue queue = Volley.newRequestQueue(mContext);
+        RequestQueue queue = GeotechpyStockApp.getRequestQueue();
+        //RequestQueue queue = Volley.newRequestQueue(mContext);
 
         JsonObjectRequest jsonArrayRequest = new JsonObjectRequest(Request.Method.POST, URL, obj,
                 new Response.Listener<JSONObject>() {

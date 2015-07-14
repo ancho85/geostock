@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.Espresso.registerIdlingResources;
 import static android.support.test.espresso.action.ViewActions.clearText;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.typeText;
@@ -29,7 +30,7 @@ public class MainActivityTest {
     public final ActivityRule<MainActivity> main = new ActivityRule<>(MainActivity.class);
 
     @Test
-    public void shouldBeAbleToLaunchMainScreen() {
+    public void test1_shouldBeAbleToLaunchMainScreen() {
         onView(withText(R.string.username)).check(matches(isDisplayed()));
         onView(withText(R.string.password)).check(matches(isDisplayed()));
         onView(withId(R.id.btn_reset)).check(matches(isDisplayed()));
@@ -39,7 +40,7 @@ public class MainActivityTest {
     }
 
     @Test
-    public void shouldButtonDeleteDatabase() {
+    public void test2_shouldButtonDeleteDatabase() {
         onView(withId(R.id.btn_reset)).perform(click());
         onView(withText(R.string.confirm_title)).check(matches(isDisplayed()));
         onView(withId(android.R.id.button1)).perform(click());
@@ -52,7 +53,28 @@ public class MainActivityTest {
     }
 
     @Test
-    public void shouldButtonLoginUser(){
+    public void test3_shouldDatabaseSync () throws InterruptedException{
+        VolleyIdlingResource volleyIdlingResource;
+        try {
+            volleyIdlingResource = new VolleyIdlingResource("VolleyCalls");
+            registerIdlingResources(volleyIdlingResource);
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        }
+
+        onView(withId(R.id.btn_sync)).perform(click());
+        onView(withText(R.string.confirm_action)).check(matches(isDisplayed()));
+        onView(withId(android.R.id.button1)).perform(click());
+
+        //Toast text
+        onView(withText(R.string.db_sync)
+        ).inRoot(withDecorView(
+                not(main.get().getWindow().getDecorView())
+        )).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void test4_shouldButtonLoginUser(){
         onView(withId(R.id.btn_login)).perform(click());
         onView(withText(R.string.empty_field_user)).check(matches(isDisplayed()));
 
