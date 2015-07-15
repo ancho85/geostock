@@ -7,7 +7,7 @@ import android.util.Log;
 
 import java.lang.reflect.Method;
 
-class SystemAnimations {
+public class SystemAnimations {
 
     private static final String ANIMATION_PERMISSION = "android.permission.SET_ANIMATION_SCALE";
     private static final float DISABLED = 0.0f;
@@ -15,18 +15,18 @@ class SystemAnimations {
 
     private final Context context;
 
-    SystemAnimations(Context context) {
+    public SystemAnimations(Context context) {
         this.context = context;
     }
 
-    void disableAll() {
+    public void disableAll() {
         int permStatus = context.checkCallingOrSelfPermission(ANIMATION_PERMISSION);
         if (permStatus == PackageManager.PERMISSION_GRANTED) {
             setSystemAnimationsScale(DISABLED);
         }
     }
 
-    void enableAll() {
+    public void enableAll() {
         int permStatus = context.checkCallingOrSelfPermission(ANIMATION_PERMISSION);
         if (permStatus == PackageManager.PERMISSION_GRANTED) {
             setSystemAnimationsScale(DEFAULT);
