@@ -38,7 +38,7 @@ public class MainActivityTest {
     @Rule
     public final ActivityRule<MainActivity> main = new ActivityRule<>(MainActivity.class);
 
-    /*static VolleyIdlingResource volleyIdlingResource; //test3 uses an idling resource
+    static VolleyIdlingResource volleyIdlingResource; //test3 uses an idling resource
     SystemAnimations systemAnimations;
 
     @BeforeClass
@@ -96,11 +96,11 @@ public class MainActivityTest {
         onView(withText(R.string.confirm_action)).check(matches(isDisplayed()));
         onView(withId(android.R.id.button1)).perform(click());
         onView(withText(R.string.db_sync)).check(matches(isDisplayed()));
-    }*/
+    }
 
     @Test
     public void test4_shouldButtonLoginUser(){
-        onView(withId(R.id.btn_login)).perform(click());
+        onView(withId(R.id.btn_login)).check(matches(isDisplayed())).perform(click());
         onView(withText(R.string.empty_field_user)).check(matches(isDisplayed()));
 
         onView(withId(R.id.et_user)).perform(clearText(), typeText("no_user"));
