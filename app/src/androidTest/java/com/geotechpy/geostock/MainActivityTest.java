@@ -91,16 +91,7 @@ public class MainActivityTest {
     }
 
     @Test
-    public void test3_shouldDatabaseSync() throws InterruptedException {
-        onView(withId(R.id.btn_sync)).perform(click());
-        onView(withText(R.string.confirm_action)).check(matches(isDisplayed()));
-        onView(withId(android.R.id.button1)).perform(click());
-        onView(withText(R.string.db_sync)).check(matches(isDisplayed()));
-        onView(withId(R.id.btn_login)).check(matches(withText(R.string.login)));
-    }
-
-    @Test
-    public void test4_shouldButtonLoginUser(){
+    public void test3_shouldButtonLoginUser(){
         onView(withId(R.id.btn_login)).perform(click());
         onView(withText(R.string.empty_field_user)).check(matches(isDisplayed()));
 
@@ -111,6 +102,14 @@ public class MainActivityTest {
         onView(withId(R.id.et_password)).perform(clearText(), typeText("no_pass"));
         onView(withId(R.id.btn_login)).perform(click());
         onView(withText(R.string.invalid_user)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void test4_shouldDatabaseSync() throws InterruptedException {
+        onView(withId(R.id.btn_sync)).perform(click());
+        onView(withText(R.string.confirm_action)).check(matches(isDisplayed()));
+        onView(withId(android.R.id.button1)).perform(click());
+        onView(withText(R.string.db_sync)).check(matches(isDisplayed()));
     }
 
 }
