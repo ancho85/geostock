@@ -1,4 +1,4 @@
-package com.geotechpy.geostock;
+package com.geotechpy.geostock.others;
 
 import android.content.Context;
 import android.content.pm.PackageManager;

@@ -3,6 +3,7 @@ package com.geotechpy.geostock;
 
 import android.support.test.runner.AndroidJUnit4;
 
+import com.geotechpy.geostock.others.SystemAnimations;
 import com.geotechpy.geostock.resources.VolleyIdlingResource;
 import com.geotechpy.geostock.rules.ActivityRule;
 
