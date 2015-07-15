@@ -53,9 +53,9 @@ public class MainActivityTest {
     public void test1_shouldBeAbleToLaunchMainScreen() {
         onView(withText(R.string.username)).check(matches(isDisplayed()));
         onView(withText(R.string.password)).check(matches(isDisplayed()));
-        onView(withId(R.id.btn_reset)).check(matches(isDisplayed()));
-        onView(withId(R.id.btn_sync)).check(matches(isDisplayed()));
-        onView(withId(R.id.btn_login)).check(matches(isDisplayed()));
+        onView(withId(R.id.btn_reset)).check(matches(withText(R.string.reset)));
+        onView(withId(R.id.btn_sync)).check(matches(withText(R.string.sync)));
+        onView(withId(R.id.btn_login)).check(matches(withText(R.string.login)));
 
     }
 
