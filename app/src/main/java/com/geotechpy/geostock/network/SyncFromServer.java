@@ -2,6 +2,8 @@ package com.geotechpy.geostock.network;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.NetworkResponse;
@@ -13,6 +15,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.geotechpy.geostock.R;
+import com.geotechpy.geostock.app.GeotechpyStockApp;
 import com.geotechpy.geostock.database.ItemManager;
 import com.geotechpy.geostock.database.StockDetailManager;
 import com.geotechpy.geostock.database.StockManager;
@@ -38,6 +41,7 @@ public class SyncFromServer {
 
     public void syncMasters() {
         final ProgressDialog progressDialog = ProgressDialog.show(mContext, mContext.getString(R.string.sync_please_wait), mContext.getString(R.string.sync_requesting_data));
+        final TextView tv_mainStatus;
 
         String URL = "http://jsonplaceholder.typicode.com/users";
         JSONObject obj = new JSONObject();
@@ -46,7 +50,10 @@ public class SyncFromServer {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        RequestQueue queue = Volley.newRequestQueue(mContext);
+        tv_mainStatus = (TextView) ((AppCompatActivity) mContext).findViewById(R.id.tv_mainstatus);
+        tv_mainStatus.setText("Sync started...");
+
+        RequestQueue queue = GeotechpyStockApp.getRequestQueue();
 
         JsonObjectRequest jsonArrayRequest = new JsonObjectRequest(Request.Method.POST, URL, obj,
                 new Response.Listener<JSONObject>() {
@@ -83,6 +90,8 @@ public class SyncFromServer {
 
                         progressDialog.cancel();
                         Toast.makeText(mContext, R.string.db_sync, Toast.LENGTH_SHORT).show();
+                        tv_mainStatus.setText(R.string.db_sync);
+
                     }
                 }, new Response.ErrorListener() {
                     @Override
@@ -90,6 +99,7 @@ public class SyncFromServer {
                         progressDialog.cancel();
                         String errorMsg = webServiceErrorParser(error);
                         Toast.makeText(mContext, errorMsg, Toast.LENGTH_LONG).show();
+                        tv_mainStatus.setText(errorMsg);
                     }
                 }
         );
