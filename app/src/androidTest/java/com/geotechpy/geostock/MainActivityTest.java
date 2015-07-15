@@ -38,7 +38,7 @@ public class MainActivityTest {
     @Rule
     public final ActivityRule<MainActivity> main = new ActivityRule<>(MainActivity.class);
 
-    static VolleyIdlingResource volleyIdlingResource; //test3 uses an idling resource
+    /*static VolleyIdlingResource volleyIdlingResource; //test3 uses an idling resource
     SystemAnimations systemAnimations;
 
     @BeforeClass
@@ -78,7 +78,7 @@ public class MainActivityTest {
     }
 
     @Test
-    public void test3_shouldButtonDeleteDatabase() {
+    public void test2_shouldButtonDeleteDatabase() {
         onView(withId(R.id.btn_reset)).perform(click());
         onView(withText(R.string.confirm_title)).check(matches(isDisplayed()));
         onView(withId(android.R.id.button1)).perform(click());
@@ -91,7 +91,15 @@ public class MainActivityTest {
     }
 
     @Test
-    public void test2_shouldButtonLoginUser(){
+    public void test3_shouldDatabaseSync() throws InterruptedException {
+        onView(withId(R.id.btn_sync)).perform(click());
+        onView(withText(R.string.confirm_action)).check(matches(isDisplayed()));
+        onView(withId(android.R.id.button1)).perform(click());
+        onView(withText(R.string.db_sync)).check(matches(isDisplayed()));
+    }*/
+
+    @Test
+    public void test4_shouldButtonLoginUser(){
         onView(withId(R.id.btn_login)).perform(click());
         onView(withText(R.string.empty_field_user)).check(matches(isDisplayed()));
 
@@ -102,14 +110,6 @@ public class MainActivityTest {
         onView(withId(R.id.et_password)).perform(clearText(), typeText("no_pass"));
         onView(withId(R.id.btn_login)).perform(click());
         onView(withText(R.string.invalid_user)).check(matches(isDisplayed()));
-    }
-
-    @Test
-    public void test4_shouldDatabaseSync() throws InterruptedException {
-        onView(withId(R.id.btn_sync)).perform(click());
-        onView(withText(R.string.confirm_action)).check(matches(isDisplayed()));
-        onView(withId(android.R.id.button1)).perform(click());
-        onView(withText(R.string.db_sync)).check(matches(isDisplayed()));
     }
 
 }
