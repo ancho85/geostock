@@ -5,7 +5,6 @@ import android.support.test.runner.AndroidJUnit4;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,9 +31,6 @@ public class MainActivityTest {
 
     @Rule
     public final ActivityRule<MainActivity> main = new ActivityRule<>(MainActivity.class);
-
-    //@ClassRule
-    //public static DisableAnimationsRule disableAnimationsRule = new DisableAnimationsRule();
 
     VolleyIdlingResource volleyIdlingResource; //test3 uses an idling resource
     SystemAnimations systemAnimations;
