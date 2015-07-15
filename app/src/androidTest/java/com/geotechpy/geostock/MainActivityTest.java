@@ -96,6 +96,7 @@ public class MainActivityTest {
         onView(withText(R.string.confirm_action)).check(matches(isDisplayed()));
         onView(withId(android.R.id.button1)).perform(click());
         onView(withText(R.string.db_sync)).check(matches(isDisplayed()));
+        onView(withId(R.id.btn_login)).check(matches(withText(R.string.login)));
     }
 
     @Test
