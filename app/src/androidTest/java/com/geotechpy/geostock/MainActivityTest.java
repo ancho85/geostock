@@ -66,11 +66,8 @@ public class MainActivityTest {
         onView(withText(R.string.confirm_action)).check(matches(isDisplayed()));
         onView(withId(android.R.id.button1)).perform(click());
 
-        //Toast text
-        onView(withText(R.string.db_sync)
-        ).inRoot(withDecorView(
-                not(main.get().getWindow().getDecorView())
-        )).check(matches(isDisplayed()));
+        onView(withText(R.string.db_sync)).check(matches(isDisplayed()));
+
     }
 
     @Test
