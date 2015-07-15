@@ -3,12 +3,15 @@ package com.geotechpy.geostock;
 
 import android.support.test.runner.AndroidJUnit4;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.Espresso.registerIdlingResources;
+import static android.support.test.espresso.Espresso.unregisterIdlingResources;
 import static android.support.test.espresso.action.ViewActions.clearText;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.typeText;
@@ -28,6 +31,23 @@ public class MainActivityTest {
 
     @Rule
     public final ActivityRule<MainActivity> main = new ActivityRule<>(MainActivity.class);
+
+    VolleyIdlingResource volleyIdlingResource; //test3 uses an idling resource
+
+    @Before
+    public void registerIntentServiceIdlingResource() {
+        try {
+            volleyIdlingResource = new VolleyIdlingResource("VolleyCalls");
+            registerIdlingResources(volleyIdlingResource);
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @After
+    public void unregisterIntentServiceIdlingResource() {
+        unregisterIdlingResources(volleyIdlingResource);
+    }
 
     @Test
     public void test1_shouldBeAbleToLaunchMainScreen() {
@@ -53,21 +73,11 @@ public class MainActivityTest {
     }
 
     @Test
-    public void test3_shouldDatabaseSync () throws InterruptedException{
-        VolleyIdlingResource volleyIdlingResource;
-        try {
-            volleyIdlingResource = new VolleyIdlingResource("VolleyCalls");
-            registerIdlingResources(volleyIdlingResource);
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        }
-
+    public void test3_shouldDatabaseSync() throws InterruptedException {
         onView(withId(R.id.btn_sync)).perform(click());
         onView(withText(R.string.confirm_action)).check(matches(isDisplayed()));
         onView(withId(android.R.id.button1)).perform(click());
-
         onView(withText(R.string.db_sync)).check(matches(isDisplayed()));
-
     }
 
     @Test
