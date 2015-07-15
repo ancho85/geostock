@@ -120,7 +120,7 @@ task findBugs(type: FindBugs) {
 }
 
 task grantAnimationPermission(type: Exec, dependsOn: 'installDebug') {
-    commandLine "adb shell pm grant $android.defaultConfig.applicationId$applicationIdSuffix android.permission.SET_ANIMATION_SCALE".split(' ')
+    commandLine "adb shell pm grant com.geotechpy.geostock.debug android.permission.SET_ANIMATION_SCALE".split(' ')
 }
 
 tasks.whenTaskAdded { task ->
