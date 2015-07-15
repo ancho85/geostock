@@ -33,13 +33,16 @@ public class MainActivityTest {
     @Rule
     public final ActivityRule<MainActivity> main = new ActivityRule<>(MainActivity.class);
 
-    @ClassRule
-    public static DisableAnimationsRule disableAnimationsRule = new DisableAnimationsRule();
+    //@ClassRule
+    //public static DisableAnimationsRule disableAnimationsRule = new DisableAnimationsRule();
 
     VolleyIdlingResource volleyIdlingResource; //test3 uses an idling resource
+    SystemAnimations systemAnimations;
 
     @Before
     public void registerIntentServiceIdlingResource() {
+        systemAnimations = new SystemAnimations(main.get().getApplicationContext());
+        systemAnimations.disableAll();
         try {
             volleyIdlingResource = new VolleyIdlingResource("VolleyCalls");
             registerIdlingResources(volleyIdlingResource);
@@ -51,6 +54,7 @@ public class MainActivityTest {
     @After
     public void unregisterIntentServiceIdlingResource() {
         unregisterIdlingResources(volleyIdlingResource);
+        systemAnimations.enableAll();
     }
 
     @Test
