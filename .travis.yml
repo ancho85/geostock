@@ -60,7 +60,7 @@ before_script:
   - adb shell input keyevent 82 &
 
 script:
-    - ./gradlew clean test connectedAndroidTest -PdisablePreDex --debug
+    - ./gradlew clean test connectedAndroidTest -PdisablePreDex --stacktrace
     # cleanup a little for better caching reuse
     - rm $HOME/.gradle/daemon/2.4/*.*
     - rm $HOME/.gradle/caches/modules-2/modules-2.lock
