@@ -8,7 +8,9 @@ import com.geotechpy.geostock.resources.VolleyIdlingResource;
 import com.geotechpy.geostock.rules.ActivityRule;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,13 +38,11 @@ public class MainActivityTest {
     @Rule
     public final ActivityRule<MainActivity> main = new ActivityRule<>(MainActivity.class);
 
-    VolleyIdlingResource volleyIdlingResource; //test3 uses an idling resource
+    static VolleyIdlingResource volleyIdlingResource; //test3 uses an idling resource
     SystemAnimations systemAnimations;
 
-    @Before
-    public void registerIntentServiceIdlingResource() {
-        systemAnimations = new SystemAnimations(main.get().getApplicationContext());
-        systemAnimations.disableAll();
+    @BeforeClass
+    public static void registerIntentServiceIdlingResource() {
         try {
             volleyIdlingResource = new VolleyIdlingResource("VolleyCalls");
             registerIdlingResources(volleyIdlingResource);
@@ -51,9 +51,19 @@ public class MainActivityTest {
         }
     }
 
-    @After
-    public void unregisterIntentServiceIdlingResource() {
+    @AfterClass
+    public static void unregisterIntentServiceIdlingResource() {
         unregisterIdlingResources(volleyIdlingResource);
+    }
+
+    @Before
+    public void setUp() {
+        systemAnimations = new SystemAnimations(main.get().getApplicationContext());
+        systemAnimations.disableAll();
+    }
+
+    @After
+    public void tearDown() {
         systemAnimations.enableAll();
     }
 
