@@ -2,6 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.geotechpy.geostock" >
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- For espresso testing purposes, this is removed in live builds, but not in dev builds -->
     <uses-permission android:name="android.permission.SET_ANIMATION_SCALE"/>
 </manifest>
