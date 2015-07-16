@@ -49,7 +49,7 @@ public class MainActivityTest {
 
     @Test
     public void test3_shouldButtonLoginUser() throws InterruptedException {
-        Thread.sleep(1000);
+        Thread.sleep(5000);
         onView(withId(R.id.btn_login)).perform(click());
         onView(withText(R.string.empty_field_user)).check(matches(isDisplayed()));
         onView(withId(R.id.et_user)).perform(clearText(), typeText("no_user"), closeSoftKeyboard());
