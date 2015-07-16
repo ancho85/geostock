@@ -1,15 +1,10 @@
 package com.geotechpy.geostock;
 
 
-import android.support.test.espresso.UiController;
-import android.support.test.espresso.ViewAction;
-import android.support.test.espresso.action.CloseKeyboardAction;
 import android.support.test.runner.AndroidJUnit4;
-import android.view.View;
 
 import com.geotechpy.geostock.rules.ActivityRule;
 
-import org.hamcrest.Matcher;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,6 +12,7 @@ import org.junit.runner.RunWith;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.clearText;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
@@ -43,6 +39,16 @@ public class MainActivityTest {
         onView(withId(R.id.btn_reset)).check(matches(withText(R.string.reset)));
         onView(withId(R.id.btn_sync)).check(matches(withText(R.string.sync)));
         onView(withId(R.id.btn_login)).check(matches(withText(R.string.login)));
+
+        // test login empty fields
+        onView(withId(R.id.btn_login)).perform(click());
+        onView(withText(R.string.empty_field_user)).check(matches(isDisplayed()));
+        onView(withId(R.id.et_user)).perform(clearText(), typeText("no_user"), closeSoftKeyboard());
+        onView(withId(R.id.btn_login)).perform(click());
+        onView(withText(R.string.empty_field_password)).check(matches(isDisplayed()));
+        onView(withId(R.id.et_password)).perform(clearText(), typeText("no_pass"), closeSoftKeyboard());
+        onView(withId(R.id.btn_login)).perform(click());
+        onView(withText(R.string.invalid_user)).check(matches(isDisplayed()));
     }
 
     @Test
@@ -50,55 +56,7 @@ public class MainActivityTest {
         onView(withId(R.id.btn_reset)).perform(click());
         onView(withText(R.string.confirm_title)).check(matches(isDisplayed()));
         onView(withId(android.R.id.button1)).perform(click());
-
-        //Toast text
-        onView(withText(R.string.db_reset)
-            ).inRoot(withDecorView(
-                not(main.get().getWindow().getDecorView())
-        )).check(matches(isDisplayed()));
+        onView(withText(R.string.db_reset)).check(matches(isDisplayed()));
     }
 
-    @Test
-    public void test3_shouldButtonLoginUser(){
-        onView(withId(R.id.btn_login)).perform(click());
-        onView(withText(R.string.empty_field_user)).check(matches(isDisplayed()));
-
-        onView(withId(R.id.et_user)).perform(clearText(), typeText("no_user"), closeSoftKeyboard());
-        onView(withId(R.id.btn_login)).perform(click());
-        onView(withText(R.string.empty_field_password)).check(matches(isDisplayed()));
-
-        onView(withId(R.id.et_password)).perform(clearText(), typeText("no_pass"), closeSoftKeyboard());
-        onView(withId(R.id.btn_login)).perform(click());
-        onView(withText(R.string.invalid_user)).check(matches(isDisplayed()));
-    }
-
-    public static ViewAction closeSoftKeyboard() {
-        return new ViewAction() {
-            /**
-             * The delay time to allow the soft keyboard to dismiss.
-             */
-            private static final long KEYBOARD_DISMISSAL_DELAY_MILLIS = 1000L;
-
-            /**
-             * The real {@link CloseKeyboardAction} instance.
-             */
-            private final ViewAction mCloseSoftKeyboard = new CloseKeyboardAction();
-
-            @Override
-            public Matcher<View> getConstraints() {
-                return mCloseSoftKeyboard.getConstraints();
-            }
-
-            @Override
-            public String getDescription() {
-                return mCloseSoftKeyboard.getDescription();
-            }
-
-            @Override
-            public void perform(final UiController uiController, final View view) {
-                mCloseSoftKeyboard.perform(uiController, view);
-                uiController.loopMainThreadForAtLeast(KEYBOARD_DISMISSAL_DELAY_MILLIS);
-            }
-        };
-    }
 }
