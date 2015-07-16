@@ -15,12 +15,9 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.not;
 
 /**
  * Login activity test case
@@ -51,7 +48,8 @@ public class MainActivityTest {
     }
 
     @Test
-    public void test3_shouldButtonLoginUser(){
+    public void test3_shouldButtonLoginUser() throws InterruptedException {
+        Thread.sleep(1000);
         onView(withId(R.id.btn_login)).perform(click());
         onView(withText(R.string.empty_field_user)).check(matches(isDisplayed()));
         onView(withId(R.id.et_user)).perform(clearText(), typeText("no_user"), closeSoftKeyboard());
