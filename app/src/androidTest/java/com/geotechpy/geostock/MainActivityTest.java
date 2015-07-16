@@ -19,6 +19,7 @@ import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.not;
 
 /**
@@ -41,13 +42,13 @@ public class MainActivityTest {
         onView(withId(R.id.btn_login)).check(matches(withText(R.string.login)));
 
         // test login empty fields
-        onView(withId(R.id.btn_login)).perform(click());
+        onView(allOf(withId(R.id.btn_login), isDisplayed())).perform(click());
         onView(withText(R.string.empty_field_user)).check(matches(isDisplayed()));
         onView(withId(R.id.et_user)).perform(clearText(), typeText("no_user"), closeSoftKeyboard());
-        onView(withId(R.id.btn_login)).perform(click());
+        onView(allOf(withId(R.id.btn_login), isDisplayed())).perform(click());
         onView(withText(R.string.empty_field_password)).check(matches(isDisplayed()));
         onView(withId(R.id.et_password)).perform(clearText(), typeText("no_pass"), closeSoftKeyboard());
-        onView(withId(R.id.btn_login)).perform(click());
+        onView(allOf(withId(R.id.btn_login), isDisplayed())).perform(click());
         onView(withText(R.string.invalid_user)).check(matches(isDisplayed()));
     }
 
