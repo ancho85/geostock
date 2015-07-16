@@ -74,10 +74,11 @@ public class MainActivityTest {
         onView(withId(R.id.btn_reset)).check(matches(withText(R.string.reset)));
         onView(withId(R.id.btn_sync)).check(matches(withText(R.string.sync)));
         onView(withId(R.id.btn_login)).check(matches(withText(R.string.login)));
+        onView(withId(R.id.btn_login)).perform(click());
 
     }
 
-    @Test
+    //@Test
     public void test2_shouldButtonDeleteDatabase() {
         onView(withId(R.id.btn_reset)).perform(click());
         onView(withText(R.string.confirm_title)).check(matches(isDisplayed()));
@@ -90,7 +91,7 @@ public class MainActivityTest {
         )).check(matches(isDisplayed()));
     }
 
-    @Test
+    //@Test
     public void test3_shouldDatabaseSync() throws InterruptedException {
         onView(withId(R.id.btn_sync)).perform(click());
         onView(withText(R.string.confirm_action)).check(matches(isDisplayed()));
@@ -98,7 +99,7 @@ public class MainActivityTest {
         onView(withText(R.string.db_sync)).check(matches(isDisplayed()));
     }
 
-    @Test
+    //@Test
     public void test4_shouldButtonLoginUser(){
         onView(withId(R.id.btn_login)).check(matches(withText(R.string.login)));
         onView(withId(R.id.btn_login)).perform(click());
