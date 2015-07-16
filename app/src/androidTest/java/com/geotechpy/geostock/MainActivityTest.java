@@ -75,8 +75,6 @@ public class MainActivityTest {
         onView(withId(R.id.btn_reset)).check(matches(withText(R.string.reset)));
         onView(withId(R.id.btn_sync)).check(matches(withText(R.string.sync)));
         onView(withId(R.id.btn_login)).check(matches(withText(R.string.login)));
-        onView(withId(R.id.btn_login)).perform(click(), closeSoftKeyboard());
-
     }
 
     //@Test
