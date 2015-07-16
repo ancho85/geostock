@@ -40,7 +40,7 @@ public class MainActivityTest {
         onView(withId(R.id.btn_login)).check(matches(withText(R.string.login)));
     }
 
-    /*@Test
+    @Test
     public void test2_shouldButtonDeleteDatabase() {
         onView(withId(R.id.btn_reset)).perform(click());
         onView(withText(R.string.confirm_title)).check(matches(isDisplayed()));
@@ -51,9 +51,9 @@ public class MainActivityTest {
             ).inRoot(withDecorView(
                 not(main.get().getWindow().getDecorView())
         )).check(matches(isDisplayed()));
-    }*/
+    }
 
-    @Test
+    /*@Test
     public void test3_shouldButtonLoginUser(){
         onView(withId(R.id.btn_login)).check(matches(withText(R.string.login)));
         onView(withId(R.id.btn_login)).perform(click());
@@ -66,6 +66,6 @@ public class MainActivityTest {
         onView(withId(R.id.et_password)).perform(clearText(), typeText("no_pass"));
         onView(withId(R.id.btn_login)).perform(click());
         onView(withText(R.string.invalid_user)).check(matches(isDisplayed()));
-    }
+    }*/
 
 }
