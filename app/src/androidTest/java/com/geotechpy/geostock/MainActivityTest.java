@@ -100,7 +100,8 @@ public class MainActivityTest {
 
     @Test
     public void test4_shouldButtonLoginUser(){
-        onView(withId(R.id.btn_login)).check(matches(isDisplayed())).perform(click());
+        onView(withId(R.id.btn_login)).check(matches(withText(R.string.login)));
+        onView(withId(R.id.btn_login)).perform(click());
         onView(withText(R.string.empty_field_user)).check(matches(isDisplayed()));
 
         onView(withId(R.id.et_user)).perform(clearText(), typeText("no_user"));
