@@ -12,6 +12,7 @@ import org.junit.runner.RunWith;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.clearText;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
@@ -53,19 +54,19 @@ public class MainActivityTest {
         )).check(matches(isDisplayed()));
     }
 
-    /*@Test
+    @Test
     public void test3_shouldButtonLoginUser(){
         onView(withId(R.id.btn_login)).check(matches(withText(R.string.login)));
         onView(withId(R.id.btn_login)).perform(click());
         onView(withText(R.string.empty_field_user)).check(matches(isDisplayed()));
 
-        onView(withId(R.id.et_user)).perform(clearText(), typeText("no_user"));
+        onView(withId(R.id.et_user)).perform(clearText(), typeText("no_user"), closeSoftKeyboard());
         onView(withId(R.id.btn_login)).perform(click());
         onView(withText(R.string.empty_field_password)).check(matches(isDisplayed()));
 
-        onView(withId(R.id.et_password)).perform(clearText(), typeText("no_pass"));
+        onView(withId(R.id.et_password)).perform(clearText(), typeText("no_pass"), closeSoftKeyboard());
         onView(withId(R.id.btn_login)).perform(click());
         onView(withText(R.string.invalid_user)).check(matches(isDisplayed()));
-    }*/
+    }
 
 }
