@@ -20,6 +20,7 @@ import static android.support.test.espresso.Espresso.registerIdlingResources;
 import static android.support.test.espresso.Espresso.unregisterIdlingResources;
 import static android.support.test.espresso.action.ViewActions.clearText;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
@@ -74,7 +75,7 @@ public class MainActivityTest {
         onView(withId(R.id.btn_reset)).check(matches(withText(R.string.reset)));
         onView(withId(R.id.btn_sync)).check(matches(withText(R.string.sync)));
         onView(withId(R.id.btn_login)).check(matches(withText(R.string.login)));
-        onView(withId(R.id.btn_login)).perform(click());
+        onView(withId(R.id.btn_login)).perform(click(), closeSoftKeyboard());
 
     }
 
