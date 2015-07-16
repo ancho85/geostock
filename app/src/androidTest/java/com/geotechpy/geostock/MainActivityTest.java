@@ -3,24 +3,15 @@ package com.geotechpy.geostock;
 
 import android.support.test.runner.AndroidJUnit4;
 
-import com.geotechpy.geostock.others.SystemAnimations;
-import com.geotechpy.geostock.resources.VolleyIdlingResource;
 import com.geotechpy.geostock.rules.ActivityRule;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.Espresso.registerIdlingResources;
-import static android.support.test.espresso.Espresso.unregisterIdlingResources;
 import static android.support.test.espresso.action.ViewActions.clearText;
 import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
@@ -39,34 +30,6 @@ public class MainActivityTest {
     @Rule
     public final ActivityRule<MainActivity> main = new ActivityRule<>(MainActivity.class);
 
-    static VolleyIdlingResource volleyIdlingResource; //test3 uses an idling resource
-    SystemAnimations systemAnimations;
-
-    @BeforeClass
-    public static void registerIntentServiceIdlingResource() {
-        try {
-            volleyIdlingResource = new VolleyIdlingResource("VolleyCalls");
-            registerIdlingResources(volleyIdlingResource);
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @AfterClass
-    public static void unregisterIntentServiceIdlingResource() {
-        unregisterIdlingResources(volleyIdlingResource);
-    }
-
-    @Before
-    public void setUp() {
-        systemAnimations = new SystemAnimations(main.get().getApplicationContext());
-        systemAnimations.disableAll();
-    }
-
-    @After
-    public void tearDown() {
-        systemAnimations.enableAll();
-    }
 
     @Test
     public void test1_shouldBeAbleToLaunchMainScreen() {
@@ -77,7 +40,7 @@ public class MainActivityTest {
         onView(withId(R.id.btn_login)).check(matches(withText(R.string.login)));
     }
 
-    //@Test
+    @Test
     public void test2_shouldButtonDeleteDatabase() {
         onView(withId(R.id.btn_reset)).perform(click());
         onView(withText(R.string.confirm_title)).check(matches(isDisplayed()));
@@ -90,16 +53,8 @@ public class MainActivityTest {
         )).check(matches(isDisplayed()));
     }
 
-    //@Test
-    public void test3_shouldDatabaseSync() throws InterruptedException {
-        onView(withId(R.id.btn_sync)).perform(click());
-        onView(withText(R.string.confirm_action)).check(matches(isDisplayed()));
-        onView(withId(android.R.id.button1)).perform(click());
-        onView(withText(R.string.db_sync)).check(matches(isDisplayed()));
-    }
-
-    //@Test
-    public void test4_shouldButtonLoginUser(){
+    @Test
+    public void test3_shouldButtonLoginUser(){
         onView(withId(R.id.btn_login)).check(matches(withText(R.string.login)));
         onView(withId(R.id.btn_login)).perform(click());
         onView(withText(R.string.empty_field_user)).check(matches(isDisplayed()));
