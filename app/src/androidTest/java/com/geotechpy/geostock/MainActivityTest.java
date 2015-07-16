@@ -40,16 +40,6 @@ public class MainActivityTest {
         onView(withId(R.id.btn_reset)).check(matches(withText(R.string.reset)));
         onView(withId(R.id.btn_sync)).check(matches(withText(R.string.sync)));
         onView(withId(R.id.btn_login)).check(matches(withText(R.string.login)));
-
-        // test login empty fields
-        onView(allOf(withId(R.id.btn_login), isDisplayed())).perform(click());
-        onView(withText(R.string.empty_field_user)).check(matches(isDisplayed()));
-        onView(withId(R.id.et_user)).perform(clearText(), typeText("no_user"), closeSoftKeyboard());
-        onView(allOf(withId(R.id.btn_login), isDisplayed())).perform(click());
-        onView(withText(R.string.empty_field_password)).check(matches(isDisplayed()));
-        onView(withId(R.id.et_password)).perform(clearText(), typeText("no_pass"), closeSoftKeyboard());
-        onView(allOf(withId(R.id.btn_login), isDisplayed())).perform(click());
-        onView(withText(R.string.invalid_user)).check(matches(isDisplayed()));
     }
 
     @Test
@@ -58,6 +48,18 @@ public class MainActivityTest {
         onView(withText(R.string.confirm_title)).check(matches(isDisplayed()));
         onView(withId(android.R.id.button1)).perform(click());
         onView(withText(R.string.db_reset)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void test3_shouldButtonLoginUser(){
+        onView(withId(R.id.btn_login)).perform(click());
+        onView(withText(R.string.empty_field_user)).check(matches(isDisplayed()));
+        onView(withId(R.id.et_user)).perform(clearText(), typeText("no_user"), closeSoftKeyboard());
+        onView(withId(R.id.btn_login)).perform(click());
+        onView(withText(R.string.empty_field_password)).check(matches(isDisplayed()));
+        onView(withId(R.id.et_password)).perform(clearText(), typeText("no_pass"), closeSoftKeyboard());
+        onView(withId(R.id.btn_login)).perform(click());
+        onView(withText(R.string.invalid_user)).check(matches(isDisplayed()));
     }
 
 }
