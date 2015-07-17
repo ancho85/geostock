@@ -65,8 +65,7 @@ public class MainActivity2Test {
     }
 
     @Test
-    public void shouldDatabaseSync() throws InterruptedException {
-        Thread.sleep(5000);
+    public void shouldDatabaseSync(){
         onView(withId(R.id.btn_sync)).perform(click());
         onView(withText(R.string.confirm_action)).check(matches(isDisplayed()));
         onView(withId(android.R.id.button1)).perform(click());
