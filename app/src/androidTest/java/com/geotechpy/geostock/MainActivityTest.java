@@ -34,7 +34,8 @@ public class MainActivityTest {
 
     public MainActivityTest(){
         super();
-        IdlingPolicies.setMasterPolicyTimeout(5, TimeUnit.SECONDS);
+        IdlingPolicies.setMasterPolicyTimeout(3600, TimeUnit.SECONDS);
+        IdlingPolicies.setIdlingResourceTimeout(3600, TimeUnit.SECONDS);
     }
 
 
