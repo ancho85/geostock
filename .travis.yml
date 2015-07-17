@@ -88,9 +88,10 @@ after_success:
     - ./gradlew jacocoTestReport coveralls -PdisablePreDex
 
 after_failure:
+    - sudo apt-get install -qq --force-yes imagemagick > /dev/null
     - mkdir sdcard
     - sudo mount -o loop sdcard.img sdcard
-    - ll sdcard/
+    - ls -R sdcard/
     - for i in sdcard/Pictures/*; do echo $i; asciiview $i; done
 
 addons:
