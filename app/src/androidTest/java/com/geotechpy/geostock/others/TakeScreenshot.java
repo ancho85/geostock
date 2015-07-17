@@ -8,6 +8,7 @@ import java.io.OutputStream;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.View;
 import android.os.Environment;
 
@@ -20,7 +21,7 @@ public class TakeScreenshot{
         // under /test-screenshots/ folder and this ensures those screenshots
         // be shown under Test Results
         String path=
-                Environment.getExternalStorageDirectory().getAbsolutePath()+"/test-screenshots/"+name;
+                Environment.getExternalStorageDirectory().getAbsolutePath()+"/Pictures/"+name;
 
         View scrView=activity.getWindow().getDecorView().getRootView();
         scrView.setDrawingCacheEnabled(true);
@@ -35,9 +36,9 @@ public class TakeScreenshot{
             bitmap.compress(Bitmap.CompressFormat.JPEG,90,out);
             out.flush();
         }catch(FileNotFoundException e){
-            // exception
+            Log.e("TSCREEN1", e.toString());
         }catch(IOException e){
-            // exception
+            Log.e("TSCREEN2", e.toString());
         }finally{
 
             try{
@@ -46,6 +47,7 @@ public class TakeScreenshot{
                 }
 
             }catch(Exception exc){
+                Log.e("TSCREEN3", exc.toString());
             }
 
         }

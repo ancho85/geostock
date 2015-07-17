@@ -55,7 +55,7 @@ public class MainActivityTest {
 
     @Test
     public void test3_shouldButtonLoginUser(){
-        TakeScreenshot.takeScreenshot("screenshot-001", main.get());
+        TakeScreenshot.takeScreenshot("screenshot-001.jpg", main.get());
         Log.d("LOGIN", "screenshot taken");
         onView(withId(R.id.btn_login)).perform(closeSoftKeyboard(), click());
         onView(withText(R.string.empty_field_user)).check(matches(isDisplayed()));
