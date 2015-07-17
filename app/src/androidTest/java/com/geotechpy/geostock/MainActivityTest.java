@@ -49,7 +49,7 @@ public class MainActivityTest {
     }
 
     @Test
-    public void test2_shouldButtonDeleteDatabase() {
+    public void test3_shouldButtonDeleteDatabase() {
         onView(withId(R.id.btn_reset)).perform(click());
         onView(withText(R.string.confirm_title)).check(matches(isDisplayed()));
         onView(withId(android.R.id.button1)).perform(click());
@@ -57,7 +57,7 @@ public class MainActivityTest {
     }
 
     @Test
-    public void test3_shouldButtonLoginUser(){
+    public void test2_shouldButtonLoginUser(){
         onView(withId(R.id.btn_login)).perform(click());
         onView(withText(R.string.empty_field_user)).check(matches(isDisplayed()));
         onView(withId(R.id.et_user)).perform(clearText(), typeText("no_user"), closeSoftKeyboard());

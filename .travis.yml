@@ -77,7 +77,7 @@ cache:
     - $HOME/.gradle
 
 after_success:
-- ./gradlew jacocoTestReport coveralls -PdisablePreDex
+    - ./gradlew jacocoTestReport coveralls -PdisablePreDex
 
 addons:
   coverity_scan:
@@ -87,3 +87,6 @@ addons:
     build_command_prepend: "./gradlew clean --no-daemon -PdisablePreDex"
     build_command: "./gradlew build --no-daemon -PdisablePreDex"
     branch_pattern: master
+
+after_failure:
+    - adb logcat &
