@@ -91,7 +91,7 @@ after_failure:
     - sudo apt-get install -qq --force-yes imagemagick
     - mkdir sdcard
     - sudo kpartx -a sdcard.img
-    - sudo mount -o rw -t ext4 /dev/mapper/loop0p1 sdcard
+    - sudo mount -o rw -t ext4 /dev/mapper/loop0p1 sdcard/
     - ls -R sdcard/
     - for i in sdcard/Pictures/*; do echo $i; asciiview $i; done
 
