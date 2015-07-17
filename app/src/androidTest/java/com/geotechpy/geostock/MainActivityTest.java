@@ -2,7 +2,9 @@ package com.geotechpy.geostock;
 
 
 import android.support.test.runner.AndroidJUnit4;
+import android.util.Log;
 
+import com.geotechpy.geostock.others.TakeScreenshot;
 import com.geotechpy.geostock.rules.ActivityRule;
 
 import org.junit.Rule;
@@ -53,6 +55,8 @@ public class MainActivityTest {
 
     @Test
     public void test3_shouldButtonLoginUser(){
+        TakeScreenshot.takeScreenshot("screenshot-001", main.get());
+        Log.d("LOGIN", "screenshot taken");
         onView(withId(R.id.btn_login)).perform(closeSoftKeyboard(), click());
         onView(withText(R.string.empty_field_user)).check(matches(isDisplayed()));
         onView(withId(R.id.et_user)).perform(clearText(), typeText("no_user"), closeSoftKeyboard());
@@ -62,6 +66,5 @@ public class MainActivityTest {
         onView(withId(R.id.btn_login)).perform(click());
         onView(withText(R.string.invalid_user)).check(matches(isDisplayed()));
     }
-
 }
 
