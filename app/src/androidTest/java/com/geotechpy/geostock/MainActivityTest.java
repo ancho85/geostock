@@ -1,6 +1,7 @@
 package com.geotechpy.geostock;
 
 
+import android.support.test.espresso.IdlingPolicies;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.geotechpy.geostock.rules.ActivityRule;
@@ -8,6 +9,8 @@ import com.geotechpy.geostock.rules.ActivityRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.util.concurrent.TimeUnit;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.clearText;
@@ -29,6 +32,11 @@ public class MainActivityTest {
     @Rule
     public final ActivityRule<MainActivity> main = new ActivityRule<>(MainActivity.class);
 
+    public MainActivityTest(){
+        super();
+        IdlingPolicies.setMasterPolicyTimeout(5, TimeUnit.SECONDS);
+    }
+
 
     @Test
     public void test1_shouldBeAbleToLaunchMainScreen() {
@@ -48,8 +56,7 @@ public class MainActivityTest {
     }
 
     @Test
-    public void test3_shouldButtonLoginUser() throws InterruptedException {
-        Thread.sleep(10000);
+    public void test3_shouldButtonLoginUser(){
         onView(withId(R.id.btn_login)).perform(click());
         onView(withText(R.string.empty_field_user)).check(matches(isDisplayed()));
         onView(withId(R.id.et_user)).perform(clearText(), typeText("no_user"), closeSoftKeyboard());
