@@ -1,7 +1,6 @@
 package com.geotechpy.geostock;
 
 
-import android.support.test.espresso.IdlingPolicies;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.geotechpy.geostock.rules.ActivityRule;
@@ -9,8 +8,6 @@ import com.geotechpy.geostock.rules.ActivityRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import java.util.concurrent.TimeUnit;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.clearText;
@@ -34,8 +31,6 @@ public class MainActivityTest {
 
     public MainActivityTest(){
         super();
-        IdlingPolicies.setMasterPolicyTimeout(3600, TimeUnit.SECONDS);
-        IdlingPolicies.setIdlingResourceTimeout(3600, TimeUnit.SECONDS);
     }
 
 
@@ -49,7 +44,7 @@ public class MainActivityTest {
     }
 
     @Test
-    public void test3_shouldButtonDeleteDatabase() {
+    public void test2_shouldButtonDeleteDatabase() {
         onView(withId(R.id.btn_reset)).perform(click());
         onView(withText(R.string.confirm_title)).check(matches(isDisplayed()));
         onView(withId(android.R.id.button1)).perform(click());
@@ -57,8 +52,9 @@ public class MainActivityTest {
     }
 
     @Test
-    public void test2_shouldButtonLoginUser(){
-        onView(withId(R.id.btn_login)).perform(click());
+    public void test3_shouldButtonLoginUser() throws InterruptedException {
+        Thread.sleep(1000);
+        onView(withId(R.id.btn_login)).perform(closeSoftKeyboard(), click());
         onView(withText(R.string.empty_field_user)).check(matches(isDisplayed()));
         onView(withId(R.id.et_user)).perform(clearText(), typeText("no_user"), closeSoftKeyboard());
         onView(withId(R.id.btn_login)).perform(click());
