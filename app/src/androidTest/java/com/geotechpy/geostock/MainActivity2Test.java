@@ -15,13 +15,19 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.Espresso.pressBack;
 import static android.support.test.espresso.Espresso.registerIdlingResources;
 import static android.support.test.espresso.Espresso.unregisterIdlingResources;
+import static android.support.test.espresso.action.ViewActions.clearText;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static android.support.test.espresso.action.ViewActions.typeText;
+import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.Matchers.not;
 
 /**
  * Volley network sync test
@@ -59,5 +65,26 @@ public class MainActivity2Test {
         onView(withText(R.string.confirm_action)).check(matches(isDisplayed()));
         onView(withId(android.R.id.button1)).perform(click());
         onView(withText(R.string.db_sync)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void shouldDisplayStockTypeOnUserLogin() throws InterruptedException{
+        onView(withId(R.id.et_user)).perform(clearText(), typeText("ancho"), closeSoftKeyboard());
+        Thread.sleep(2000);
+        onView(withId(R.id.et_password)).perform(clearText(), typeText("777"), closeSoftKeyboard());
+        Thread.sleep(2000);
+        onView(withText(R.string.login)).perform(click());
+        onView(withText(R.string.invalid_password)).check(matches(isDisplayed()));
+
+        onView(withId(R.id.et_password)).perform(clearText(), typeText("666"), closeSoftKeyboard());
+        Thread.sleep(2000);
+        onView(withText(R.string.login)).perform(click());
+        onView(withId(R.id.btn_deposit)).check(matches(isDisplayed()));
+        onView(withId(R.id.btn_laboratory)).check(matches(not(isDisplayed())));
+
+        pressBack();
+        onView(withText(R.string.confirm_exit)).check(matches(isDisplayed()));
+        onView(withId(android.R.id.button1)).perform(click());
+
     }
 }
