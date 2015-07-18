@@ -16,6 +16,7 @@ env:
     - ANDROID_BUILD_TOOLS_VERSION=22.0.1
     - ARMEABI=armeabi-v7a
     - ADB_INSTALL_TIMEOUT=8 # minutes (2 minutes by default)
+    - TARGET="android-22" NAME="android-22"
 
      # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
      #   via the "travis encrypt" command using the project repo's public key
@@ -54,16 +55,10 @@ before_install:
     - android list targets | grep -e '^\(\(id:\)\|\( Tag\)\)'
 
 before_script:
-  - echo no | android create avd --force -n test -t android-$ANDROID_API_LEVEL --abi $ARMEABI
-  - emulator -avd test -no-skin -no-audio -no-window &
-  - android-wait-for-emulator
-  - adb shell input keyevent 82 &
+  - ./adv-test.sh
 
 script:
     - ./gradlew clean test connectedAndroidTest -PdisablePreDex
-    # cleanup a little for better caching reuse
-    - rm $HOME/.gradle/daemon/2.4/*.*
-    - rm $HOME/.gradle/caches/modules-2/modules-2.lock
 
 notifications:
   email: false
@@ -76,6 +71,11 @@ cache:
   directories:
     - $HOME/.gradle
 
+before_cache:
+    # cleanup a little for better caching reuse
+    - rm $HOME/.gradle/daemon/2.4/*.*
+    - rm $HOME/.gradle/caches/modules-2/modules-2.lock
+
 after_success:
 - ./gradlew jacocoTestReport coveralls -PdisablePreDex
 
@@ -87,3 +87,6 @@ addons:
     build_command_prepend: "./gradlew clean --no-daemon -PdisablePreDex"
     build_command: "./gradlew build --no-daemon -PdisablePreDex"
     branch_pattern: master
+
+after_failure:
+    - adb logcat -t 500

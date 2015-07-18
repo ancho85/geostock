@@ -1,4 +1,4 @@
-package com.geotechpy.geostock;
+package com.geotechpy.geostock.resources;
 
 import android.support.test.espresso.IdlingResource;
 import android.util.Log;

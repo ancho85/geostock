@@ -1,4 +1,4 @@
-package com.geotechpy.geostock;
+package com.geotechpy.geostock.rules;
 
 /*
  * Copyright (C) 2015 Jake Wharton
