@@ -88,7 +88,7 @@ after_success:
     - ./gradlew jacocoTestReport coveralls -PdisablePreDex
 
 after_failure:
-    - sudo apt-get install -qq --force-yes imagemagick
+    - sudo apt-get -qq install --force-yes aview kpartx
     - mkdir sdcard
     - sudo kpartx -a sdcard.img
     - sudo mount -o rw -t ext4 /dev/mapper/loop0p1 sdcard/
