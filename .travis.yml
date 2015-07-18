@@ -86,7 +86,7 @@ addons:
     notification_email: ancho.corp@gmail.com
     build_command_prepend: "./gradlew clean --no-daemon -PdisablePreDex"
     build_command: "./gradlew build --no-daemon -PdisablePreDex"
-    branch_pattern: master
+    branch_pattern: coverity-scan
 
 after_failure:
     - adb logcat -t 500

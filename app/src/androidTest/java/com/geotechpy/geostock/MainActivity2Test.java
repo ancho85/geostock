@@ -104,6 +104,6 @@ public class MainActivity2Test {
         pressBack();
         onView(withText(R.string.confirm_exit)).check(matches(isDisplayed()));
         onView(withId(android.R.id.button2)).perform(click());
-        onView(withText(R.id.tv_stocktype_username)).check(matches(isDisplayed()));
+        onView(withId(R.id.tv_stocktype_username)).check(matches(isDisplayed()));
     }
 }
