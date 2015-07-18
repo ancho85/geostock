@@ -81,6 +81,7 @@ public class MainActivity2Test {
         onView(withText(R.string.login)).perform(click());
         onView(withId(R.id.btn_deposit)).check(matches(isDisplayed()));
         onView(withId(R.id.btn_laboratory)).check(matches(not(isDisplayed())));
+        onView(withText("ancho")).check(matches(isDisplayed()));
 
         pressBack();
         onView(withText(R.string.confirm_exit)).check(matches(isDisplayed()));
