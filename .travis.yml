@@ -65,7 +65,7 @@ before_script:
     - adb shell input keyevent 82 &
 
 script:
-    - travis_retry ./gradlew clean test connectedAndroidTest -PdisablePreDex --info
+    - travis_retry ./gradlew clean test connectedAndroidTest -PdisablePreDex
     # cleanup a little for better caching reuse
     - rm $HOME/.gradle/daemon/2.4/*.*
     - rm $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -88,6 +88,7 @@ after_success:
     - ./gradlew jacocoTestReport coveralls -PdisablePreDex
 
 after_failure:
+    - modprobe dm-mod
     - sudo apt-get -qq install --force-yes aview kpartx
     - mkdir sdcard
     - sudo kpartx -a sdcard.img
