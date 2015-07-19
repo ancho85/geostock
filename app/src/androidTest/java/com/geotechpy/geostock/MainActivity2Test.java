@@ -1,11 +1,13 @@
 package com.geotechpy.geostock;
 
+import android.content.Context;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.MediumTest;
 
 import com.geotechpy.geostock.models.Stock;
 import com.geotechpy.geostock.rules.ActivityRule;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,6 +24,8 @@ import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static com.geotechpy.geostock.matchers.CustomMatchers.withStockSerNr;
+import static com.geotechpy.geostock.matchers.CustomMatchers.withStockStatus;
+import static com.geotechpy.geostock.matchers.CustomMatchers.withStockType;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
@@ -35,8 +39,15 @@ import static org.hamcrest.Matchers.not;
 @MediumTest
 public class MainActivity2Test {
 
+    Context ctx;
+
     @Rule
     public final ActivityRule<MainActivity> main = new ActivityRule<>(MainActivity.class);
+
+    @Before
+    public void setUp(){
+        ctx = main.instrumentation().getTargetContext();
+    }
 
 
     @Test
@@ -62,11 +73,24 @@ public class MainActivity2Test {
         onView(withId(R.id.tv_stocklist_username)).check(matches(isDisplayed()));
         onData(allOf(is(instanceOf(Stock.class)), withStockSerNr(1))).check(matches(isDisplayed()));
 
+        String active = ctx.getString(R.string.stock_active);
+        String deposit = ctx.getString(R.string.zone_deposit);
+        onData(allOf(is(instanceOf(Stock.class)), withStockStatus(active)))
+                .onChildView(withId(R.id.ib_delete)) //resource id of third column from xml layout
+                .perform(click());
+        onView(withText(R.string.confirm_action)).check(matches(isDisplayed()));
+        onView(withId(android.R.id.button1)).perform(click());
+
+        onData(allOf(is(instanceOf(Stock.class)), withStockType(deposit)))
+                .onChildView(withId(R.id.ib_edit)) //resource id of second column from xml layout
+                .perform(click());
+        onView(withId(R.id.lv_itemlist_items)).check(matches(isDisplayed()));
+
+        pressBack(); //back to StockActivity
         pressBack(); //back to StockTypeActivity
         pressBack(); //Try to go back to MainActivity (Login) and exit
         onView(withText(R.string.confirm_exit)).check(matches(isDisplayed()));
         onView(withId(android.R.id.button1)).perform(click());
-
     }
 
     @Test
