@@ -5,6 +5,7 @@ import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.MediumTest;
 
 import com.geotechpy.geostock.models.Stock;
+import com.geotechpy.geostock.models.Zone;
 import com.geotechpy.geostock.rules.ActivityRule;
 
 import org.junit.Before;
@@ -20,12 +21,14 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.isChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static com.geotechpy.geostock.matchers.CustomMatchers.withStockSerNr;
 import static com.geotechpy.geostock.matchers.CustomMatchers.withStockStatus;
 import static com.geotechpy.geostock.matchers.CustomMatchers.withStockType;
+import static com.geotechpy.geostock.matchers.CustomMatchers.withZoneSerNr;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
@@ -81,8 +84,25 @@ public class MainActivity2Test {
         onView(withText(R.string.confirm_action)).check(matches(isDisplayed()));
         onView(withId(android.R.id.button1)).perform(click());
 
+        onView(withId(R.id.btn_new_stock)).perform(click());
+
+        //StockZoneListActivity
+        onView(withId(R.id.btn_ok)).perform(click()); //must select one first
+        onData(allOf(is(instanceOf(Zone.class)), withZoneSerNr(1)))
+                .perform(click());
+        onData(allOf(is(instanceOf(Zone.class)), withZoneSerNr(1)))
+                .check(matches(isChecked()));
+        onView(withId(R.id.btn_cancel)).perform(click());
+        onView(withId(R.id.btn_new_stock)).perform(click());
+        onData(allOf(is(instanceOf(Zone.class)), withZoneSerNr(3)))
+                .perform(click());
+        onView(withId(R.id.btn_ok)).perform(click());
+        onData(allOf(is(instanceOf(Stock.class)), withStockSerNr(4)))
+                .check(matches(isDisplayed())); //created stock appears
+
         onData(allOf(is(instanceOf(Stock.class)), withStockType(deposit)))
                 .onChildView(withId(R.id.ib_edit)) //resource id of second column from xml layout
+                .atPosition(0)
                 .perform(click());
         onView(withId(R.id.lv_itemlist_items)).check(matches(isDisplayed()));
 

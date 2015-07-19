@@ -6,6 +6,7 @@ import android.widget.Adapter;
 import android.widget.AdapterView;
 
 import com.geotechpy.geostock.models.Stock;
+import com.geotechpy.geostock.models.Zone;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -121,6 +122,23 @@ public class CustomMatchers {
             @Override
             public void describeTo(Description description) {
                 description.appendText("with id: " + stockType);
+            }
+        };
+    }
+
+    /**
+     * Matches a Zone with a specific SerNr
+     */
+    public static Matcher<Object> withZoneSerNr(final int zoneSerNr) {
+        return new BoundedMatcher<Object, Zone>(Zone.class) {
+            @Override
+            protected boolean matchesSafely(Zone zone) {
+                return zoneSerNr == zone.getSernr();
+            }
+
+            @Override
+            public void describeTo(Description description) {
+                description.appendText("with id: " + zoneSerNr);
             }
         };
     }
