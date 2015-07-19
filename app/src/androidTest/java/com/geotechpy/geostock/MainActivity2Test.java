@@ -1,14 +1,11 @@
 package com.geotechpy.geostock;
 
 import android.support.test.runner.AndroidJUnit4;
-import android.test.suitebuilder.annotation.LargeTest;
+import android.test.suitebuilder.annotation.MediumTest;
 
 import com.geotechpy.geostock.models.Stock;
-import com.geotechpy.geostock.resources.VolleyIdlingResource;
 import com.geotechpy.geostock.rules.ActivityRule;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,8 +13,6 @@ import org.junit.runner.RunWith;
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.Espresso.pressBack;
-import static android.support.test.espresso.Espresso.registerIdlingResources;
-import static android.support.test.espresso.Espresso.unregisterIdlingResources;
 import static android.support.test.espresso.action.ViewActions.clearText;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
@@ -37,38 +32,12 @@ import static org.hamcrest.Matchers.not;
  */
 
 @RunWith(AndroidJUnit4.class)
-@LargeTest
+@MediumTest
 public class MainActivity2Test {
 
     @Rule
     public final ActivityRule<MainActivity> main = new ActivityRule<>(MainActivity.class);
 
-    static VolleyIdlingResource volleyIdlingResource;
-
-    @BeforeClass
-    public static void registerIntentServiceIdlingResource() {
-        try {
-            volleyIdlingResource = new VolleyIdlingResource("VolleyCalls");
-            registerIdlingResources(volleyIdlingResource);
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @AfterClass
-    public static void unregisterIntentServiceIdlingResource() {
-        unregisterIdlingResources(volleyIdlingResource);
-    }
-
-
-    @Test
-    public void shouldDatabaseSync() throws InterruptedException {
-        Thread.sleep(5000);
-        onView(withId(R.id.btn_sync)).perform(click());
-        onView(withText(R.string.confirm_action)).check(matches(isDisplayed()));
-        onView(withId(android.R.id.button1)).perform(click());
-        onView(withText(R.string.db_sync)).check(matches(isDisplayed()));
-    }
 
     @Test
     public void shouldDisplayStockTypeDepositOnUserLogin() throws InterruptedException {
