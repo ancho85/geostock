@@ -76,15 +76,18 @@ public class MainActivity2Test {
         onView(withId(R.id.et_password)).perform(clearText(), typeText("666"), closeSoftKeyboard());
         Thread.sleep(2000);
         onView(withText(R.string.login)).perform(click());
+
+        //StockTypeActivity
         onView(withId(R.id.btn_deposit)).check(matches(isDisplayed()));
         onView(withId(R.id.btn_laboratory)).check(matches(not(isDisplayed())));
         onView(withText("ancho")).check(matches(isDisplayed()));
-
         onView(withId(R.id.btn_deposit)).perform(click());
+
+        //StockListActivity
         onView(withId(R.id.tv_stocklist_username)).check(matches(isDisplayed()));
 
-        pressBack();
-        pressBack();
+        pressBack(); //back to StockTypeActivity
+        pressBack(); //Try to go back to MainActivity (Login) and exit
         onView(withText(R.string.confirm_exit)).check(matches(isDisplayed()));
         onView(withId(android.R.id.button1)).perform(click());
 
