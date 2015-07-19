@@ -3,6 +3,7 @@ package com.geotechpy.geostock;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
 
+import com.geotechpy.geostock.models.Stock;
 import com.geotechpy.geostock.resources.VolleyIdlingResource;
 import com.geotechpy.geostock.rules.ActivityRule;
 
@@ -12,6 +13,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.Espresso.pressBack;
 import static android.support.test.espresso.Espresso.registerIdlingResources;
@@ -24,6 +26,10 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static com.geotechpy.geostock.matchers.CustomMatchers.withStockSerNr;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 
 /**
@@ -56,7 +62,7 @@ public class MainActivity2Test {
 
 
     @Test
-    public void shouldDatabaseSync() throws InterruptedException{
+    public void shouldDatabaseSync() throws InterruptedException {
         Thread.sleep(5000);
         onView(withId(R.id.btn_sync)).perform(click());
         onView(withText(R.string.confirm_action)).check(matches(isDisplayed()));
@@ -65,7 +71,7 @@ public class MainActivity2Test {
     }
 
     @Test
-    public void shouldDisplayStockTypeDepositOnUserLogin() throws InterruptedException{
+    public void shouldDisplayStockTypeDepositOnUserLogin() throws InterruptedException {
         onView(withId(R.id.et_user)).perform(clearText(), typeText("ancho"), closeSoftKeyboard());
         Thread.sleep(2000);
         onView(withId(R.id.et_password)).perform(clearText(), typeText("777"), closeSoftKeyboard());
@@ -85,6 +91,7 @@ public class MainActivity2Test {
 
         //StockListActivity
         onView(withId(R.id.tv_stocklist_username)).check(matches(isDisplayed()));
+        onData(allOf(is(instanceOf(Stock.class)), withStockSerNr(1))).check(matches(isDisplayed()));
 
         pressBack(); //back to StockTypeActivity
         pressBack(); //Try to go back to MainActivity (Login) and exit
@@ -94,7 +101,7 @@ public class MainActivity2Test {
     }
 
     @Test
-    public void shouldDisplayStockTypeLaboratoryOnUserLogin() throws InterruptedException{
+    public void shouldDisplayStockTypeLaboratoryOnUserLogin() throws InterruptedException {
         onView(withId(R.id.et_user)).perform(clearText(), typeText("alex"), closeSoftKeyboard());
         Thread.sleep(2000);
         onView(withId(R.id.et_password)).perform(clearText(), typeText("777"), closeSoftKeyboard());
