@@ -10,13 +10,17 @@ import com.android.volley.toolbox.Volley;
  */
 public class GeotechpyStockApp extends Application {
 
-    private static String userName;
+    private static volatile String userName;
     private static RequestQueue requestQueue;
-    private static GeotechpyStockApp appInstance;
+    private static volatile GeotechpyStockApp appInstance;
 
     @Override
     public void onCreate() {
         super.onCreate();
+        setAppInstance();
+    }
+
+    synchronized void setAppInstance(){
         appInstance = this;
     }
 
@@ -31,7 +35,7 @@ public class GeotechpyStockApp extends Application {
         return userName;
     }
 
-    public void setUserName(String userCode){
+    public synchronized static void setUserName(String userCode){
         userName = userCode;
     }
 
