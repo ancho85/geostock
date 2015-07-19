@@ -10,15 +10,14 @@ import com.android.volley.toolbox.Volley;
  */
 public class GeotechpyStockApp extends Application {
 
-    private static String userName = "";
+    private static String userName;
     private static RequestQueue requestQueue;
-    private static GeotechpyStockApp appInstance = null;
+    private static GeotechpyStockApp appInstance;
 
     @Override
     public void onCreate() {
         super.onCreate();
         appInstance = this;
-        requestQueue = Volley.newRequestQueue(this);
     }
 
     public synchronized static RequestQueue getRequestQueue(){

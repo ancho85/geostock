@@ -37,20 +37,19 @@ public final class VolleyIdlingResource implements IdlingResource {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public boolean isIdleNow() {
         try {
             Set<Request> set = (Set<Request>) mCurrentRequests.get(mVolleyRequestQueue);
             int count = set.size();
-            if (set != null) {
 
-                if (count == 0) {
-                    Log.d(TAG, "Volley is idle now! with: " + count);
-                    resourceCallback.onTransitionToIdle();
-                } else {
-                    Log.d(TAG, "Not idle... " +count);
-                }
-                return count == 0;
+            if (count == 0) {
+                Log.d(TAG, "Volley is idle now! with: " + count);
+                resourceCallback.onTransitionToIdle();
+            } else {
+                Log.d(TAG, "Not idle... " +count);
             }
+            return count == 0;
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
