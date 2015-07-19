@@ -58,7 +58,7 @@ before_script:
   - ./adv-test.sh
 
 script:
-    - ./gradlew clean test connectedAndroidTest -PdisablePreDex
+    - travis_retry ./gradlew clean test connectedAndroidTest -PdisablePreDex
 
 notifications:
   email: false
