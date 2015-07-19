@@ -44,6 +44,8 @@ public class SyncFromServer {
         final TextView tv_mainStatus;
 
         String URL = "http://jsonplaceholder.typicode.com/users";
+        //https://geotechpy.com/inventario/ajax/productos/get_full_productos_rest.php
+        //https://geotechpy.com/inventario/ajax/usuarios/get_full_usuarios_rest.php
         JSONObject obj = new JSONObject();
         try {
             obj.put("key", "value");
