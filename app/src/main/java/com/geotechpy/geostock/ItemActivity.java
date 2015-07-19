@@ -30,6 +30,7 @@ public class ItemActivity extends AppCompatActivity {
     EditText etQty;
     Integer lineNr;
     String userName;
+    Stock stock;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +54,7 @@ public class ItemActivity extends AppCompatActivity {
         tvZoneCode.setText(intent.getStringExtra("zoneCode"));
         editMode = intent.getBooleanExtra("editMode", false);
 
-        Stock stock = StockManager.load(this, Integer.valueOf(tvStockSerNr.getText().toString()));
+        stock = StockManager.load(this, Integer.valueOf(tvStockSerNr.getText().toString()));
         if (stock.getType().equals(getString(R.string.zone_deposit))) {
             etCode.setInputType(InputType.TYPE_CLASS_NUMBER);
             etQty.setInputType(InputType.TYPE_CLASS_NUMBER);
@@ -103,7 +104,6 @@ public class ItemActivity extends AppCompatActivity {
         String name = etName.getText().toString();
         String qty = etQty.getText().toString();
         Integer stockSerNr = Integer.valueOf(tvStockSerNr.getText().toString());
-        Float fQty = Float.valueOf(qty);
         if (!editMode) {
             if (TextUtils.isEmpty(code)){
                 displayMessage(getString(R.string.invalid_item_code));
@@ -118,10 +118,11 @@ public class ItemActivity extends AppCompatActivity {
             displayMessage(getString(R.string.invalid_item_qty));
             return;
         }
+        Float fQty = Float.valueOf(qty);
         StockDetailManager sdm = new StockDetailManager(this);
         if (!editMode){
             ItemManager im = new ItemManager(this);
-            im.insert(code, name, getString(R.string.zone_deposit));
+            im.insert(code, name, stock.getType());
             sdm.insert(stockSerNr, code, fQty);
             displayMessage(getString(R.string.item_created));
         }else{
