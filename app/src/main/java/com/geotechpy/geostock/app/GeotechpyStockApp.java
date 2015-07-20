@@ -17,11 +17,11 @@ public class GeotechpyStockApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        setAppInstance();
+        setAppInstance(this);
     }
 
-    synchronized void setAppInstance(){
-        appInstance = this;
+    synchronized static void setAppInstance(GeotechpyStockApp application){
+        appInstance = application;
     }
 
     public synchronized static RequestQueue getRequestQueue(){
