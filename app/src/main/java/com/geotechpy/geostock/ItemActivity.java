@@ -120,12 +120,13 @@ public class ItemActivity extends AppCompatActivity {
         }
         Float fQty = Float.valueOf(qty);
         StockDetailManager sdm = new StockDetailManager(this);
+        ItemManager im = new ItemManager(this);
         if (!editMode){
-            ItemManager im = new ItemManager(this);
             im.insert(code, name, stock.getType());
             sdm.insert(stockSerNr, code, fQty);
             displayMessage(getString(R.string.item_created));
         }else{
+            im.update(code, name, stock.getType());
             sdm.update(stockSerNr, lineNr, code, fQty);
             displayMessage(getString(R.string.item_updated));
         }
