@@ -2,16 +2,12 @@ package com.geotechpy.geostock.app;
 
 import android.app.Application;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
-
 /**
- * Holds login information. Also network requests
+ * Holds login information.
  */
 public class GeotechpyStockApp extends Application {
 
     private static volatile String userName;
-    private static RequestQueue requestQueue;
     private static volatile GeotechpyStockApp appInstance;
 
     @Override
@@ -22,13 +18,6 @@ public class GeotechpyStockApp extends Application {
 
     synchronized static void setAppInstance(GeotechpyStockApp application){
         appInstance = application;
-    }
-
-    public synchronized static RequestQueue getRequestQueue(){
-        if (requestQueue == null){
-            requestQueue = Volley.newRequestQueue(appInstance);
-        }
-        return requestQueue;
     }
 
     public String getUserName(){

@@ -56,7 +56,7 @@ public class SyncFromServer {
         tv_mainStatus = (TextView) ((AppCompatActivity) mContext).findViewById(R.id.tv_mainstatus);
         tv_mainStatus.setText("Sync started...");
 
-        RequestQueue queue = GeotechpyStockApp.getRequestQueue();
+        RequestQueue queue = NetRequester.getInstance(mContext).getRequestQueue();
 
         JsonObjectRequest jsonArrayRequest = new JsonObjectRequest(Request.Method.POST, URL, obj,
                 new Response.Listener<JSONObject>() {

@@ -1,11 +1,13 @@
 package com.geotechpy.geostock.resources;
 
+import android.content.Context;
 import android.support.test.espresso.IdlingResource;
 import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.geotechpy.geostock.app.GeotechpyStockApp;
+import com.geotechpy.geostock.network.NetRequester;
 
 import java.lang.reflect.Field;
 import java.util.Set;
@@ -24,11 +26,12 @@ public final class VolleyIdlingResource implements IdlingResource {
 
     public VolleyIdlingResource(String resourceName) throws SecurityException, NoSuchFieldException {
         this.resourceName = checkNotNull(resourceName);
-
-        mVolleyRequestQueue = GeotechpyStockApp.getRequestQueue();
-
         mCurrentRequests = RequestQueue.class.getDeclaredField("mCurrentRequests");
         mCurrentRequests.setAccessible(true);
+    }
+
+    public void setContext(Context context){
+        mVolleyRequestQueue = NetRequester.getInstance(context).getRequestQueue();
     }
 
     @Override
