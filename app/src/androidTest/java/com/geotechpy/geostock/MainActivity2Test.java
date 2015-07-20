@@ -5,6 +5,7 @@ import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.MediumTest;
 
 import com.geotechpy.geostock.models.Stock;
+import com.geotechpy.geostock.models.StockDetail;
 import com.geotechpy.geostock.models.Zone;
 import com.geotechpy.geostock.rules.ActivityRule;
 
@@ -25,6 +26,8 @@ import static android.support.test.espresso.matcher.ViewMatchers.isChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static com.geotechpy.geostock.matchers.CustomMatchers.editTextNotEditable;
+import static com.geotechpy.geostock.matchers.CustomMatchers.withStockDetailLineNumber;
 import static com.geotechpy.geostock.matchers.CustomMatchers.withStockSerNr;
 import static com.geotechpy.geostock.matchers.CustomMatchers.withStockStatus;
 import static com.geotechpy.geostock.matchers.CustomMatchers.withStockType;
@@ -77,13 +80,14 @@ public class MainActivity2Test {
         onData(allOf(is(instanceOf(Stock.class)), withStockSerNr(1))).check(matches(isDisplayed()));
 
         String active = ctx.getString(R.string.stock_active);
-        String deposit = ctx.getString(R.string.zone_deposit);
         onData(allOf(is(instanceOf(Stock.class)), withStockStatus(active)))
                 .onChildView(withId(R.id.ib_delete)) //resource id of third column from xml layout
                 .perform(click());
         onView(withText(R.string.confirm_action)).check(matches(isDisplayed()));
         onView(withId(android.R.id.button1)).perform(click());
-
+        onData(allOf(is(instanceOf(Stock.class)), withStockSerNr(2)))
+                .onChildView(withId(R.id.ib_sync)) //resource id of first column from xml layout
+                .perform(click());
         onView(withId(R.id.btn_new_stock)).perform(click());
 
         //StockZoneListActivity
@@ -99,12 +103,55 @@ public class MainActivity2Test {
         onView(withId(R.id.btn_ok)).perform(click());
         onData(allOf(is(instanceOf(Stock.class)), withStockSerNr(4)))
                 .check(matches(isDisplayed())); //created stock appears
-
+        String deposit = ctx.getString(R.string.zone_deposit);
         onData(allOf(is(instanceOf(Stock.class)), withStockType(deposit)))
                 .onChildView(withId(R.id.ib_edit)) //resource id of second column from xml layout
-                .atPosition(0)
+                .atPosition(1)
                 .perform(click());
+
+        //ItemListActivity
+        onView(withText("ancho")).check(matches(isDisplayed()));
+        onView(withId(R.id.tv_itemlist_stock_sernr)).check(matches(withText("4")));
+        onView(withId(R.id.tv_itemlist_stock_zone_code)).check(matches(withText("3")));
         onView(withId(R.id.lv_itemlist_items)).check(matches(isDisplayed()));
+        onView(withId(R.id.btn_new)).perform(click());
+        onView(withId(R.id.btn_cancel)).perform(click());
+        onView(withId(R.id.btn_new)).perform(click());
+
+        //ItemActivity
+        onView(withId(R.id.et_item_code)).check(matches(not(editTextNotEditable())));
+        onView(withId(R.id.btn_ok)).perform(click()); //no code toast
+        onView(withId(R.id.et_item_code))
+                .perform(clearText(), typeText("1010"), closeSoftKeyboard());
+        onView(withId(R.id.btn_ok)).perform(click()); // no name toast
+        onView(withId(R.id.et_item_name))
+                .perform(clearText(), typeText("testItem"), closeSoftKeyboard());
+        onView(withId(R.id.btn_ok)).perform(click()); // no qty toast
+        onView(withId(R.id.et_item_qty))
+                .perform(clearText(), typeText("33"), closeSoftKeyboard());
+        onView(withId(R.id.btn_ok)).perform(click()); //item created toast
+
+        //ItemListActivity
+        onData(allOf(is(instanceOf(StockDetail.class)), withStockDetailLineNumber(1)))
+                .onChildView(withId(R.id.ib_items_edit))
+                .perform(click());
+
+        //ItemActivity
+        onView(withId(R.id.et_item_code)).check(matches(editTextNotEditable()));
+        onView(withId(R.id.et_item_name))
+                .perform(clearText(), typeText("testItemUpdated"), closeSoftKeyboard());
+        onView(withId(R.id.et_item_qty))
+                .perform(clearText(), typeText("34"), closeSoftKeyboard());
+        onView(withId(R.id.btn_ok)).perform(click()); //item updated toast
+
+        //ItemListActivity
+        onData(allOf(is(instanceOf(StockDetail.class)), withStockDetailLineNumber(1)))
+                .check(matches(withText("testItemUpdated")));
+        onData(allOf(is(instanceOf(StockDetail.class)), withStockDetailLineNumber(1)))
+                .onChildView(withId(R.id.ib_items_delete))
+                .perform(click());
+        onView(withText(R.string.confirm_action)).check(matches(isDisplayed()));
+        onView(withId(android.R.id.button1)).perform(click());
 
         pressBack(); //back to StockActivity
         pressBack(); //back to StockTypeActivity

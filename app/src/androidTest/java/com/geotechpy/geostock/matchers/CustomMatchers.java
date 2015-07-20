@@ -4,8 +4,11 @@ import android.support.test.espresso.matcher.BoundedMatcher;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
+import android.widget.EditText;
 
+import com.geotechpy.geostock.models.Item;
 import com.geotechpy.geostock.models.Stock;
+import com.geotechpy.geostock.models.StockDetail;
 import com.geotechpy.geostock.models.Zone;
 
 import org.hamcrest.Description;
@@ -139,6 +142,54 @@ public class CustomMatchers {
             @Override
             public void describeTo(Description description) {
                 description.appendText("with id: " + zoneSerNr);
+            }
+        };
+    }
+
+    /**
+     * Matches a Item with a specific Code
+     */
+    public static Matcher<Object> withItemCode(final String itemCode) {
+        return new BoundedMatcher<Object, Item>(Item.class) {
+            @Override
+            protected boolean matchesSafely(Item item) {
+                return itemCode.equals(item.getCode());
+            }
+
+            @Override
+            public void describeTo(Description description) {
+                description.appendText("with id: " + itemCode);
+            }
+        };
+    }
+
+    /**
+     * Matches a StockDetail with a specific Line Number
+     */
+    public static Matcher<Object> withStockDetailLineNumber(final int lineNr) {
+        return new BoundedMatcher<Object, StockDetail>(StockDetail.class) {
+            @Override
+            protected boolean matchesSafely(StockDetail stockDetail) {
+                return lineNr == stockDetail.getLinenr();
+            }
+
+            @Override
+            public void describeTo(Description description) {
+                description.appendText("with id: " + lineNr);
+            }
+        };
+    }
+
+    public static Matcher<View> editTextNotEditable() {
+        return new TypeSafeMatcher<View>() {
+
+            @Override
+            public boolean matchesSafely(View view) {
+                return view instanceof EditText && ((EditText) view).getKeyListener() == null;
+            }
+
+            @Override
+            public void describeTo(Description description) {
             }
         };
     }
