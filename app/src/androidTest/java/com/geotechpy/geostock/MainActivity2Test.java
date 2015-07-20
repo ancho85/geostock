@@ -27,6 +27,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static com.geotechpy.geostock.matchers.CustomMatchers.editTextNotEditable;
+import static com.geotechpy.geostock.matchers.CustomMatchers.withAdaptedData;
 import static com.geotechpy.geostock.matchers.CustomMatchers.withStockDetailLineNumber;
 import static com.geotechpy.geostock.matchers.CustomMatchers.withStockSerNr;
 import static com.geotechpy.geostock.matchers.CustomMatchers.withStockStatus;
@@ -146,12 +147,12 @@ public class MainActivity2Test {
 
         //ItemListActivity
         onData(allOf(is(instanceOf(StockDetail.class)), withStockDetailLineNumber(1)))
-                .check(matches(withText("testItemUpdated")));
-        onData(allOf(is(instanceOf(StockDetail.class)), withStockDetailLineNumber(1)))
                 .onChildView(withId(R.id.ib_items_delete))
                 .perform(click());
         onView(withText(R.string.confirm_action)).check(matches(isDisplayed()));
         onView(withId(android.R.id.button1)).perform(click());
+        onView(withId(R.id.lv_itemlist_items))
+                .check(matches(not(withAdaptedData(is(withStockDetailLineNumber(1))))));
 
         pressBack(); //back to StockActivity
         pressBack(); //back to StockTypeActivity
