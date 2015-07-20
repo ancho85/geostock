@@ -162,6 +162,7 @@ public class MainActivity2Test {
         pressBack(); //back to StockActivity
         pressBack(); //back to StockTypeActivity
         pressBack(); //Try to go back to MainActivity (Login) and exit
+        Thread.sleep(2000);
         onView(withText(R.string.confirm_exit)).check(matches(isDisplayed()));
         onView(withId(android.R.id.button1)).perform(click());
     }
