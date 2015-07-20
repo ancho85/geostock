@@ -13,7 +13,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.geotechpy.geostock.R;
 import com.geotechpy.geostock.app.GeotechpyStockApp;
 import com.geotechpy.geostock.database.ItemManager;
@@ -56,7 +55,7 @@ public class SyncFromServer {
         tv_mainStatus = (TextView) ((AppCompatActivity) mContext).findViewById(R.id.tv_mainstatus);
         tv_mainStatus.setText("Sync started...");
 
-        RequestQueue queue = NetRequester.getInstance(mContext).getRequestQueue();
+        RequestQueue queue = GeotechpyStockApp.getRequestQueue();
 
         JsonObjectRequest jsonArrayRequest = new JsonObjectRequest(Request.Method.POST, URL, obj,
                 new Response.Listener<JSONObject>() {

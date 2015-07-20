@@ -2,6 +2,9 @@ package com.geotechpy.geostock.app;
 
 import android.app.Application;
 
+import com.android.volley.RequestQueue;
+import com.geotechpy.geostock.network.NetRequester;
+
 /**
  * Holds login information.
  */
@@ -18,6 +21,10 @@ public class GeotechpyStockApp extends Application {
 
     synchronized static void setAppInstance(GeotechpyStockApp application){
         appInstance = application;
+    }
+
+    public synchronized static RequestQueue getRequestQueue(){
+        return NetRequester.getInstance(appInstance).getRequestQueue();
     }
 
     public String getUserName(){

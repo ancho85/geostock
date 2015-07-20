@@ -1,10 +1,7 @@
 package com.geotechpy.geostock;
 
 
-import android.content.Context;
-import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
-import android.test.RenamingDelegatingContext;
 import android.test.suitebuilder.annotation.LargeTest;
 
 import com.geotechpy.geostock.resources.VolleyIdlingResource;
@@ -44,9 +41,7 @@ public class MainActivity1Test {
     @BeforeClass
     public static void registerIntentServiceIdlingResource() {
         try {
-            Context ctx = new RenamingDelegatingContext(InstrumentationRegistry.getInstrumentation().getTargetContext(), "test_");
             volleyIdlingResource = new VolleyIdlingResource("VolleyCalls");
-            volleyIdlingResource.setContext(ctx);
             registerIdlingResources(volleyIdlingResource);
         } catch (NoSuchFieldException e) {
             e.printStackTrace();
