@@ -58,7 +58,7 @@ before_script:
   - ./adv-test.sh
 
 script:
-    - travis_retry ./gradlew clean test connectedAndroidTest -PdisablePreDex
+    - if [ "$COVERITY_SCAN_BRANCH" != 1 ]; then travis_retry ./gradlew clean test connectedAndroidTest -PdisablePreDex; fi
 
 notifications:
   email: false
@@ -77,7 +77,7 @@ before_cache:
     - rm $HOME/.gradle/caches/modules-2/modules-2.lock
 
 after_success:
-- ./gradlew jacocoTestReport coveralls -PdisablePreDex
+- if [ "$COVERITY_SCAN_BRANCH" != 1 ]; then ./gradlew jacocoTestReport coveralls -PdisablePreDex; fi
 
 addons:
   coverity_scan:
