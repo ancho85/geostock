@@ -124,12 +124,15 @@ public class MainActivity2Test {
         onView(withId(R.id.btn_ok)).perform(click()); //no code toast
         onView(withId(R.id.et_item_code))
                 .perform(clearText(), typeText("1010"), closeSoftKeyboard());
+        Thread.sleep(2000);
         onView(withId(R.id.btn_ok)).perform(click()); // no name toast
         onView(withId(R.id.et_item_name))
                 .perform(clearText(), typeText("testItem"), closeSoftKeyboard());
+        Thread.sleep(2000);
         onView(withId(R.id.btn_ok)).perform(click()); // no qty toast
         onView(withId(R.id.et_item_qty))
                 .perform(clearText(), typeText("33"), closeSoftKeyboard());
+        Thread.sleep(2000);
         onView(withId(R.id.btn_ok)).perform(click()); //item created toast
 
         //ItemListActivity
@@ -141,8 +144,10 @@ public class MainActivity2Test {
         onView(withId(R.id.et_item_code)).check(matches(editTextNotEditable()));
         onView(withId(R.id.et_item_name))
                 .perform(clearText(), typeText("testItemUpdated"), closeSoftKeyboard());
+        Thread.sleep(2000);
         onView(withId(R.id.et_item_qty))
                 .perform(clearText(), typeText("34"), closeSoftKeyboard());
+        Thread.sleep(2000);
         onView(withId(R.id.btn_ok)).perform(click()); //item updated toast
 
         //ItemListActivity
