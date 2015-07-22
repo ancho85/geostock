@@ -33,16 +33,17 @@ import java.io.UnsupportedEncodingException;
 public class SyncFromServer {
 
     Context mContext;
+    ProgressDialog progressDialog;
+    TextView tv_mainStatus;
+    int pendingRequests = 0;
 
     public SyncFromServer(Context context){
         this.mContext = context;
     }
 
     public void syncMasters() {
-        final ProgressDialog progressDialog = ProgressDialog.show(mContext, mContext.getString(R.string.sync_please_wait), mContext.getString(R.string.sync_requesting_data));
-        final TextView tv_mainStatus;
-
-        String URL = "http://jsonplaceholder.typicode.com/users";
+        showDialog();
+        String URL = "http://nothing";//"http://jsonplaceholder.typicode.com/users";
         //https://geotechpy.com/inventario/ajax/productos/get_full_productos_rest.php
         //https://geotechpy.com/inventario/ajax/usuarios/get_full_usuarios_rest.php
         //https://geotechpy.com/inventario/ajax/zonas/get_full_zonas_rest.php
@@ -56,7 +57,8 @@ public class SyncFromServer {
         tv_mainStatus.setText("Sync started...");
 
         RequestQueue queue = GeotechpyStockApp.getRequestQueue();
-
+        increasePendingRequests();
+        updateDialogMessage("Sync users");
         JsonObjectRequest jsonArrayRequest = new JsonObjectRequest(Request.Method.POST, URL, obj,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -93,17 +95,8 @@ public class SyncFromServer {
                         progressDialog.cancel();
                         Toast.makeText(mContext, R.string.db_sync, Toast.LENGTH_SHORT).show();
                         tv_mainStatus.setText(R.string.db_sync);
-
                     }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        progressDialog.cancel();
-                        String errorMsg = webServiceErrorParser(error);
-                        Toast.makeText(mContext, errorMsg, Toast.LENGTH_LONG).show();
-                        tv_mainStatus.setText(errorMsg);
-                    }
-                }
+                }, new VolleyErrorResponse()
         );
         queue.add(jsonArrayRequest);
     }
@@ -136,5 +129,43 @@ public class SyncFromServer {
         }
 
         return messageError.toString();
+    }
+
+    public int getPendingRequests(){
+        return pendingRequests;
+    }
+
+    public void increasePendingRequests(){
+        pendingRequests++;
+    }
+
+    public void decreasePendingRequests(){
+        pendingRequests--;
+    }
+
+    public void showDialog(){
+        progressDialog = ProgressDialog.show(mContext, mContext.getString(R.string.sync_please_wait), mContext.getString(R.string.sync_requesting_data));
+    }
+
+    public void updateDialogMessage(String message){
+        progressDialog.setMessage(message);
+    }
+
+    public void cancelDialog(){
+        progressDialog.dismiss();
+    }
+    
+    public class VolleyErrorResponse implements Response.ErrorListener{
+
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            decreasePendingRequests();
+            String errorMsg = webServiceErrorParser(error);
+            Toast.makeText(mContext, errorMsg, Toast.LENGTH_LONG).show();
+            tv_mainStatus.setText(errorMsg);
+            if (getPendingRequests() == 0){
+                cancelDialog();
+            }
+        }
     }
 }
