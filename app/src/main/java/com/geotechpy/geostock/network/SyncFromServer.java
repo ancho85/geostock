@@ -15,11 +15,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.geotechpy.geostock.R;
 import com.geotechpy.geostock.app.GeotechpyStockApp;
-import com.geotechpy.geostock.database.ItemManager;
-import com.geotechpy.geostock.database.StockDetailManager;
-import com.geotechpy.geostock.database.StockManager;
-import com.geotechpy.geostock.database.UserManager;
-import com.geotechpy.geostock.database.ZoneManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,62 +38,32 @@ public class SyncFromServer {
 
     public void syncMasters() {
         showDialog();
-        String URL = "http://nothing";//"http://jsonplaceholder.typicode.com/users";
-        //https://geotechpy.com/inventario/ajax/productos/get_full_productos_rest.php
-        //https://geotechpy.com/inventario/ajax/usuarios/get_full_usuarios_rest.php
-        //https://geotechpy.com/inventario/ajax/zonas/get_full_zonas_rest.php
-        JSONObject obj = new JSONObject();
-        try {
-            obj.put("key", "value");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        String itemURL = "http://jsonplaceholder.typicode.com/users"; //"http://geotechpy.com/inventario/ajax/productos/get_full_productos_rest.php";
+        String userURL = "http://jsonplaceholder.typicode.com/users"; //"http://geotechpy.com/inventario/ajax/usuarios/get_full_usuarios_rest.php";
+        String zoneURL = "http://jsonplaceholder.typicode.com/users"; //"http://geotechpy.com/inventario/ajax/zonas/get_full_zonas_rest.php";
+
         tv_mainStatus = (TextView) ((AppCompatActivity) mContext).findViewById(R.id.tv_mainstatus);
         tv_mainStatus.setText("Sync started...");
 
         RequestQueue queue = GeotechpyStockApp.getRequestQueue();
+
+        //user request
         increasePendingRequests();
-        updateDialogMessage("Sync users");
-        JsonObjectRequest jsonArrayRequest = new JsonObjectRequest(Request.Method.POST, URL, obj,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        UserManager um = new UserManager(mContext);
-                        um.insert("ancho", "666", mContext.getString(R.string.zone_deposit));
-                        um.insert("alex", "777", mContext.getString(R.string.zone_lab));
-                        um.insert("liz", "liz", mContext.getString(R.string.zone_both));
+        JsonObjectRequest jsonArrayUserRequest = new JsonObjectRequest(Request.Method.POST,
+                userURL, new JSONObject(), new UserSyncListener(), new VolleyErrorResponseListener());
+        queue.add(jsonArrayUserRequest);
 
-                        ZoneManager zm = new ZoneManager(mContext);
-                        zm.insert(1, "Deposit Nr. 1", mContext.getString(R.string.zone_deposit));
-                        zm.insert(2, "Deposit Nr. 2", mContext.getString(R.string.zone_deposit));
-                        zm.insert(3, "Deposit Nr. 3", mContext.getString(R.string.zone_deposit));
-                        zm.insert(4, "Lab Nr. 1", mContext.getString(R.string.zone_lab));
-                        zm.insert(5, "Lab Nr. 2", mContext.getString(R.string.zone_lab));
+        //zone request
+        increasePendingRequests();
+        JsonObjectRequest jsonArrayZoneRequest = new JsonObjectRequest(Request.Method.POST,
+                zoneURL, new JSONObject(), new ZoneSyncListener(), new VolleyErrorResponseListener());
+        queue.add(jsonArrayZoneRequest);
 
-                        ItemManager it = new ItemManager(mContext);
-                        it.insert("keyboard", "Keyboard", mContext.getString(R.string.zone_deposit));
-                        it.insert("engine", "Fusion Engine", mContext.getString(R.string.zone_lab));
-                        it.insert("quantum", "Quantum Engine", mContext.getString(R.string.zone_lab));
-
-                        StockManager sm = new StockManager(mContext);
-                        sm.insert(1, mContext.getString(R.string.zone_deposit), mContext.getString(R.string.stock_active), "ancho", 1);
-                        sm.insert(2, mContext.getString(R.string.zone_deposit), mContext.getString(R.string.stock_confirmed), "ancho", 3);
-                        sm.insert(3, mContext.getString(R.string.zone_lab), mContext.getString(R.string.stock_confirmed), "alex", 4);
-
-                        StockDetailManager sdm = new StockDetailManager(mContext);
-                        sdm.insert(1, "keyboard", 10f);
-                        sdm.insert(1, "engine", 20f);
-                        sdm.insert(2, "keyboard", 30f);
-                        sdm.insert(3, "engine", 40f);
-                        sdm.insert(3, "quantum", 50f);
-
-                        progressDialog.cancel();
-                        Toast.makeText(mContext, R.string.db_sync, Toast.LENGTH_SHORT).show();
-                        tv_mainStatus.setText(R.string.db_sync);
-                    }
-                }, new VolleyErrorResponse()
-        );
-        queue.add(jsonArrayRequest);
+        //item request
+        increasePendingRequests();
+        JsonObjectRequest jsonArrayItemRequest = new JsonObjectRequest(Request.Method.POST,
+                itemURL, new JSONObject(), new ItemSyncListener(), new VolleyErrorResponseListener());
+        queue.add(jsonArrayItemRequest);
     }
 
     public String webServiceErrorParser(VolleyError error) {
@@ -154,8 +119,50 @@ public class SyncFromServer {
     public void cancelDialog(){
         progressDialog.dismiss();
     }
-    
-    public class VolleyErrorResponse implements Response.ErrorListener{
+
+    public class UserSyncListener implements Response.Listener<JSONObject>{
+
+        @Override
+        public void onResponse(JSONObject response) {
+            updateDialogMessage("Sync users");
+            decreasePendingRequests();
+            if (getPendingRequests() == 0){
+                Toast.makeText(mContext, R.string.db_sync, Toast.LENGTH_SHORT).show();
+                tv_mainStatus.setText(R.string.db_sync);
+                cancelDialog();
+            }
+        }
+    }
+
+    public class ZoneSyncListener implements Response.Listener<JSONObject>{
+
+        @Override
+        public void onResponse(JSONObject response) {
+            updateDialogMessage("Sync zones");
+            decreasePendingRequests();
+            if (getPendingRequests() == 0){
+                Toast.makeText(mContext, R.string.db_sync, Toast.LENGTH_SHORT).show();
+                tv_mainStatus.setText(R.string.db_sync);
+                cancelDialog();
+            }
+        }
+    }
+
+    public class ItemSyncListener implements Response.Listener<JSONObject>{
+
+        @Override
+        public void onResponse(JSONObject response) {
+            updateDialogMessage("Sync items");
+            decreasePendingRequests();
+            if (getPendingRequests() == 0){
+                Toast.makeText(mContext, R.string.db_sync, Toast.LENGTH_SHORT).show();
+                tv_mainStatus.setText(R.string.db_sync);
+                cancelDialog();
+            }
+        }
+    }
+
+    public class VolleyErrorResponseListener implements Response.ErrorListener{
 
         @Override
         public void onErrorResponse(VolleyError error) {
