@@ -10,7 +10,6 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkError;
 import com.android.volley.NetworkResponse;
-import com.android.volley.NoConnectionError;
 import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -21,6 +20,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.geotechpy.geostock.R;
 import com.geotechpy.geostock.app.GeotechpyStockApp;
+import com.geotechpy.geostock.database.ItemManager;
+import com.geotechpy.geostock.database.UserManager;
+import com.geotechpy.geostock.database.ZoneManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -46,9 +48,9 @@ public class SyncFromServer {
 
     public void syncMasters() {
         showDialog();
-        String itemURL = "http://jsonplaceholder.typicode.com/users"; //"http://geotechpy.com/inventario/ajax/productos/get_full_productos_rest.php";
-        String userURL = "http://jsonplaceholder.typicode.com/users"; //"http://geotechpy.com/inventario/ajax/usuarios/get_full_usuarios_rest.php";
-        String zoneURL = "http://jsonplaceholder.typicode.com/users"; //"http://geotechpy.com/inventario/ajax/zonas/get_full_zonas_rest.php";
+        String itemURL = "http://geotechpy.com/inventario/ajax/productos/get_full_productos_rest.php";
+        String userURL = "http://geotechpy.com/inventario/ajax/usuarios/get_full_usuarios_rest.php";
+        String zoneURL = "http://geotechpy.com/inventario/ajax/zonas/get_full_zonas_rest.php";
 
         tv_mainStatus = (TextView) ((AppCompatActivity) mContext).findViewById(R.id.tv_mainstatus);
         tv_mainStatus.setText(mContext.getString(R.string.sync_started));
@@ -152,8 +154,18 @@ public class SyncFromServer {
     public class UserSyncListener implements Response.Listener<JSONObject>{
 
         @Override
-        public void onResponse(JSONObject response) {
+        public void onResponse(JSONObject response){
             updateDialogMessage(mContext.getString(R.string.sync_users));
+            try {
+                JSONArray jsonArray = response.getJSONArray("");
+                for(int index = 0 ; index < jsonArray.length(); index++) {
+                    JSONArray userArray = jsonArray.getJSONArray(index);
+                    UserManager um = new UserManager(mContext);
+                    um.insert(userArray.get(0).toString(), userArray.get(1).toString(), userArray.get(2).toString());
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             decreasePendingRequests();
             if (getPendingRequests() == 0){
                 Toast.makeText(mContext, R.string.db_sync, Toast.LENGTH_SHORT).show();
@@ -168,6 +180,16 @@ public class SyncFromServer {
         @Override
         public void onResponse(JSONObject response) {
             updateDialogMessage(mContext.getString(R.string.sync_zones));
+            try {
+                JSONArray jsonArray = response.getJSONArray("");
+                for(int index = 0 ; index < jsonArray.length(); index++) {
+                    JSONArray zoneArray = jsonArray.getJSONArray(index);
+                    ZoneManager zm = new ZoneManager(mContext);
+                    zm.insert(Integer.valueOf(zoneArray.get(0).toString()), zoneArray.get(1).toString(), zoneArray.get(2).toString());
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             decreasePendingRequests();
             if (getPendingRequests() == 0){
                 Toast.makeText(mContext, R.string.db_sync, Toast.LENGTH_SHORT).show();
@@ -182,6 +204,16 @@ public class SyncFromServer {
         @Override
         public void onResponse(JSONObject response) {
             updateDialogMessage(mContext.getString(R.string.sync_items));
+            try {
+                JSONArray jsonArray = response.getJSONArray("");
+                for(int index = 0 ; index < jsonArray.length(); index++) {
+                    JSONArray itemArray = jsonArray.getJSONArray(index);
+                    ItemManager it = new ItemManager(mContext);
+                    it.insert(itemArray.get(0).toString(), itemArray.get(1).toString(), itemArray.get(2).toString());
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             decreasePendingRequests();
             if (getPendingRequests() == 0){
                 Toast.makeText(mContext, R.string.db_sync, Toast.LENGTH_SHORT).show();
