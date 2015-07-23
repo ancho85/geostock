@@ -43,7 +43,7 @@ public class SyncFromServer {
         String zoneURL = "http://jsonplaceholder.typicode.com/users"; //"http://geotechpy.com/inventario/ajax/zonas/get_full_zonas_rest.php";
 
         tv_mainStatus = (TextView) ((AppCompatActivity) mContext).findViewById(R.id.tv_mainstatus);
-        tv_mainStatus.setText("Sync started...");
+        tv_mainStatus.setText(mContext.getString(R.string.sync_started));
 
         RequestQueue queue = GeotechpyStockApp.getRequestQueue();
 
@@ -124,7 +124,7 @@ public class SyncFromServer {
 
         @Override
         public void onResponse(JSONObject response) {
-            updateDialogMessage("Sync users");
+            updateDialogMessage(mContext.getString(R.string.sync_users));
             decreasePendingRequests();
             if (getPendingRequests() == 0){
                 Toast.makeText(mContext, R.string.db_sync, Toast.LENGTH_SHORT).show();
@@ -138,7 +138,7 @@ public class SyncFromServer {
 
         @Override
         public void onResponse(JSONObject response) {
-            updateDialogMessage("Sync zones");
+            updateDialogMessage(mContext.getString(R.string.sync_zones));
             decreasePendingRequests();
             if (getPendingRequests() == 0){
                 Toast.makeText(mContext, R.string.db_sync, Toast.LENGTH_SHORT).show();
@@ -152,7 +152,7 @@ public class SyncFromServer {
 
         @Override
         public void onResponse(JSONObject response) {
-            updateDialogMessage("Sync items");
+            updateDialogMessage(mContext.getString(R.string.sync_items));
             decreasePendingRequests();
             if (getPendingRequests() == 0){
                 Toast.makeText(mContext, R.string.db_sync, Toast.LENGTH_SHORT).show();
