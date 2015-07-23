@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;
 import com.android.volley.Request;
@@ -31,9 +32,11 @@ public class SyncFromServer {
     ProgressDialog progressDialog;
     TextView tv_mainStatus;
     int pendingRequests = 0;
+    RequestQueue queue;
 
     public SyncFromServer(Context context){
         this.mContext = context;
+        this.queue = GeotechpyStockApp.getRequestQueue();
     }
 
     public void syncMasters() {
@@ -44,26 +47,31 @@ public class SyncFromServer {
 
         tv_mainStatus = (TextView) ((AppCompatActivity) mContext).findViewById(R.id.tv_mainstatus);
         tv_mainStatus.setText(mContext.getString(R.string.sync_started));
-
-        RequestQueue queue = GeotechpyStockApp.getRequestQueue();
-
+        
         //user request
         increasePendingRequests();
         JsonObjectRequest jsonArrayUserRequest = new JsonObjectRequest(Request.Method.POST,
                 userURL, new JSONObject(), new UserSyncListener(), new VolleyErrorResponseListener());
-        queue.add(jsonArrayUserRequest);
+        addToQueue(jsonArrayUserRequest, "USERSYNC");
 
         //zone request
         increasePendingRequests();
         JsonObjectRequest jsonArrayZoneRequest = new JsonObjectRequest(Request.Method.POST,
                 zoneURL, new JSONObject(), new ZoneSyncListener(), new VolleyErrorResponseListener());
-        queue.add(jsonArrayZoneRequest);
+        addToQueue(jsonArrayZoneRequest, "ZONESYNC");
 
         //item request
         increasePendingRequests();
         JsonObjectRequest jsonArrayItemRequest = new JsonObjectRequest(Request.Method.POST,
                 itemURL, new JSONObject(), new ItemSyncListener(), new VolleyErrorResponseListener());
-        queue.add(jsonArrayItemRequest);
+        addToQueue(jsonArrayItemRequest, "ITEMSYNC");
+    }
+
+    public void addToQueue(JsonObjectRequest request, String tag){
+        //Set a retry policy in case of SocketTimeout & ConnectionTimeout Exceptions. Volley does retry for you if you have specified the policy.
+        request.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        request.setTag(tag);
+        queue.add(request);
     }
 
     public String webServiceErrorParser(VolleyError error) {
