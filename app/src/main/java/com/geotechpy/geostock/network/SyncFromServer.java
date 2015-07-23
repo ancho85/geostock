@@ -6,12 +6,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkError;
 import com.android.volley.NetworkResponse;
+import com.android.volley.NoConnectionError;
 import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.geotechpy.geostock.R;
@@ -47,7 +52,7 @@ public class SyncFromServer {
 
         tv_mainStatus = (TextView) ((AppCompatActivity) mContext).findViewById(R.id.tv_mainstatus);
         tv_mainStatus.setText(mContext.getString(R.string.sync_started));
-        
+
         //user request
         increasePendingRequests();
         JsonObjectRequest jsonArrayUserRequest = new JsonObjectRequest(Request.Method.GET,
@@ -99,6 +104,22 @@ public class SyncFromServer {
         }
         if (messageError.length() <= 0) {
             messageError.append(mContext.getString(R.string.sync_wscomm_error));
+            if( error instanceof NetworkError) {
+                messageError.append("Network Error");
+                messageError.append(error.getMessage());
+            } else if( error instanceof ServerError) {
+                messageError.append("Server Error");
+                messageError.append(error.getMessage());
+            } else if( error instanceof AuthFailureError) {
+                messageError.append("Auth Failure Error");
+                messageError.append(error.getMessage());
+            } else if( error instanceof ParseError) {
+                messageError.append("Parse Error");
+                messageError.append(error.getMessage());
+            } else if( error instanceof TimeoutError) {
+                messageError.append("Timeout Error");
+                messageError.append(error.getMessage());
+            }
         }
 
         return messageError.toString();
