@@ -52,4 +52,5 @@
     <string name="sync_items">Sincronizando productos</string>
     <string name="sync_zones">Sincronizando zonas</string>
     <string name="sync_started">Iniciando sincronización</string>
+    <string name="sync_sending_data">Enviando datos</string>
 </resources>

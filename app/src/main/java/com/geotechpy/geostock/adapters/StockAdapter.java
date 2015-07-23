@@ -17,6 +17,7 @@ import com.geotechpy.geostock.ItemListActivity;
 import com.geotechpy.geostock.database.StockDetailManager;
 import com.geotechpy.geostock.database.StockManager;
 import com.geotechpy.geostock.models.Stock;
+import com.geotechpy.geostock.network.SyncToServer;
 
 import java.util.ArrayList;
 
@@ -144,7 +145,8 @@ public class StockAdapter extends BaseAdapter{
         holder.ibSync.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(mContext, R.string.db_sync, Toast.LENGTH_SHORT).show();
+                SyncToServer sync = new SyncToServer(mContext);
+                sync.syncStock();
             }
         });
 

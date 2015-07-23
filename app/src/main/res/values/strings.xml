@@ -59,5 +59,6 @@
     <string name="sync_items">Synchronizing Items</string>
     <string name="sync_zones">Synchronizing Zones</string>
     <string name="sync_started">Synchronization Started</string>
+    <string name="sync_sending_data">Sending Data</string>
 
 </resources>
