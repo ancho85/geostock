@@ -50,19 +50,19 @@ public class SyncFromServer {
         
         //user request
         increasePendingRequests();
-        JsonObjectRequest jsonArrayUserRequest = new JsonObjectRequest(Request.Method.POST,
+        JsonObjectRequest jsonArrayUserRequest = new JsonObjectRequest(Request.Method.GET,
                 userURL, new JSONObject(), new UserSyncListener(), new VolleyErrorResponseListener());
         addToQueue(jsonArrayUserRequest, "USERSYNC");
 
         //zone request
         increasePendingRequests();
-        JsonObjectRequest jsonArrayZoneRequest = new JsonObjectRequest(Request.Method.POST,
+        JsonObjectRequest jsonArrayZoneRequest = new JsonObjectRequest(Request.Method.GET,
                 zoneURL, new JSONObject(), new ZoneSyncListener(), new VolleyErrorResponseListener());
         addToQueue(jsonArrayZoneRequest, "ZONESYNC");
 
         //item request
         increasePendingRequests();
-        JsonObjectRequest jsonArrayItemRequest = new JsonObjectRequest(Request.Method.POST,
+        JsonObjectRequest jsonArrayItemRequest = new JsonObjectRequest(Request.Method.GET,
                 itemURL, new JSONObject(), new ItemSyncListener(), new VolleyErrorResponseListener());
         addToQueue(jsonArrayItemRequest, "ITEMSYNC");
     }
