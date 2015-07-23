@@ -7,17 +7,20 @@ public class Item {
 
     private String code;
     private String name;
+    private Long barcode;
     private String type;
 
     public Item() {
         setCode("");
         setName("");
+        setBarcode(0L);
         setType("");
     }
 
-    public Item(String code, String name, String type) {
+    public Item(String code, String name, Long barCode, String type) {
         setCode(code);
         setName(name);
+        setBarcode(barCode);
         setType(type);
     }
 
@@ -43,5 +46,13 @@ public class Item {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public Long getBarcode() {
+        return barcode;
+    }
+
+    public void setBarcode(Long barcode) {
+        this.barcode = barcode;
     }
 }

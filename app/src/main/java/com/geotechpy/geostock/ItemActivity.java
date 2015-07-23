@@ -27,6 +27,7 @@ public class ItemActivity extends AppCompatActivity {
     Boolean editMode;
     EditText etCode;
     EditText etName;
+    EditText etBarCode;
     EditText etQty;
     Integer lineNr;
     String userName;
@@ -46,6 +47,7 @@ public class ItemActivity extends AppCompatActivity {
         tvZoneCode = (TextView) findViewById(R.id.tv_item_stock_zone_code);
         etCode = (EditText) findViewById(R.id.et_item_code);
         etName = (EditText) findViewById(R.id.et_item_name);
+        etBarCode = (EditText) findViewById(R.id.et_item_barcode);
         etQty = (EditText) findViewById(R.id.et_item_qty);
         userName = ((GeotechpyStockApp)getApplication()).getUserName();
         Intent intent = getIntent();
@@ -53,6 +55,7 @@ public class ItemActivity extends AppCompatActivity {
         tvStockSerNr.setText(intent.getStringExtra("stockSerNr"));
         tvZoneCode.setText(intent.getStringExtra("zoneCode"));
         editMode = intent.getBooleanExtra("editMode", false);
+        etBarCode.setInputType(InputType.TYPE_CLASS_NUMBER);
 
         stock = StockManager.load(this, Integer.valueOf(tvStockSerNr.getText().toString()));
         if (stock.getType().equals(getString(R.string.zone_deposit))) {
@@ -65,6 +68,7 @@ public class ItemActivity extends AppCompatActivity {
             etCode.setKeyListener(null);
             etName.setText(intent.getStringExtra("itemName"));
             etName.requestFocus();
+            etBarCode.setText(intent.getStringExtra("itemBarCode"));
             etQty.setText(intent.getStringExtra("itemQty"));
             lineNr = Integer.valueOf(intent.getStringExtra("itemLineNr"));
         }
@@ -99,9 +103,11 @@ public class ItemActivity extends AppCompatActivity {
     public void onClickOk(View view){
         etCode = (EditText) findViewById(R.id.et_item_code);
         etName = (EditText) findViewById(R.id.et_item_name);
+        etBarCode = (EditText) findViewById(R.id.et_item_barcode);
         etQty = (EditText) findViewById(R.id.et_item_qty);
         String code = etCode.getText().toString();
         String name = etName.getText().toString();
+        String barCode = etBarCode.getText().toString();
         String qty = etQty.getText().toString();
         Integer stockSerNr = Integer.valueOf(tvStockSerNr.getText().toString());
         if (!editMode) {
@@ -113,20 +119,25 @@ public class ItemActivity extends AppCompatActivity {
                 displayMessage(getString(R.string.invalid_item_name));
                 return;
             }
+            if (TextUtils.isEmpty(barCode)){
+                displayMessage(getString(R.string.invalid_item_barcode));
+                return;
+            }
         }
         if (TextUtils.isEmpty(qty)){
             displayMessage(getString(R.string.invalid_item_qty));
             return;
         }
+        Long longBarCode = Long.valueOf(barCode);
         Float fQty = Float.valueOf(qty);
         StockDetailManager sdm = new StockDetailManager(this);
         ItemManager im = new ItemManager(this);
         if (!editMode){
-            im.insert(code, name, stock.getType());
+            im.insert(code, name, longBarCode, stock.getType());
             sdm.insert(stockSerNr, code, fQty);
             displayMessage(getString(R.string.item_created));
         }else{
-            im.update(code, name, stock.getType());
+            im.update(code, name, longBarCode, stock.getType());
             sdm.update(stockSerNr, lineNr, code, fQty);
             displayMessage(getString(R.string.item_updated));
         }

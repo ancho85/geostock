@@ -60,5 +60,7 @@
     <string name="sync_zones">Synchronizing Zones</string>
     <string name="sync_started">Synchronization Started</string>
     <string name="sync_sending_data">Sending Data</string>
+    <string name="item_barcode">Bar Code</string>
+    <string name="invalid_item_barcode">Invalid Bar Code</string>
 
 </resources>

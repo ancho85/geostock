@@ -47,6 +47,7 @@ public class ItemAdapter extends BaseAdapter {
         ImageButton ibEdit;
         ImageButton ibDelete;
         int position;
+        Long barCode;
     }
 
     public void updateItems(ArrayList<StockDetail> al_items){
@@ -108,7 +109,7 @@ public class ItemAdapter extends BaseAdapter {
         Item item = ItemManager.load(mContext, itemCode);
         holder.tvItemName.setText(item.getName());
         holder.tvItemLineNr.setText(al_items.get(position).getLinenr().toString());
-
+        holder.barCode = item.getBarcode();
         holder.tvItemQty.setText(al_items.get(position).getQty().toString());
 
         Stock stock = StockManager.load(mContext, Integer.valueOf(stockSerNr));
@@ -129,6 +130,7 @@ public class ItemAdapter extends BaseAdapter {
                 itemEditActivity.putExtra("itemCode", holder.tvItemCode.getText().toString());
                 itemEditActivity.putExtra("itemName", holder.tvItemName.getText().toString());
                 itemEditActivity.putExtra("itemLineNr", holder.tvItemLineNr.getText().toString());
+                itemEditActivity.putExtra("itemBarCode", String.valueOf(holder.barCode));
                 itemEditActivity.putExtra("itemQty", holder.tvItemQty.getText().toString());
                 itemEditActivity.putExtra("editMode", true);
                 mContext.startActivity(itemEditActivity);

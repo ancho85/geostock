@@ -53,4 +53,6 @@
     <string name="sync_zones">Sincronizando zonas</string>
     <string name="sync_started">Iniciando sincronización</string>
     <string name="sync_sending_data">Enviando datos</string>
+    <string name="item_barcode">Cod. Barra</string>
+    <string name="invalid_item_barcode">Cod. Barra no válido</string>
 </resources>

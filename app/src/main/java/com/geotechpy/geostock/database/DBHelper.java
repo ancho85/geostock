@@ -22,6 +22,7 @@ public class DBHelper extends SQLiteOpenHelper {
     String sqlItemCreate = "CREATE TABLE Item (" +
             "code TEXT PRIMARY KEY NOT NULL, " +
             "name TEXT NOT NULL, " +
+            "barcode INTEGER NOT NULL," +
             "type TEXT NOT NULL)";
     String sqlZoneCreate = "CREATE TABLE Zone (" +
             "sernr INTEGER PRIMARY KEY NOT NULL, " +
