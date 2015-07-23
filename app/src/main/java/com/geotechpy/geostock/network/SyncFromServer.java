@@ -17,7 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.geotechpy.geostock.R;
 import com.geotechpy.geostock.app.GeotechpyStockApp;
 import com.geotechpy.geostock.database.ItemManager;
@@ -48,33 +48,33 @@ public class SyncFromServer {
 
     public void syncMasters() {
         showDialog();
-        String itemURL = "http://geotechpy.com/inventario/ajax/productos/get_full_productos_rest.php";
-        String userURL = "http://geotechpy.com/inventario/ajax/usuarios/get_full_usuarios_rest.php";
-        String zoneURL = "http://geotechpy.com/inventario/ajax/zonas/get_full_zonas_rest.php";
+        String itemURL = "http://www.mocky.io/v2/55b10d7e2267c9bd0b4e9ac2"; //"http://geotechpy.com/inventario/ajax/productos/get_full_productos_rest.php";
+        String userURL = "http://www.mocky.io/v2/55b112762267c9520c4e9ac7"; //"http://geotechpy.com/inventario/ajax/usuarios/get_full_usuarios_rest.php";
+        String zoneURL = "http://www.mocky.io/v2/55b10d552267c9ba0b4e9ac1"; //"http://geotechpy.com/inventario/ajax/zonas/get_full_zonas_rest.php";
 
         tv_mainStatus = (TextView) ((AppCompatActivity) mContext).findViewById(R.id.tv_mainstatus);
         tv_mainStatus.setText(mContext.getString(R.string.sync_started));
 
         //user request
         increasePendingRequests();
-        JsonObjectRequest jsonArrayUserRequest = new JsonObjectRequest(Request.Method.GET,
+        JsonArrayRequest jsonArrayUserRequest = new JsonArrayRequest(Request.Method.GET,
                 userURL, new JSONObject(), new UserSyncListener(), new VolleyErrorResponseListener());
         addToQueue(jsonArrayUserRequest, "USERSYNC");
 
         //zone request
         increasePendingRequests();
-        JsonObjectRequest jsonArrayZoneRequest = new JsonObjectRequest(Request.Method.GET,
+        JsonArrayRequest jsonArrayZoneRequest = new JsonArrayRequest(Request.Method.GET,
                 zoneURL, new JSONObject(), new ZoneSyncListener(), new VolleyErrorResponseListener());
         addToQueue(jsonArrayZoneRequest, "ZONESYNC");
 
         //item request
         increasePendingRequests();
-        JsonObjectRequest jsonArrayItemRequest = new JsonObjectRequest(Request.Method.GET,
+        JsonArrayRequest jsonArrayItemRequest = new JsonArrayRequest(Request.Method.GET,
                 itemURL, new JSONObject(), new ItemSyncListener(), new VolleyErrorResponseListener());
         addToQueue(jsonArrayItemRequest, "ITEMSYNC");
     }
 
-    public void addToQueue(JsonObjectRequest request, String tag){
+    public void addToQueue(JsonArrayRequest request, String tag){
         //Set a retry policy in case of SocketTimeout & ConnectionTimeout Exceptions. Volley does retry for you if you have specified the policy.
         request.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         request.setTag(tag);
@@ -107,21 +107,22 @@ public class SyncFromServer {
         if (messageError.length() <= 0) {
             messageError.append(mContext.getString(R.string.sync_wscomm_error));
             if( error instanceof NetworkError) {
-                messageError.append("Network Error");
+                messageError.append("\nNetwork Error\n");
                 messageError.append(error.getMessage());
             } else if( error instanceof ServerError) {
-                messageError.append("Server Error");
+                messageError.append("\nServer Error\n");
                 messageError.append(error.getMessage());
             } else if( error instanceof AuthFailureError) {
-                messageError.append("Auth Failure Error");
+                messageError.append("\nAuth Failure Error\n");
                 messageError.append(error.getMessage());
             } else if( error instanceof ParseError) {
-                messageError.append("Parse Error");
+                messageError.append("\nParse Error\n");
                 messageError.append(error.getMessage());
             } else if( error instanceof TimeoutError) {
-                messageError.append("Timeout Error");
+                messageError.append("\nTimeout Error\n");
                 messageError.append(error.getMessage());
             }
+            error.printStackTrace();
         }
 
         return messageError.toString();
@@ -151,15 +152,14 @@ public class SyncFromServer {
         progressDialog.dismiss();
     }
 
-    public class UserSyncListener implements Response.Listener<JSONObject>{
+    public class UserSyncListener implements Response.Listener<JSONArray>{
 
         @Override
-        public void onResponse(JSONObject response){
+        public void onResponse(JSONArray response){
             updateDialogMessage(mContext.getString(R.string.sync_users));
             try {
-                JSONArray jsonArray = response.getJSONArray("");
-                for(int index = 0 ; index < jsonArray.length(); index++) {
-                    JSONArray userArray = jsonArray.getJSONArray(index);
+                for(int index = 0 ; index < response.length(); index++) {
+                    JSONArray userArray = response.getJSONArray(index);
                     UserManager um = new UserManager(mContext);
                     um.insert(userArray.get(0).toString(), userArray.get(1).toString(), userArray.get(2).toString());
                 }
@@ -175,15 +175,14 @@ public class SyncFromServer {
         }
     }
 
-    public class ZoneSyncListener implements Response.Listener<JSONObject>{
+    public class ZoneSyncListener implements Response.Listener<JSONArray>{
 
         @Override
-        public void onResponse(JSONObject response) {
+        public void onResponse(JSONArray response) {
             updateDialogMessage(mContext.getString(R.string.sync_zones));
             try {
-                JSONArray jsonArray = response.getJSONArray("");
-                for(int index = 0 ; index < jsonArray.length(); index++) {
-                    JSONArray zoneArray = jsonArray.getJSONArray(index);
+                for(int index = 0 ; index < response.length(); index++) {
+                    JSONArray zoneArray = response.getJSONArray(index);
                     ZoneManager zm = new ZoneManager(mContext);
                     zm.insert(Integer.valueOf(zoneArray.get(0).toString()), zoneArray.get(1).toString(), zoneArray.get(2).toString());
                 }
@@ -199,15 +198,14 @@ public class SyncFromServer {
         }
     }
 
-    public class ItemSyncListener implements Response.Listener<JSONObject>{
+    public class ItemSyncListener implements Response.Listener<JSONArray>{
 
         @Override
-        public void onResponse(JSONObject response) {
+        public void onResponse(JSONArray response) {
             updateDialogMessage(mContext.getString(R.string.sync_items));
             try {
-                JSONArray jsonArray = response.getJSONArray("");
-                for(int index = 0 ; index < jsonArray.length(); index++) {
-                    JSONArray itemArray = jsonArray.getJSONArray(index);
+                for(int index = 0 ; index < response.length(); index++) {
+                    JSONArray itemArray = response.getJSONArray(index);
                     ItemManager it = new ItemManager(mContext);
                     it.insert(itemArray.get(0).toString(), itemArray.get(1).toString(), itemArray.get(2).toString());
                 }
