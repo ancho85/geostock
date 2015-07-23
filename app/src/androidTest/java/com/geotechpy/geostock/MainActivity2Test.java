@@ -78,17 +78,7 @@ public class MainActivity2Test {
 
         //StockListActivity
         onView(withId(R.id.tv_stocklist_username)).check(matches(isDisplayed()));
-        onData(allOf(is(instanceOf(Stock.class)), withStockSerNr(1))).check(matches(isDisplayed()));
-
-        String active = ctx.getString(R.string.stock_active);
-        onData(allOf(is(instanceOf(Stock.class)), withStockStatus(active)))
-                .onChildView(withId(R.id.ib_delete)) //resource id of third column from xml layout
-                .perform(click());
-        onView(withText(R.string.confirm_action)).check(matches(isDisplayed()));
-        onView(withId(android.R.id.button1)).perform(click());
-        onData(allOf(is(instanceOf(Stock.class)), withStockSerNr(2)))
-                .onChildView(withId(R.id.ib_sync)) //resource id of first column from xml layout
-                .perform(click());
+        onView(withId(R.id.lv_stocks)).check(matches(not(withAdaptedData(withStockSerNr(1))))); //there is nothing
         onView(withId(R.id.btn_new_stock)).perform(click());
 
         //StockZoneListActivity
@@ -102,17 +92,17 @@ public class MainActivity2Test {
         onData(allOf(is(instanceOf(Zone.class)), withZoneSerNr(3)))
                 .perform(click());
         onView(withId(R.id.btn_ok)).perform(click());
-        onData(allOf(is(instanceOf(Stock.class)), withStockSerNr(4)))
+        onData(allOf(is(instanceOf(Stock.class)), withStockSerNr(1)))
                 .check(matches(isDisplayed())); //created stock appears
         String deposit = ctx.getString(R.string.zone_deposit);
         onData(allOf(is(instanceOf(Stock.class)), withStockType(deposit)))
                 .onChildView(withId(R.id.ib_edit)) //resource id of second column from xml layout
-                .atPosition(1)
+                .atPosition(0)
                 .perform(click());
 
         //ItemListActivity
         onView(withText("ancho")).check(matches(isDisplayed()));
-        onView(withId(R.id.tv_itemlist_stock_sernr)).check(matches(withText("4")));
+        onView(withId(R.id.tv_itemlist_stock_sernr)).check(matches(withText("1")));
         onView(withId(R.id.tv_itemlist_stock_zone_code)).check(matches(withText("3")));
         onView(withId(R.id.lv_itemlist_items)).check(matches(isDisplayed()));
         onView(withId(R.id.btn_new)).perform(click());
