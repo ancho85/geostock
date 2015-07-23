@@ -101,10 +101,10 @@ public class DbTest extends AndroidTestCase {
     }
 
     public void testItem() throws Exception {
-        item.insert("keyb", "Keyboard", ctx.getString(R.string.zone_admin));
-        item.insert("xray", "X Ray", ctx.getString(R.string.zone_lab));
-        item.insert("paper", "Papers", ctx.getString(R.string.zone_deposit));
-        item.insert("stuffs", "Other Stuffs", ctx.getString(R.string.zone_both));
+        item.insert("keyb", "Keyboard", 1234567890123L, ctx.getString(R.string.zone_admin));
+        item.insert("xray", "X Ray", 1234567890124L, ctx.getString(R.string.zone_lab));
+        item.insert("paper", "Papers", 1234567890125L, ctx.getString(R.string.zone_deposit));
+        item.insert("stuffs", "Other Stuffs", 1234567890126L, ctx.getString(R.string.zone_both));
         assertEquals(4, item.count().intValue());
 
         item.delete("paper");
@@ -119,7 +119,7 @@ public class DbTest extends AndroidTestCase {
         assertEquals(ctx.getString(R.string.zone_lab), posItem.getType());
         assertEquals("KeyB", posItem.getName());
 
-        item.update("stuffs", "X Rayed Keyboard", ctx.getString(R.string.zone_both));
+        item.update("stuffs", "X Rayed Keyboard", 1234567890126L, ctx.getString(R.string.zone_both));
         Item stuff = ItemManager.load(ctx, "stuffs");
         assertEquals("stuffs", stuff.getCode());
         assertEquals("X Rayed Keyboard", stuff.getName());
@@ -128,7 +128,7 @@ public class DbTest extends AndroidTestCase {
     public void testStock() throws Exception {
         zone.insert(1, "Admin", ctx.getString(R.string.zone_admin));
         user.insert("ancho", "123456", ctx.getString(R.string.zone_admin));
-        item.insert("keyboard", "Keyboard", ctx.getString(R.string.zone_admin));
+        item.insert("keyboard", "Keyboard", 1234567890123L, ctx.getString(R.string.zone_admin));
 
         stock.insert(1, ctx.getString(R.string.zone_admin), ctx.getString(R.string.stock_active), "ancho", 1);
         stock.insert(stock.getNextSerNr(), ctx.getString(R.string.zone_admin), ctx.getString(R.string.stock_active), "ancho", 1);
@@ -158,7 +158,7 @@ public class DbTest extends AndroidTestCase {
     public void testStockDetail() throws Exception{
         user.insert("alex", "654321", ctx.getString(R.string.zone_deposit));
         zone.insert(2, "Deposit", ctx.getString(R.string.zone_deposit));
-        item.insert("paper", "Papers", ctx.getString(R.string.zone_deposit));
+        item.insert("paper", "Papers", 1234567890123L, ctx.getString(R.string.zone_deposit));
         stock.insert(100, ctx.getString(R.string.zone_deposit), ctx.getString(R.string.stock_active), "alex", 2);
         stock.insert(200, ctx.getString(R.string.zone_deposit), ctx.getString(R.string.stock_active), "alex", 2);
 
