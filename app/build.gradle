@@ -43,6 +43,11 @@ android {
     packagingOptions {
         exclude 'LICENSE.txt'
     }
+    sourceSets {
+        main {
+            assets.srcDirs = ['src/main/assets', 'src/androidTest/assets/']
+        }
+    }
 }
 
 dependencies {
@@ -58,7 +63,7 @@ jacoco {
     toolVersion "0.7.5.201505241946"
 }
 
-task jacocoTestReport(type:JacocoReport, dependsOn: "testDebug") {
+task jacocoTestReport(type: JacocoReport, dependsOn: "testDebug") {
     group = "Reporting"
 
     description = "Generate Jacoco coverage reports"

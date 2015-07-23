@@ -55,5 +55,10 @@
     <string name="sync_requesting_data">Requesting data</string>
     <string name="sync_unknown_error">Unknown error</string>
     <string name="sync_wscomm_error">WS Comm Error</string>
+    <string name="sync_users">Synchronizing Users</string>
+    <string name="sync_items">Synchronizing Items</string>
+    <string name="sync_zones">Synchronizing Zones</string>
+    <string name="sync_started">Synchronization Started</string>
+    <string name="sync_sending_data">Sending Data</string>
 
 </resources>
