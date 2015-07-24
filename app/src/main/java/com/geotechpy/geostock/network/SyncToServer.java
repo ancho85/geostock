@@ -173,12 +173,7 @@ public class SyncToServer {
                     mContext.getString(R.string.stock_confirmed), //Confirming line
                     user.getCode(),
                     zoneCode);
-            String typeFilter = "";
-            if (!user.getType().equals(mContext.getString(R.string.zone_admin)) || !user.getType().equals(mContext.getString(R.string.zone_both))){
-                typeFilter = user.getType();
-            }
-            ArrayList<Stock> al_stocks = smd.getStocks(typeFilter);
-            stockAdapter.updateStocks(al_stocks);
+            stockAdapter.populateStocks(userName);
             decreasePendingRequests();
             if (getPendingRequests() == 0){
                 Toast.makeText(mContext, R.string.db_sync, Toast.LENGTH_SHORT).show();

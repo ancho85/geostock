@@ -16,7 +16,9 @@ import com.geotechpy.geostock.R;
 import com.geotechpy.geostock.ItemListActivity;
 import com.geotechpy.geostock.database.StockDetailManager;
 import com.geotechpy.geostock.database.StockManager;
+import com.geotechpy.geostock.database.UserManager;
 import com.geotechpy.geostock.models.Stock;
+import com.geotechpy.geostock.models.User;
 import com.geotechpy.geostock.network.SyncToServer;
 
 import java.util.ArrayList;
@@ -45,6 +47,18 @@ public class StockAdapter extends BaseAdapter{
         ImageButton ibEdit;
         ImageButton ibDelete;
         int position;
+    }
+
+    public void populateStocks(String userName){
+        setUserName(userName);
+        User user = UserManager.load(mContext, userName);
+        String typeFilter = "";
+        if (!user.getType().equals(mContext.getString(R.string.zone_admin)) || !user.getType().equals(mContext.getString(R.string.zone_both))){
+            typeFilter = user.getType();
+        }
+        StockManager stockManager = new StockManager(mContext);
+        ArrayList<Stock> al_stocks = stockManager.getStocks(typeFilter);
+        updateStocks(al_stocks);
     }
 
     public void updateStocks(ArrayList<Stock> al_stocks){
