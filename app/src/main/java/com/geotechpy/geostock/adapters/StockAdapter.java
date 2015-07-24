@@ -148,12 +148,19 @@ public class StockAdapter extends BaseAdapter{
         holder.ibSync.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SyncToServer sync = new SyncToServer(mContext);
-                sync.setStockAdapter(currentInstance);
-                sync.setUserName(userName);
-                sync.setStockSerNr(Integer.valueOf(holder.tvStockSerNr.getText().toString()));
-                sync.setZoneCode(Integer.valueOf(holder.tvZoneCode.getText().toString()));
-                sync.syncStock();
+                String currentStatus = holder.tvStatusCode.getText().toString();
+                if (currentStatus.equals(mContext.getString(R.string.stock_active))){
+                    SyncToServer sync = new SyncToServer(mContext);
+                    sync.setStockAdapter(currentInstance);
+                    sync.setUserName(userName);
+                    sync.setStockSerNr(Integer.valueOf(holder.tvStockSerNr.getText().toString()));
+                    sync.setZoneCode(Integer.valueOf(holder.tvZoneCode.getText().toString()));
+                    sync.syncStock();
+                }
+                else{
+                    Toast.makeText(mContext, R.string.stock_already_sync, Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 

@@ -62,5 +62,6 @@
     <string name="sync_sending_data">Sending Data</string>
     <string name="item_barcode">Bar Code</string>
     <string name="invalid_item_barcode">Invalid Bar Code</string>
+    <string name="stock_already_sync">Stock Already Synchronized</string>
 
 </resources>

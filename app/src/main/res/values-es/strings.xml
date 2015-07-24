@@ -55,4 +55,5 @@
     <string name="sync_sending_data">Enviando datos</string>
     <string name="item_barcode">Cod. Barra</string>
     <string name="invalid_item_barcode">Cod. Barra no válido</string>
+    <string name="stock_already_sync">Inventario ya ha sido sincronizado</string>
 </resources>
