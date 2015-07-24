@@ -17,35 +17,61 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.geotechpy.geostock.R;
+import com.geotechpy.geostock.adapters.StockAdapter;
 import com.geotechpy.geostock.app.GeotechpyStockApp;
+import com.geotechpy.geostock.database.StockManager;
+import com.geotechpy.geostock.database.UserManager;
+import com.geotechpy.geostock.models.Stock;
+import com.geotechpy.geostock.models.User;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 
 /**
  * Store Data to Main Server
  */
 public class SyncToServer {
     Context mContext;
+    StockAdapter stockAdapter;
     ProgressDialog progressDialog;
-    int pendingRequests = 0;
     RequestQueue queue;
-    boolean syncSuccess;
+    String userName;
+    int pendingRequests = 0;
+    int stockSerNr = 0;
+    int zoneCode = 0;
+
 
     public SyncToServer(Context context){
         this.mContext = context;
         this.queue = GeotechpyStockApp.getRequestQueue();
     }
 
-    public boolean syncStock() {
+    public void setUserName(String userName){
+        this.userName = userName;
+    }
+
+    public void setStockAdapter(StockAdapter adapter){
+        this.stockAdapter = adapter;
+    }
+
+    public void setStockSerNr(int serNr){
+        this.stockSerNr = serNr;
+    }
+
+    public void setZoneCode(int code){
+        this.zoneCode = code;
+    }
+
+
+    public void syncStock() {
         showDialog();
         String stockURL = "http://geotechpy.com/inventario/ajax/inventarios/guardar_inventario.php";
 
         //stock request
-        increasePendingRequests();
         JSONObject obj = new JSONObject();
         try {
             obj.put("key", "value");
@@ -55,10 +81,10 @@ public class SyncToServer {
         JsonObjectRequest jsonArrayStockRequest = new JsonObjectRequest(Request.Method.POST,
                 stockURL, obj, new StockSyncListener(), new VolleyErrorResponseListener());
         addToQueue(jsonArrayStockRequest, "STOCKSYNC");
-        return getSyncSuccess();
     }
 
     public void addToQueue(JsonObjectRequest request, String tag){
+        increasePendingRequests();
         //Set a retry policy in case of SocketTimeout & ConnectionTimeout Exceptions. Volley does retry for you if you have specified the policy.
         request.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         request.setTag(tag);
@@ -135,23 +161,27 @@ public class SyncToServer {
         progressDialog.dismiss();
     }
 
-    public void setSyncSuccess(boolean success){
-        syncSuccess = success;
-    }
-
-    public boolean getSyncSuccess(){
-        return syncSuccess;
-    }
-
     public class StockSyncListener implements Response.Listener<JSONObject>{
 
         @Override
         public void onResponse(JSONObject response){
             updateDialogMessage(mContext.getString(R.string.sync_stock));
+            User user = UserManager.load(mContext, userName);
+            StockManager smd = new StockManager(mContext);
+            smd.update(stockSerNr,
+                    user.getType(),
+                    mContext.getString(R.string.stock_confirmed), //Confirming line
+                    user.getCode(),
+                    zoneCode);
+            String typeFilter = "";
+            if (!user.getType().equals(mContext.getString(R.string.zone_admin)) || !user.getType().equals(mContext.getString(R.string.zone_both))){
+                typeFilter = user.getType();
+            }
+            ArrayList<Stock> al_stocks = smd.getStocks(typeFilter);
+            stockAdapter.updateStocks(al_stocks);
             decreasePendingRequests();
             if (getPendingRequests() == 0){
                 Toast.makeText(mContext, R.string.db_sync, Toast.LENGTH_SHORT).show();
-                setSyncSuccess(true);
                 cancelDialog();
             }
         }
@@ -165,7 +195,6 @@ public class SyncToServer {
             String errorMsg = webServiceErrorParser(error);
             Toast.makeText(mContext, errorMsg, Toast.LENGTH_LONG).show();
             if (getPendingRequests() == 0){
-                setSyncSuccess(false);
                 cancelDialog();
             }
         }

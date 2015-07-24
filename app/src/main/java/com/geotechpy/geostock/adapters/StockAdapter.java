@@ -16,9 +16,7 @@ import com.geotechpy.geostock.R;
 import com.geotechpy.geostock.ItemListActivity;
 import com.geotechpy.geostock.database.StockDetailManager;
 import com.geotechpy.geostock.database.StockManager;
-import com.geotechpy.geostock.database.UserManager;
 import com.geotechpy.geostock.models.Stock;
-import com.geotechpy.geostock.models.User;
 import com.geotechpy.geostock.network.SyncToServer;
 
 import java.util.ArrayList;
@@ -30,9 +28,11 @@ public class StockAdapter extends BaseAdapter{
     private ArrayList<Stock> al_stocks = new ArrayList<>();
     private Context mContext;
     private String userName;
+    StockAdapter currentInstance;
 
     public StockAdapter(Context context){
         this.mContext = context;
+        this.currentInstance = this;
     }
 
     static class StockViewHolder {
@@ -149,17 +149,11 @@ public class StockAdapter extends BaseAdapter{
             @Override
             public void onClick(View view) {
                 SyncToServer sync = new SyncToServer(mContext);
-                if (sync.syncStock()){
-                    User user = UserManager.load(mContext, userName);
-                    StockManager smd = new StockManager(mContext);
-                    smd.update(Integer.valueOf(holder.tvStockSerNr.getText().toString()),
-                            user.getType(),
-                            mContext.getString(R.string.stock_confirmed), //Confirming line
-                            user.getCode(),
-                            Integer.valueOf(holder.tvZoneCode.getText().toString())
-                    );
-                    notifyDataSetChanged();
-                }
+                sync.setStockAdapter(currentInstance);
+                sync.setUserName(userName);
+                sync.setStockSerNr(Integer.valueOf(holder.tvStockSerNr.getText().toString()));
+                sync.setZoneCode(Integer.valueOf(holder.tvZoneCode.getText().toString()));
+                sync.syncStock();
             }
         });
 
