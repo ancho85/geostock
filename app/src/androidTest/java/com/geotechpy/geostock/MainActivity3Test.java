@@ -74,11 +74,16 @@ public class MainActivity3Test {
         Thread.sleep(2000);
         onView(withText(R.string.login)).perform(click());
         onView(withId(R.id.btn_deposit)).perform(click());
-        onData(allOf(is(instanceOf(Stock.class)), withStockSerNr(1)))
-                .onChildView(withId(R.id.ib_sync)) //resource id of first column from xml layout
-                .perform(click());
         String active = ctx.getString(R.string.stock_active);
         onData(allOf(is(instanceOf(Stock.class)), withStockStatus(active)))
+                .onChildView(withId(R.id.ib_sync)) //resource id of first column from xml layout
+                .perform(click());
+        /*String confirmed = ctx.getString(R.string.stock_confirmed);
+        onView(withId(R.id.lv_stocks)).check(matches(withAdaptedData(withStockStatus(confirmed))));
+        onData(allOf(is(instanceOf(Stock.class)), withStockStatus(confirmed)))
+                .onChildView(withId(R.id.ib_sync)) //resource id of first column from xml layout
+                .perform(click()); //toast text of already sync*/
+        onData(allOf(is(instanceOf(Stock.class)), withStockSerNr(1)))
                 .onChildView(withId(R.id.ib_delete)) //resource id of third column from xml layout
                 .perform(click());
         onView(withText(R.string.confirm_action)).check(matches(isDisplayed()));
