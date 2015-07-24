@@ -56,4 +56,5 @@
     <string name="item_barcode">Cod. Barra</string>
     <string name="invalid_item_barcode">Cod. Barra no válido</string>
     <string name="stock_already_sync">Inventario ya ha sido sincronizado</string>
+    <string name="app_name">Geotechpy Inventario App</string>
 </resources>
