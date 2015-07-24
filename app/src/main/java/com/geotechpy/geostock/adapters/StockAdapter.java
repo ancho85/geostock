@@ -16,7 +16,9 @@ import com.geotechpy.geostock.R;
 import com.geotechpy.geostock.ItemListActivity;
 import com.geotechpy.geostock.database.StockDetailManager;
 import com.geotechpy.geostock.database.StockManager;
+import com.geotechpy.geostock.database.UserManager;
 import com.geotechpy.geostock.models.Stock;
+import com.geotechpy.geostock.models.User;
 import com.geotechpy.geostock.network.SyncToServer;
 
 import java.util.ArrayList;
@@ -91,6 +93,7 @@ public class StockAdapter extends BaseAdapter{
             holder.ibEdit = (ImageButton) convertView.findViewById(R.id.ib_edit);
             holder.ibDelete = (ImageButton) convertView.findViewById(R.id.ib_delete);
             holder.position = position;
+
             convertView.setTag(holder);
         }
         else {
@@ -146,7 +149,17 @@ public class StockAdapter extends BaseAdapter{
             @Override
             public void onClick(View view) {
                 SyncToServer sync = new SyncToServer(mContext);
-                sync.syncStock();
+                if (sync.syncStock()){
+                    User user = UserManager.load(mContext, userName);
+                    StockManager smd = new StockManager(mContext);
+                    smd.update(Integer.valueOf(holder.tvStockSerNr.getText().toString()),
+                            user.getType(),
+                            mContext.getString(R.string.stock_confirmed), //Confirming line
+                            user.getCode(),
+                            Integer.valueOf(holder.tvZoneCode.getText().toString())
+                    );
+                    notifyDataSetChanged();
+                }
             }
         });
 

@@ -33,13 +33,14 @@ public class SyncToServer {
     ProgressDialog progressDialog;
     int pendingRequests = 0;
     RequestQueue queue;
+    boolean syncSuccess;
 
     public SyncToServer(Context context){
         this.mContext = context;
         this.queue = GeotechpyStockApp.getRequestQueue();
     }
 
-    public void syncStock() {
+    public boolean syncStock() {
         showDialog();
         String stockURL = "http://geotechpy.com/inventario/ajax/inventarios/guardar_inventario.php";
 
@@ -54,6 +55,7 @@ public class SyncToServer {
         JsonObjectRequest jsonArrayStockRequest = new JsonObjectRequest(Request.Method.POST,
                 stockURL, obj, new StockSyncListener(), new VolleyErrorResponseListener());
         addToQueue(jsonArrayStockRequest, "STOCKSYNC");
+        return getSyncSuccess();
     }
 
     public void addToQueue(JsonObjectRequest request, String tag){
@@ -133,6 +135,14 @@ public class SyncToServer {
         progressDialog.dismiss();
     }
 
+    public void setSyncSuccess(boolean success){
+        syncSuccess = success;
+    }
+
+    public boolean getSyncSuccess(){
+        return syncSuccess;
+    }
+
     public class StockSyncListener implements Response.Listener<JSONObject>{
 
         @Override
@@ -141,6 +151,7 @@ public class SyncToServer {
             decreasePendingRequests();
             if (getPendingRequests() == 0){
                 Toast.makeText(mContext, R.string.db_sync, Toast.LENGTH_SHORT).show();
+                setSyncSuccess(true);
                 cancelDialog();
             }
         }
@@ -154,6 +165,7 @@ public class SyncToServer {
             String errorMsg = webServiceErrorParser(error);
             Toast.makeText(mContext, errorMsg, Toast.LENGTH_LONG).show();
             if (getPendingRequests() == 0){
+                setSyncSuccess(false);
                 cancelDialog();
             }
         }
