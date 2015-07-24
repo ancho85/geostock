@@ -6,16 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.NetworkError;
-import com.android.volley.NetworkResponse;
-import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.ServerError;
-import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.geotechpy.geostock.R;
@@ -28,7 +22,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
+import static com.geotechpy.geostock.network.WSErrorParser.webServiceErrorParser;
 
 /**
  * Get Data from Main Server
@@ -77,53 +71,6 @@ public class SyncFromServer {
         request.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         request.setTag(tag);
         queue.add(request);
-    }
-
-    public String webServiceErrorParser(VolleyError error) {
-        StringBuilder messageError = new StringBuilder();
-        NetworkResponse response = error.networkResponse;
-        if (response != null && response.data != null) {
-            try {
-                String json = new String(response.data, "UTF-8");
-                JSONObject responseWS = new JSONObject(json);
-                JSONArray messagesObject = new JSONArray(responseWS.getString("messages"));
-                for (int i = 0; i < messagesObject.length(); i++) {
-                    JSONObject message = (JSONObject) messagesObject.get(i);
-                    messageError.append(message.getString("dsc"));
-                    messageError.append("\n");
-                }
-                if (messageError.length() <= 0) {
-                    messageError.append(mContext.getString(R.string.sync_unknown_error));
-                }
-            } catch (UnsupportedEncodingException e) {
-                return Response.error(new ParseError(e)).toString();
-            } catch (JSONException je) {
-                return Response.error(new ParseError(je)).toString();
-            }
-
-        }
-        if (messageError.length() <= 0) {
-            messageError.append(mContext.getString(R.string.sync_wscomm_error));
-            if( error instanceof NetworkError) {
-                messageError.append("\nNetwork Error\n");
-                messageError.append(error.getMessage());
-            } else if( error instanceof ServerError) {
-                messageError.append("\nServer Error\n");
-                messageError.append(error.getMessage());
-            } else if( error instanceof AuthFailureError) {
-                messageError.append("\nAuth Failure Error\n");
-                messageError.append(error.getMessage());
-            } else if( error instanceof ParseError) {
-                messageError.append("\nParse Error\n");
-                messageError.append(error.getMessage());
-            } else if( error instanceof TimeoutError) {
-                messageError.append("\nTimeout Error\n");
-                messageError.append(error.getMessage());
-            }
-            error.printStackTrace();
-        }
-
-        return messageError.toString();
     }
 
     public int getPendingRequests(){
@@ -224,7 +171,7 @@ public class SyncFromServer {
         @Override
         public void onErrorResponse(VolleyError error) {
             decreasePendingRequests();
-            String errorMsg = webServiceErrorParser(error);
+            String errorMsg = webServiceErrorParser(mContext, error);
             Toast.makeText(mContext, errorMsg, Toast.LENGTH_LONG).show();
             tv_mainStatus.setText(errorMsg);
             if (getPendingRequests() == 0){
