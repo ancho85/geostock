@@ -56,25 +56,23 @@ public class SyncFromServer {
         tv_mainStatus.setText(mContext.getString(R.string.sync_started));
 
         //user request
-        increasePendingRequests();
         JsonArrayRequest jsonArrayUserRequest = new JsonArrayRequest(Request.Method.GET,
                 userURL, new JSONObject(), new UserSyncListener(), new VolleyErrorResponseListener());
         addToQueue(jsonArrayUserRequest, "USERSYNC");
 
         //zone request
-        increasePendingRequests();
         JsonArrayRequest jsonArrayZoneRequest = new JsonArrayRequest(Request.Method.GET,
                 zoneURL, new JSONObject(), new ZoneSyncListener(), new VolleyErrorResponseListener());
         addToQueue(jsonArrayZoneRequest, "ZONESYNC");
 
         //item request
-        increasePendingRequests();
         JsonArrayRequest jsonArrayItemRequest = new JsonArrayRequest(Request.Method.GET,
                 itemURL, new JSONObject(), new ItemSyncListener(), new VolleyErrorResponseListener());
         addToQueue(jsonArrayItemRequest, "ITEMSYNC");
     }
 
     public void addToQueue(JsonArrayRequest request, String tag){
+        increasePendingRequests();
         //Set a retry policy in case of SocketTimeout & ConnectionTimeout Exceptions. Volley does retry for you if you have specified the policy.
         request.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         request.setTag(tag);
