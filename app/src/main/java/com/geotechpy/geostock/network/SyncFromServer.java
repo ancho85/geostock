@@ -152,7 +152,7 @@ public class SyncFromServer {
                 for(int index = 0 ; index < response.length(); index++) {
                     JSONArray itemArray = response.getJSONArray(index);
                     ItemManager it = new ItemManager(mContext);
-                    it.insert(itemArray.get(0).toString(), itemArray.get(1).toString(), Long.valueOf(itemArray.get(2).toString()), itemArray.get(2).toString());
+                    it.insert(itemArray.get(0).toString(), itemArray.get(1).toString(), Long.valueOf(itemArray.get(2).toString()), itemArray.get(3).toString());
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
