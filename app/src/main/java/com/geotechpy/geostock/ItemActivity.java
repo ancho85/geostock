@@ -18,6 +18,9 @@ import com.geotechpy.geostock.database.StockDetailManager;
 import com.geotechpy.geostock.database.StockManager;
 import com.geotechpy.geostock.models.Item;
 import com.geotechpy.geostock.models.Stock;
+import com.geotechpy.geostock.models.StockDetail;
+
+import java.util.ArrayList;
 
 
 public class ItemActivity extends AppCompatActivity {
@@ -142,6 +145,14 @@ public class ItemActivity extends AppCompatActivity {
         StockDetailManager sdm = new StockDetailManager(this);
         ItemManager im = new ItemManager(this);
         if (!editMode){
+            StockDetailManager stockDetailManager = new StockDetailManager(this);
+            ArrayList<StockDetail> al_stockDetail = stockDetailManager.getStockDetails(Integer.valueOf(tvStockSerNr.getText().toString()));
+            for (int i = 0; i < al_stockDetail.size(); i++) {
+                if (al_stockDetail.get(i).getItem_code().equals(code)) {
+                    displayMessage(getString(R.string.item_already_in_detail));
+                    return;
+                }
+            }
             im.insert(code, name, longBarCode, stock.getType());
             sdm.insert(stockSerNr, code, fQty);
             displayMessage(getString(R.string.item_created));
