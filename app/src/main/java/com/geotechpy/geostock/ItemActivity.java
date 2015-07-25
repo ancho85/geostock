@@ -125,6 +125,7 @@ public class ItemActivity extends AppCompatActivity {
                 Item item = ItemManager.load(this, code);
                 if (TextUtils.isEmpty(item.getCode())){
                     displayMessage(getString(R.string.invalid_item_code));
+                    return;
                 }
             }
             if (TextUtils.isEmpty(name)){
