@@ -16,6 +16,7 @@ import com.geotechpy.geostock.app.GeotechpyStockApp;
 import com.geotechpy.geostock.database.ItemManager;
 import com.geotechpy.geostock.database.StockDetailManager;
 import com.geotechpy.geostock.database.StockManager;
+import com.geotechpy.geostock.models.Item;
 import com.geotechpy.geostock.models.Stock;
 
 
@@ -117,6 +118,11 @@ public class ItemActivity extends AppCompatActivity {
             if (TextUtils.isEmpty(code)){
                 displayMessage(getString(R.string.invalid_item_code));
                 return;
+            }else{
+                Item item = ItemManager.load(this, code);
+                if (TextUtils.isEmpty(item.getCode())){
+                    displayMessage(getString(R.string.invalid_item_code));
+                }
             }
             if (TextUtils.isEmpty(name)){
                 displayMessage(getString(R.string.invalid_item_name));
