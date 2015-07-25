@@ -60,7 +60,7 @@ public class SyncToServer {
 
     public void syncStock() {
         showDialog();
-        String stockURL = "http://geotechpy.com/inventario/ajax/inventarios/guardar_inventario.php";
+        String stockURL = "http://geotechpy.com/inventario/ajax/inventario/save_inventario.php";
 
         //stock request
         JSONObject obj = new JSONObject();
@@ -111,17 +111,31 @@ public class SyncToServer {
         @Override
         public void onResponse(JSONObject response){
             updateDialogMessage(mContext.getString(R.string.sync_stock));
-            User user = UserManager.load(mContext, userName);
-            StockManager smd = new StockManager(mContext);
-            smd.update(stockSerNr,
-                    user.getType(),
-                    mContext.getString(R.string.stock_confirmed), //Confirming line
-                    user.getCode(),
-                    zoneCode);
-            stockAdapter.populateStocks(userName);
+            String replyMsg = mContext.getString(R.string.db_sync);
+            if (response.has("status")){
+                try {
+                    if (response.getString("status").equals("ok")){
+                        User user = UserManager.load(mContext, userName);
+                        StockManager smd = new StockManager(mContext);
+                        smd.update(stockSerNr,
+                                user.getType(),
+                                mContext.getString(R.string.stock_confirmed), //Confirming line
+                                user.getCode(),
+                                zoneCode);
+                        stockAdapter.populateStocks(userName);
+                    }else{
+                        replyMsg = response.getString("status");
+                    }
+                } catch (JSONException e) {
+                    replyMsg = e.getMessage();
+                    e.printStackTrace();
+                }
+            }else{
+                replyMsg = response.toString();
+            }
             decreasePendingRequests();
             if (getPendingRequests() == 0){
-                Toast.makeText(mContext, R.string.db_sync, Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, replyMsg, Toast.LENGTH_SHORT).show();
                 cancelDialog();
             }
         }
