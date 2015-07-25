@@ -28,6 +28,9 @@ public class StockListActivity extends AppCompatActivity{
         super.onResume();
         tvUserName = (TextView) findViewById(R.id.tv_stocklist_username);
         userName = ((GeotechpyStockApp)getApplication()).getUserName();
+        if (userName == null){
+            ((GeotechpyStockApp)getApplication()).respawnLogin();
+        }
         tvUserName.setText(userName);
         showStocks();
     }

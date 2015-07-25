@@ -18,6 +18,7 @@ import com.geotechpy.geostock.models.User;
 public class StockTypeActivity extends AppCompatActivity {
 
     TextView tvUserName;
+    String userName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +29,11 @@ public class StockTypeActivity extends AppCompatActivity {
     @Override
     public void onResume(){
         super.onResume();
+        userName = ((GeotechpyStockApp)getApplication()).getUserName();
+        if (userName == null){
+            ((GeotechpyStockApp)getApplication()).respawnLogin();
+        }
         tvUserName = (TextView) findViewById(R.id.tv_stocktype_username);
-        String userName = ((GeotechpyStockApp)getApplication()).getUserName();
         tvUserName.setText(userName);
         User user = UserManager.load(this, userName);
         String userType = user.getType();

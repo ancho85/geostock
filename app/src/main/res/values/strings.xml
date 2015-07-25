@@ -63,5 +63,6 @@
     <string name="item_barcode">Bar Code</string>
     <string name="invalid_item_barcode">Invalid Bar Code</string>
     <string name="stock_already_sync">Stock Already Synchronized</string>
+    <string name="session_expired">Session Expired</string>
 
 </resources>

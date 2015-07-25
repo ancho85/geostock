@@ -28,6 +28,10 @@ public class ItemListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        userName = ((GeotechpyStockApp)getApplication()).getUserName();
+        if (userName == null){
+            ((GeotechpyStockApp)getApplication()).respawnLogin();
+        }
         setContentView(R.layout.activity_item_list);
     }
 

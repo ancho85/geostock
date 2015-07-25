@@ -1,8 +1,14 @@
 package com.geotechpy.geostock.app;
 
+import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
+import android.content.Intent;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
+import com.geotechpy.geostock.MainActivity;
+import com.geotechpy.geostock.R;
 import com.geotechpy.geostock.network.NetRequester;
 
 /**
@@ -33,6 +39,20 @@ public class GeotechpyStockApp extends Application {
 
     public synchronized static void setUserName(String userCode){
         userName = userCode;
+    }
+
+    public void respawnLogin(){
+        /*
+         * The user leaves the app (with home button) and after a while the OS's kills the app
+         * to save memory. Thus the current activity is recreated without userName information.
+         * http://www.developerphil.com/dont-store-data-in-the-application-object/
+         */
+        Context mContext = getApplicationContext();
+        Toast.makeText(mContext, R.string.session_expired, Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(this, MainActivity.class); //Relogin
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        ((Activity)mContext).finish(); // call this to finish the current activity
     }
 
 

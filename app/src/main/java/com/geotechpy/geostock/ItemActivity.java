@@ -42,6 +42,10 @@ public class ItemActivity extends AppCompatActivity {
     @Override
     public void onResume(){
         super.onResume();
+        userName = ((GeotechpyStockApp)getApplication()).getUserName();
+        if (userName == null){
+            ((GeotechpyStockApp)getApplication()).respawnLogin();
+        }
         tvUserName = (TextView) findViewById(R.id.tv_item_username);
         tvStockSerNr = (TextView) findViewById(R.id.tv_item_stock_sernr);
         tvZoneCode = (TextView) findViewById(R.id.tv_item_stock_zone_code);
@@ -49,7 +53,6 @@ public class ItemActivity extends AppCompatActivity {
         etName = (EditText) findViewById(R.id.et_item_name);
         etBarCode = (EditText) findViewById(R.id.et_item_barcode);
         etQty = (EditText) findViewById(R.id.et_item_qty);
-        userName = ((GeotechpyStockApp)getApplication()).getUserName();
         Intent intent = getIntent();
         tvUserName.setText(userName);
         tvStockSerNr.setText(intent.getStringExtra("stockSerNr"));
