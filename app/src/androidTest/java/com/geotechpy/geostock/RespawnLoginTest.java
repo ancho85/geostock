@@ -37,13 +37,13 @@ public class RespawnLoginTest {
         ).inRoot(withDecorView(
                 not(main.get().getWindow().getDecorView())
         )).check(matches(isDisplayed()));*/
-        Log.d("WAITING", "WAITING 5 SECONDS");
+        /*Log.d("WAITING", "WAITING 5 SECONDS");
         Thread.sleep(5000);
         onView(withText(R.string.username)).check(matches(isDisplayed()));
         onView(withText(R.string.password)).check(matches(isDisplayed()));
         onView(withId(R.id.btn_reset)).check(matches(withText(R.string.reset)));
         onView(withId(R.id.btn_sync)).check(matches(withText(R.string.sync)));
         onView(withId(R.id.btn_login)).check(matches(withText(R.string.login)));
-        Log.d("END", "WAITING 5 SECONDS");
+        Log.d("END", "WAITING 5 SECONDS");*/
     }
 }
