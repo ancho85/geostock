@@ -13,12 +13,22 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.geotechpy.geostock.R;
 import com.geotechpy.geostock.adapters.StockAdapter;
 import com.geotechpy.geostock.app.GeotechpyStockApp;
+import com.geotechpy.geostock.database.StockDetailManager;
 import com.geotechpy.geostock.database.StockManager;
 import com.geotechpy.geostock.database.UserManager;
+import com.geotechpy.geostock.database.ZoneManager;
+import com.geotechpy.geostock.models.StockDetail;
 import com.geotechpy.geostock.models.User;
+import com.geotechpy.geostock.models.Zone;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static com.geotechpy.geostock.network.WSErrorParser.webServiceErrorParser;
 
@@ -63,15 +73,31 @@ public class SyncToServer {
         String stockURL = "http://geotechpy.com/inventario/ajax/inventario/save_inventario.php";
 
         //stock request
-        JSONObject obj = new JSONObject();
+        Zone zone = ZoneManager.load(mContext, zoneCode);
+        StockDetailManager stockDetailManager = new StockDetailManager(mContext);
+        ArrayList<StockDetail> al_stockDetail = stockDetailManager.getStockDetails(stockSerNr);
+        List<Map<String,String>> paramsList =  new ArrayList<>();
+        for (int i=0; i < al_stockDetail.size(); i++) {
+            HashMap<String, String> params = new HashMap<>();
+            params.put("zona_codigo", String.valueOf(zoneCode));
+            params.put("usua_codigo", userName);
+            params.put("inve_tipo", zone.getType());
+            params.put("prod_codigo", al_stockDetail.get(i).getItem_code());
+            params.put("invd_cantidad", al_stockDetail.get(i).getQty().toString());
+            paramsList.add(params);
+        }
+        JSONObject json = new JSONObject();
         try {
-            obj.put("key", "value");
+            json.put("json", String.valueOf(new JSONArray(paramsList)));
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        JsonObjectRequest jsonArrayStockRequest = new JsonObjectRequest(Request.Method.POST,
-                stockURL, obj, new StockSyncListener(), new VolleyErrorResponseListener());
-        addToQueue(jsonArrayStockRequest, "STOCKSYNC");
+
+        JsonObjectRequest jsonStockRequest = new JsonObjectRequest(Request.Method.POST,
+                stockURL, json,
+                new StockSyncListener(),
+                new VolleyErrorResponseListener());
+        addToQueue(jsonStockRequest, "STOCKSYNC");
     }
 
     public void addToQueue(JsonObjectRequest request, String tag){
