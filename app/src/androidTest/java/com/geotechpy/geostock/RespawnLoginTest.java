@@ -35,8 +35,8 @@ public class RespawnLoginTest {
         /*onView(withText(R.string.session_expired)
         ).inRoot(withDecorView(
                 not(main.get().getWindow().getDecorView())
-        )).check(matches(isDisplayed()));
-        SystemClock.sleep(3000);*/
+        )).check(matches(isDisplayed()));*/
+        SystemClock.sleep(3000);
         onView(withText(R.string.username)).check(matches(isDisplayed()));
         onView(withText(R.string.password)).check(matches(isDisplayed()));
         onView(withId(R.id.btn_reset)).check(matches(withText(R.string.reset)));
