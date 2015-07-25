@@ -121,15 +121,20 @@ public class StockAdapter extends BaseAdapter{
 
             @Override
             public void onClick(View v) {
-                Intent itemList = new Intent(mContext, ItemListActivity.class);
-                itemList.putExtra("username", userName);
-                itemList.putExtra("stockSerNr", holder.tvStockSerNr.getText().toString());
-                itemList.putExtra("zoneCode", holder.tvZoneCode.getText().toString());
-                mContext.startActivity(itemList);
+                String currentStatus = holder.tvStatusCode.getText().toString();
+                if (currentStatus.equals(mContext.getString(R.string.stock_active))) {
+                    Intent itemList = new Intent(mContext, ItemListActivity.class);
+                    itemList.putExtra("username", userName);
+                    itemList.putExtra("stockSerNr", holder.tvStockSerNr.getText().toString());
+                    itemList.putExtra("zoneCode", holder.tvZoneCode.getText().toString());
+                    mContext.startActivity(itemList);
+                } else {
+                    Toast.makeText(mContext, R.string.stock_already_sync, Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
-        holder.ibDelete.setOnClickListener(new View.OnClickListener(){
+        holder.ibDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
@@ -163,15 +168,14 @@ public class StockAdapter extends BaseAdapter{
             @Override
             public void onClick(View view) {
                 String currentStatus = holder.tvStatusCode.getText().toString();
-                if (currentStatus.equals(mContext.getString(R.string.stock_active))){
+                if (currentStatus.equals(mContext.getString(R.string.stock_active))) {
                     SyncToServer sync = new SyncToServer(mContext);
                     sync.setStockAdapter(currentInstance);
                     sync.setUserName(userName);
                     sync.setStockSerNr(Integer.valueOf(holder.tvStockSerNr.getText().toString()));
                     sync.setZoneCode(Integer.valueOf(holder.tvZoneCode.getText().toString()));
                     sync.syncStock();
-                }
-                else{
+                } else {
                     Toast.makeText(mContext, R.string.stock_already_sync, Toast.LENGTH_SHORT).show();
                 }
 
