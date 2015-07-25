@@ -44,7 +44,7 @@ public class ItemActivity extends AppCompatActivity {
         super.onResume();
         userName = ((GeotechpyStockApp)getApplication()).getUserName();
         if (userName == null){
-            ((GeotechpyStockApp)getApplication()).respawnLogin();
+            ((GeotechpyStockApp)getApplication()).respawnLogin(this);
         }
         tvUserName = (TextView) findViewById(R.id.tv_item_username);
         tvStockSerNr = (TextView) findViewById(R.id.tv_item_stock_sernr);

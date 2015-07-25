@@ -35,7 +35,7 @@ public class StockZoneListActivity extends AppCompatActivity {
         super.onResume();
         userName = ((GeotechpyStockApp)getApplication()).getUserName();
         if (userName == null){
-            ((GeotechpyStockApp)getApplication()).respawnLogin();
+            ((GeotechpyStockApp)getApplication()).respawnLogin(this);
         }
         tvUserName = (TextView) findViewById(R.id.tv_stockzonelist_username);
         tvUserName.setText(userName);

@@ -41,13 +41,12 @@ public class GeotechpyStockApp extends Application {
         userName = userCode;
     }
 
-    public void respawnLogin(){
+    public void respawnLogin(Context mContext){
         /*
          * The user leaves the app (with home button) and after a while the OS's kills the app
          * to save memory. Thus the current activity is recreated without userName information.
          * http://www.developerphil.com/dont-store-data-in-the-application-object/
          */
-        Context mContext = getApplicationContext();
         Toast.makeText(mContext, R.string.session_expired, Toast.LENGTH_LONG).show();
         Intent intent = new Intent(this, MainActivity.class); //Relogin
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
