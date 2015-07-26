@@ -42,7 +42,7 @@ public class SyncFromServer {
 
     public void syncMasters() {
         showDialog();
-        String itemURL = "http://www.mocky.io/v2/55b10d7e2267c9bd0b4e9ac2"; //"http://geotechpy.com/inventario/ajax/productos/get_full_productos_rest.php";
+        String itemURL = "http://www.mocky.io/v2/55b42bde1c5bf1fe0ec90092"; //"http://geotechpy.com/inventario/ajax/productos/get_full_productos_rest.php";
         String userURL = "http://www.mocky.io/v2/55b112762267c9520c4e9ac7"; //"http://geotechpy.com/inventario/ajax/usuarios/get_full_usuarios_rest.php";
         String zoneURL = "http://www.mocky.io/v2/55b10d552267c9ba0b4e9ac1"; //"http://geotechpy.com/inventario/ajax/zonas/get_full_zonas_rest.php";
 

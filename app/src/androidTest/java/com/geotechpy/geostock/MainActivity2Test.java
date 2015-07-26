@@ -114,10 +114,14 @@ public class MainActivity2Test {
         onView(withId(R.id.btn_ok)).perform(click()); //no code toast
         onView(withId(R.id.et_item_code))
                 .perform(clearText(), typeText("1010"), closeSoftKeyboard());
+        Thread.sleep(2000); //invalid code toast
+        onView(withId(R.id.btn_ok)).perform(click()); // no name toast
+        onView(withId(R.id.et_item_code))
+                .perform(clearText(), typeText("10100"), closeSoftKeyboard());
         Thread.sleep(2000);
         onView(withId(R.id.btn_ok)).perform(click()); // no name toast
         onView(withId(R.id.et_item_name))
-                .perform(clearText(), typeText("testItem"), closeSoftKeyboard());
+                .perform(clearText(), typeText("Keyboard"), closeSoftKeyboard());
         Thread.sleep(2000);
         onView(withId(R.id.btn_ok)).perform(click()); // no barCode toast
         onView(withId(R.id.et_item_barcode))
@@ -137,7 +141,7 @@ public class MainActivity2Test {
         //ItemActivity
         onView(withId(R.id.et_item_code)).check(matches(editTextNotEditable()));
         onView(withId(R.id.et_item_name))
-                .perform(clearText(), typeText("testItemUpdated"), closeSoftKeyboard());
+                .perform(clearText(), typeText("KeyboardUpdated"), closeSoftKeyboard());
         Thread.sleep(2000);
         onView(withId(R.id.et_item_barcode))
                 .perform(clearText(), typeText("3210987654321"), closeSoftKeyboard());
