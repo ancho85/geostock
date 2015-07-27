@@ -118,14 +118,14 @@ public class MainActivity2Test {
         onView(withId(R.id.btn_ok)).perform(click()); // no name toast
         onView(withId(R.id.et_item_code))
                 .perform(clearText(), typeText("10100"), closeSoftKeyboard());
-        Thread.sleep(2000);
+        /*Thread.sleep(2000);
         onView(withId(R.id.btn_ok)).perform(click()); // no name toast
         onView(withId(R.id.et_item_name))
                 .perform(clearText(), typeText("Keyboard"), closeSoftKeyboard());
         Thread.sleep(2000);
         onView(withId(R.id.btn_ok)).perform(click()); // no barCode toast
         onView(withId(R.id.et_item_barcode))
-                .perform(clearText(), typeText("1234567890123"), closeSoftKeyboard());
+                .perform(clearText(), typeText("1234567890123"), closeSoftKeyboard());*/
         Thread.sleep(2000);
         onView(withId(R.id.btn_ok)).perform(click()); // no qty toast
         onView(withId(R.id.et_item_qty))

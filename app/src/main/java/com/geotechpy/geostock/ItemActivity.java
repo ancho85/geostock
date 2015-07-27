@@ -79,6 +79,22 @@ public class ItemActivity extends AppCompatActivity {
             etQty.setText(intent.getStringExtra("itemQty"));
             lineNr = Integer.valueOf(intent.getStringExtra("itemLineNr"));
         }
+
+        etCode.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    Item it = ItemManager.load(getApplicationContext(), etCode.getText().toString());
+                    if (it.getCode().equals("")){
+                        Toast.makeText(getApplicationContext(), R.string.invalid_item_code, Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        etName.setText(it.getName());
+                        etBarCode.setText(it.getBarcode().toString());
+                    }
+                }
+            }
+        });
     }
 
     @Override
