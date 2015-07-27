@@ -76,7 +76,10 @@ public class MainActivity1Test {
         Thread.sleep(5000);
         onView(withId(R.id.btn_sync)).perform(click());
         onView(withText(R.string.confirm_action)).check(matches(isDisplayed()));
-        onView(withId(android.R.id.button1)).perform(click());
+        onView(withId(android.R.id.button2)).perform(click()); //cancel
+        onView(withId(R.id.btn_sync)).perform(click());
+        onView(withText(R.string.confirm_action)).check(matches(isDisplayed()));
+        onView(withId(android.R.id.button1)).perform(click()); //confirm
         onView(withText(R.string.db_sync)).check(matches(isDisplayed()));
     }
 
