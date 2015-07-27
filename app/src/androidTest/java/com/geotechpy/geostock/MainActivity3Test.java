@@ -67,7 +67,41 @@ public class MainActivity3Test {
     }
 
     @Test
-    public void test1_shouldSendDataToServer() throws InterruptedException{
+    public void test1_mustInsertDataToSync() throws InterruptedException {
+        onView(withId(R.id.et_user)).perform(clearText(), typeText("ancho"), closeSoftKeyboard());
+        Thread.sleep(2000);
+        onView(withId(R.id.et_password)).perform(clearText(), typeText("666"), closeSoftKeyboard());
+        Thread.sleep(2000);
+        onView(withText(R.string.login)).perform(click());
+        onView(withId(R.id.btn_deposit)).perform(click());
+        onData(allOf(is(instanceOf(Stock.class)), withStockSerNr(1)))
+                .onChildView(withId(R.id.ib_edit))
+                .atPosition(0)
+                .perform(click());
+        onView(withId(R.id.btn_new)).perform(click());
+        onView(withId(R.id.et_item_code))
+                .perform(clearText(), typeText("10100"), closeSoftKeyboard());
+        Thread.sleep(2000);
+        onView(withId(R.id.et_item_name))
+                .perform(clearText(), typeText("Quantum"), closeSoftKeyboard());
+        Thread.sleep(2000);
+        onView(withId(R.id.et_item_barcode))
+                .perform(clearText(), typeText("1234567890123"), closeSoftKeyboard());
+        Thread.sleep(2000);
+        onView(withId(R.id.et_item_qty))
+                .perform(clearText(), typeText("100"), closeSoftKeyboard());
+        Thread.sleep(2000);
+        onView(withId(R.id.btn_ok)).perform(click());
+        pressBack();
+        pressBack();
+        pressBack();
+        Thread.sleep(2000);
+        onView(withText(R.string.confirm_exit)).check(matches(isDisplayed()));
+        onView(withId(android.R.id.button1)).perform(click());
+    }
+
+    @Test
+    public void test2_shouldSendDataToServer() throws InterruptedException{
         onView(withId(R.id.et_user)).perform(clearText(), typeText("ancho"), closeSoftKeyboard());
         Thread.sleep(2000);
         onView(withId(R.id.et_password)).perform(clearText(), typeText("666"), closeSoftKeyboard());
@@ -78,11 +112,12 @@ public class MainActivity3Test {
         onData(allOf(is(instanceOf(Stock.class)), withStockStatus(active)))
                 .onChildView(withId(R.id.ib_sync)) //resource id of first column from xml layout
                 .perform(click());
-        /*String confirmed = ctx.getString(R.string.stock_confirmed);
+        String confirmed = ctx.getString(R.string.stock_confirmed);
         onView(withId(R.id.lv_stocks)).check(matches(withAdaptedData(withStockStatus(confirmed))));
         onData(allOf(is(instanceOf(Stock.class)), withStockStatus(confirmed)))
                 .onChildView(withId(R.id.ib_sync)) //resource id of first column from xml layout
-                .perform(click()); //toast text of already sync*/
+                .perform(click()); //toast text of already sync
+        Thread.sleep(2000);
         onData(allOf(is(instanceOf(Stock.class)), withStockSerNr(1)))
                 .onChildView(withId(R.id.ib_delete)) //resource id of third column from xml layout
                 .perform(click());
