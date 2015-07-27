@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.geotechpy.geostock.MainActivity;
 import com.geotechpy.geostock.R;
@@ -31,6 +32,10 @@ public class GeotechpyStockApp extends Application {
 
     public synchronized static RequestQueue getRequestQueue(){
         return NetRequester.getInstance(appInstance).getRequestQueue();
+    }
+
+    public synchronized static void addToRequestQueue(Request request){
+        NetRequester.getInstance(appInstance).addToRequestQueue(request);
     }
 
     public String getUserName(){

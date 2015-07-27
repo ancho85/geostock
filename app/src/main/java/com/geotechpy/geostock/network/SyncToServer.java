@@ -6,7 +6,6 @@ import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -39,7 +38,6 @@ public class SyncToServer {
     Context mContext;
     StockAdapter stockAdapter;
     ProgressDialog progressDialog;
-    RequestQueue queue;
     String userName;
     int pendingRequests = 0;
     int stockSerNr = 0;
@@ -48,7 +46,6 @@ public class SyncToServer {
 
     public SyncToServer(Context context){
         this.mContext = context;
-        this.queue = GeotechpyStockApp.getRequestQueue();
     }
 
     public void setUserName(String userName){
@@ -105,7 +102,7 @@ public class SyncToServer {
         //Set a retry policy in case of SocketTimeout & ConnectionTimeout Exceptions. Volley does retry for you if you have specified the policy.
         request.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         request.setTag(tag);
-        queue.add(request);
+        GeotechpyStockApp.addToRequestQueue(request);
     }
 
     public int getPendingRequests(){
