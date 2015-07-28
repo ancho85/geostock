@@ -82,12 +82,6 @@ public class MainActivity3Test {
         onView(withId(R.id.et_item_code))
                 .perform(clearText(), typeText("10100"), closeSoftKeyboard());
         Thread.sleep(2000);
-        onView(withId(R.id.et_item_name))
-                .perform(clearText(), typeText("Quantum"), closeSoftKeyboard());
-        Thread.sleep(2000);
-        onView(withId(R.id.et_item_barcode))
-                .perform(clearText(), typeText("1234567890123"), closeSoftKeyboard());
-        Thread.sleep(2000);
         onView(withId(R.id.et_item_qty))
                 .perform(clearText(), typeText("100"), closeSoftKeyboard());
         Thread.sleep(2000);
@@ -112,6 +106,13 @@ public class MainActivity3Test {
         onData(allOf(is(instanceOf(Stock.class)), withStockStatus(active)))
                 .onChildView(withId(R.id.ib_sync)) //resource id of first column from xml layout
                 .perform(click());
+        onView(withText(R.string.confirm_action)).check(matches(isDisplayed()));
+        onView(withId(android.R.id.button2)).perform(click()); //cancel sync
+        onData(allOf(is(instanceOf(Stock.class)), withStockStatus(active)))
+                .onChildView(withId(R.id.ib_sync)) //resource id of first column from xml layout
+                .perform(click());
+        onView(withText(R.string.confirm_action)).check(matches(isDisplayed()));
+        onView(withId(android.R.id.button1)).perform(click()); //confirm sync
         String confirmed = ctx.getString(R.string.stock_confirmed);
         onView(withId(R.id.lv_stocks)).check(matches(withAdaptedData(withStockStatus(confirmed))));
         onData(allOf(is(instanceOf(Stock.class)), withStockStatus(confirmed)))
