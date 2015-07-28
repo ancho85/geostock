@@ -92,7 +92,7 @@ public class ItemManager {
                     item.setCode(c.getString(0));
                     item.setName(c.getString(1));
                     item.setBarcode(Long.valueOf(c.getString(2)));
-                    item.setType(c.getString(2));
+                    item.setType(c.getString(3));
                 }
             }finally {
                 if (c != null){

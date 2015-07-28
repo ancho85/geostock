@@ -88,6 +88,9 @@ public class ItemActivity extends AppCompatActivity {
                     if (it.getCode().equals("")){
                         Toast.makeText(getApplicationContext(), R.string.invalid_item_code, Toast.LENGTH_SHORT).show();
                     }
+                    else if(!it.getType().equals(GeotechpyStockApp.getStockType())){ //item type not the same as chosen
+                        Toast.makeText(getApplicationContext(), R.string.invalid_item_code, Toast.LENGTH_SHORT).show();
+                    }
                     else{
                         etName.setText(it.getName());
                         etBarCode.setText(it.getBarcode().toString());
@@ -142,6 +145,8 @@ public class ItemActivity extends AppCompatActivity {
                 if (TextUtils.isEmpty(item.getCode())){
                     displayMessage(getString(R.string.invalid_item_code));
                     return;
+                } else if(!item.getType().equals(GeotechpyStockApp.getStockType())) { //item type not the same as chosen
+                    displayMessage(getString(R.string.invalid_item_code));
                 }
             }
             if (TextUtils.isEmpty(name)){
