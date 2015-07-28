@@ -30,7 +30,6 @@ import static com.geotechpy.geostock.matchers.CustomMatchers.editTextNotEditable
 import static com.geotechpy.geostock.matchers.CustomMatchers.withAdaptedData;
 import static com.geotechpy.geostock.matchers.CustomMatchers.withStockDetailLineNumber;
 import static com.geotechpy.geostock.matchers.CustomMatchers.withStockSerNr;
-import static com.geotechpy.geostock.matchers.CustomMatchers.withStockStatus;
 import static com.geotechpy.geostock.matchers.CustomMatchers.withStockType;
 import static com.geotechpy.geostock.matchers.CustomMatchers.withZoneSerNr;
 import static org.hamcrest.Matchers.allOf;
@@ -59,21 +58,21 @@ public class MainActivity2Test {
 
     @Test
     public void shouldDisplayStockTypeDepositOnUserLogin() throws InterruptedException {
-        onView(withId(R.id.et_user)).perform(clearText(), typeText("ancho"), closeSoftKeyboard());
+        onView(withId(R.id.et_user)).perform(clearText(), typeText("dep"), closeSoftKeyboard());
         Thread.sleep(2000);
         onView(withId(R.id.et_password)).perform(clearText(), typeText("777"), closeSoftKeyboard());
         Thread.sleep(2000);
         onView(withText(R.string.login)).perform(click());
         onView(withText(R.string.invalid_password)).check(matches(isDisplayed()));
 
-        onView(withId(R.id.et_password)).perform(clearText(), typeText("666"), closeSoftKeyboard());
+        onView(withId(R.id.et_password)).perform(clearText(), typeText("dep"), closeSoftKeyboard());
         Thread.sleep(2000);
         onView(withText(R.string.login)).perform(click());
 
         //StockTypeActivity
         onView(withId(R.id.btn_deposit)).check(matches(isDisplayed()));
         onView(withId(R.id.btn_laboratory)).check(matches(not(isDisplayed())));
-        onView(withText("ancho")).check(matches(isDisplayed()));
+        onView(withText("dep")).check(matches(isDisplayed()));
         onView(withId(R.id.btn_deposit)).perform(click());
 
         //StockListActivity
@@ -94,6 +93,10 @@ public class MainActivity2Test {
         onView(withId(R.id.btn_ok)).perform(click());
         onData(allOf(is(instanceOf(Stock.class)), withStockSerNr(1)))
                 .check(matches(isDisplayed())); //created stock appears
+        onView(withId(R.id.btn_new_stock)).perform(click());
+        onData(allOf(is(instanceOf(Zone.class)), withZoneSerNr(1)))
+                .perform(click());
+        onView(withId(R.id.btn_ok)).perform(click()); //another stock detail of the same type
         String deposit = ctx.getString(R.string.zone_deposit);
         onData(allOf(is(instanceOf(Stock.class)), withStockType(deposit)))
                 .onChildView(withId(R.id.ib_edit)) //resource id of second column from xml layout
@@ -101,7 +104,7 @@ public class MainActivity2Test {
                 .perform(click());
 
         //ItemListActivity
-        onView(withText("ancho")).check(matches(isDisplayed()));
+        onView(withText("dep")).check(matches(isDisplayed()));
         onView(withId(R.id.tv_itemlist_stock_sernr)).check(matches(withText("1")));
         onView(withId(R.id.tv_itemlist_stock_zone_code)).check(matches(withText("3")));
         onView(withId(R.id.lv_itemlist_items)).check(matches(isDisplayed()));
@@ -112,22 +115,22 @@ public class MainActivity2Test {
         //ItemActivity
         onView(withId(R.id.et_item_code)).check(matches(not(editTextNotEditable())));
         onView(withId(R.id.btn_ok)).perform(click()); //no code toast
+
         onView(withId(R.id.et_item_code))
                 .perform(clearText(), typeText("1010"), closeSoftKeyboard());
-        Thread.sleep(2000); //invalid code toast
-        onView(withId(R.id.btn_ok)).perform(click()); // no name toast
-        onView(withId(R.id.et_item_code))
-                .perform(clearText(), typeText("10100"), closeSoftKeyboard());
-        /*Thread.sleep(2000);
-        onView(withId(R.id.btn_ok)).perform(click()); // no name toast
-        onView(withId(R.id.et_item_name))
-                .perform(clearText(), typeText("Keyboard"), closeSoftKeyboard());
         Thread.sleep(2000);
-        onView(withId(R.id.btn_ok)).perform(click()); // no barCode toast
-        onView(withId(R.id.et_item_barcode))
-                .perform(clearText(), typeText("1234567890123"), closeSoftKeyboard());*/
+        onView(withId(R.id.btn_ok)).perform(click()); //invalid code toast
+
+        onView(withId(R.id.et_item_code))
+                .perform(clearText(), typeText("956803"), closeSoftKeyboard());
+        Thread.sleep(2000);
+        onView(withId(R.id.btn_ok)).perform(click()); //valid code invalid zone toast
+
+        onView(withId(R.id.et_item_code))
+                .perform(clearText(), typeText("100100"), closeSoftKeyboard());
         Thread.sleep(2000);
         onView(withId(R.id.btn_ok)).perform(click()); // no qty toast
+
         onView(withId(R.id.et_item_qty))
                 .perform(clearText(), typeText("33"), closeSoftKeyboard());
         Thread.sleep(2000);
@@ -170,15 +173,24 @@ public class MainActivity2Test {
 
     @Test
     public void shouldDisplayStockTypeLaboratoryOnUserLogin() throws InterruptedException {
-        onView(withId(R.id.et_user)).perform(clearText(), typeText("alex"), closeSoftKeyboard());
+        onView(withId(R.id.et_user)).perform(clearText(), typeText("lab"), closeSoftKeyboard());
         Thread.sleep(2000);
-        onView(withId(R.id.et_password)).perform(clearText(), typeText("777"), closeSoftKeyboard());
+        onView(withId(R.id.et_password)).perform(clearText(), typeText("lab"), closeSoftKeyboard());
         Thread.sleep(2000);
         onView(withText(R.string.login)).perform(click());
         onView(withId(R.id.btn_laboratory)).check(matches(isDisplayed()));
         onView(withId(R.id.btn_deposit)).check(matches(not(isDisplayed())));
-        onView(withText("alex")).check(matches(isDisplayed()));
+        onView(withText("lab")).check(matches(isDisplayed()));
+        onView(withId(R.id.btn_laboratory)).perform(click());
+        onView(withId(R.id.lv_stocks)).check(matches(not(withAdaptedData(withStockSerNr(2))))); //there is nothing of other user
+        onView(withId(R.id.btn_new_stock)).perform(click());
+        onView(withId(R.id.lv_zones)).check(matches(not(withAdaptedData(withZoneSerNr(4))))); //deposit zones are hidden
+        onData(allOf(is(instanceOf(Zone.class)), withZoneSerNr(5)))
+                .perform(click());
+        onView(withId(R.id.btn_ok)).perform(click());
+        onView(withId(R.id.lv_stocks)).check(matches(withAdaptedData(withStockSerNr(3)))); //new stock
 
+        pressBack();
         pressBack();
         onView(withText(R.string.confirm_exit)).check(matches(isDisplayed()));
         onView(withId(android.R.id.button2)).perform(click());

@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.test.AndroidTestCase;
 import android.test.RenamingDelegatingContext;
 
+import com.geotechpy.geostock.app.GeotechpyStockApp;
 import com.geotechpy.geostock.database.DBHelper;
 import com.geotechpy.geostock.database.ItemManager;
 import com.geotechpy.geostock.database.StockDetailManager;
@@ -129,6 +130,8 @@ public class DbTest extends AndroidTestCase {
         zone.insert(1, "Admin", ctx.getString(R.string.zone_admin));
         user.insert("ancho", "123456", ctx.getString(R.string.zone_admin));
         item.insert("keyboard", "Keyboard", 1234567890123L, ctx.getString(R.string.zone_admin));
+
+        GeotechpyStockApp.setUserName("ancho");
 
         stock.insert(1, ctx.getString(R.string.zone_admin), ctx.getString(R.string.stock_active), "ancho", 1);
         stock.insert(stock.getNextSerNr(), ctx.getString(R.string.zone_admin), ctx.getString(R.string.stock_active), "ancho", 1);

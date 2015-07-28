@@ -68,9 +68,9 @@ public class MainActivity3Test {
 
     @Test
     public void test1_mustInsertDataToSync() throws InterruptedException {
-        onView(withId(R.id.et_user)).perform(clearText(), typeText("ancho"), closeSoftKeyboard());
+        onView(withId(R.id.et_user)).perform(clearText(), typeText("dep"), closeSoftKeyboard());
         Thread.sleep(2000);
-        onView(withId(R.id.et_password)).perform(clearText(), typeText("666"), closeSoftKeyboard());
+        onView(withId(R.id.et_password)).perform(clearText(), typeText("dep"), closeSoftKeyboard());
         Thread.sleep(2000);
         onView(withText(R.string.login)).perform(click());
         onView(withId(R.id.btn_deposit)).perform(click());
@@ -80,7 +80,7 @@ public class MainActivity3Test {
                 .perform(click());
         onView(withId(R.id.btn_new)).perform(click());
         onView(withId(R.id.et_item_code))
-                .perform(clearText(), typeText("10100"), closeSoftKeyboard());
+                .perform(clearText(), typeText("100100"), closeSoftKeyboard());
         Thread.sleep(2000);
         onView(withId(R.id.et_item_qty))
                 .perform(clearText(), typeText("100"), closeSoftKeyboard());
@@ -96,15 +96,16 @@ public class MainActivity3Test {
 
     @Test
     public void test2_shouldSendDataToServer() throws InterruptedException{
-        onView(withId(R.id.et_user)).perform(clearText(), typeText("ancho"), closeSoftKeyboard());
+        onView(withId(R.id.et_user)).perform(clearText(), typeText("dep"), closeSoftKeyboard());
         Thread.sleep(2000);
-        onView(withId(R.id.et_password)).perform(clearText(), typeText("666"), closeSoftKeyboard());
+        onView(withId(R.id.et_password)).perform(clearText(), typeText("dep"), closeSoftKeyboard());
         Thread.sleep(2000);
         onView(withText(R.string.login)).perform(click());
         onView(withId(R.id.btn_deposit)).perform(click());
         String active = ctx.getString(R.string.stock_active);
         onData(allOf(is(instanceOf(Stock.class)), withStockStatus(active)))
                 .onChildView(withId(R.id.ib_sync)) //resource id of first column from xml layout
+                .atPosition(0)
                 .perform(click());
         onView(withText(R.string.confirm_action)).check(matches(isDisplayed()));
         onView(withId(android.R.id.button2)).perform(click()); //cancel sync
