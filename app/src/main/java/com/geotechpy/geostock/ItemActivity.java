@@ -46,7 +46,7 @@ public class ItemActivity extends AppCompatActivity {
     @Override
     public void onResume(){
         super.onResume();
-        userName = ((GeotechpyStockApp)getApplication()).getUserName();
+        userName = GeotechpyStockApp.getUserName();
         if (userName == null){
             ((GeotechpyStockApp)getApplication()).respawnLogin(this);
         }

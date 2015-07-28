@@ -28,7 +28,7 @@ public class ItemListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        userName = ((GeotechpyStockApp)getApplication()).getUserName();
+        userName = GeotechpyStockApp.getUserName();
         if (userName == null){
             ((GeotechpyStockApp)getApplication()).respawnLogin(this);
         }
@@ -42,7 +42,7 @@ public class ItemListActivity extends AppCompatActivity {
         tvStockSerNr = (TextView) findViewById(R.id.tv_itemlist_stock_sernr);
         tvZoneCode = (TextView) findViewById(R.id.tv_itemlist_stock_zone_code);
         Intent intent = getIntent();
-        userName = ((GeotechpyStockApp)getApplication()).getUserName();
+        userName = GeotechpyStockApp.getUserName();
         tvUserName.setText(userName);
         tvStockSerNr.setText(intent.getStringExtra("stockSerNr"));
         tvZoneCode.setText(intent.getStringExtra("zoneCode"));
