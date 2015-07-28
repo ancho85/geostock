@@ -43,6 +43,7 @@
     <string name="invalid_item_code">Invalid Item Code</string>
     <string name="invalid_item_name">Invalid Item Name</string>
     <string name="invalid_item_qty">Invalid Item Qty</string>
+    <string name="invalid_item_zone">Invalid Item Zone</string>
     <string name="item_created">Item Created</string>
     <string name="item_updated">Item Updated</string>
     <string name="stockSerNr">Stock Nr:</string>

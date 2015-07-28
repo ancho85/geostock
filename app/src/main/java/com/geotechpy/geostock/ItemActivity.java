@@ -84,12 +84,14 @@ public class ItemActivity extends AppCompatActivity {
 
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
+                    etName.setText("");
+                    etBarCode.setText("");
                     Item it = ItemManager.load(getApplicationContext(), etCode.getText().toString());
                     if (it.getCode().equals("")){
                         Toast.makeText(getApplicationContext(), R.string.invalid_item_code, Toast.LENGTH_SHORT).show();
                     }
                     else if(!it.getType().equals(GeotechpyStockApp.getStockType())){ //item type not the same as chosen
-                        Toast.makeText(getApplicationContext(), R.string.invalid_item_code, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), R.string.invalid_item_zone, Toast.LENGTH_SHORT).show();
                     }
                     else{
                         etName.setText(it.getName());
@@ -146,7 +148,8 @@ public class ItemActivity extends AppCompatActivity {
                     displayMessage(getString(R.string.invalid_item_code));
                     return;
                 } else if(!item.getType().equals(GeotechpyStockApp.getStockType())) { //item type not the same as chosen
-                    displayMessage(getString(R.string.invalid_item_code));
+                    displayMessage(getString(R.string.invalid_item_zone));
+                    return;
                 }
             }
             if (TextUtils.isEmpty(name)){
