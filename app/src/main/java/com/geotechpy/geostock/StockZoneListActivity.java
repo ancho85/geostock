@@ -12,9 +12,7 @@ import android.widget.Toast;
 import com.geotechpy.geostock.adapters.ZoneAdapter;
 import com.geotechpy.geostock.app.GeotechpyStockApp;
 import com.geotechpy.geostock.database.StockManager;
-import com.geotechpy.geostock.database.UserManager;
 import com.geotechpy.geostock.database.ZoneManager;
-import com.geotechpy.geostock.models.User;
 import com.geotechpy.geostock.models.Zone;
 
 import java.util.ArrayList;
@@ -33,7 +31,7 @@ public class StockZoneListActivity extends AppCompatActivity {
     @Override
     public void onResume(){
         super.onResume();
-        userName = ((GeotechpyStockApp)getApplication()).getUserName();
+        userName = GeotechpyStockApp.getUserName();
         if (userName == null){
             ((GeotechpyStockApp)getApplication()).respawnLogin(this);
         }
@@ -43,13 +41,8 @@ public class StockZoneListActivity extends AppCompatActivity {
     }
 
     public void showZones(){
-        User user = UserManager.load(this, userName);
-        String typeFilter = "";
-        if (!user.getType().equals(getString(R.string.zone_admin)) && !user.getType().equals(getString(R.string.zone_both))){
-            typeFilter = user.getType();
-        }
         ZoneManager zoneManager = new ZoneManager(this);
-        ArrayList<Zone> al_zones = zoneManager.getZones(typeFilter);
+        ArrayList<Zone> al_zones = zoneManager.getZones(GeotechpyStockApp.getStockType());
         ZoneAdapter zoneAdapter = new ZoneAdapter(this);
         zoneAdapter.updateZones(al_zones);
         ListView lvZones = (ListView) findViewById(R.id.lv_zones);
@@ -86,11 +79,10 @@ public class StockZoneListActivity extends AppCompatActivity {
         ListView lvZones = (ListView) findViewById(R.id.lv_zones);
         Integer position = lvZones.getCheckedItemPosition();
         Zone zone = (Zone) lvZones.getItemAtPosition(position);
-        User user = UserManager.load(this, userName);
         if (zone != null){
             StockManager stockManager = new StockManager(this);
-            stockManager.insert(stockManager.getNextSerNr(), user.getType(),
-                    getString(R.string.stock_active), user.getCode(), zone.getSernr());
+            stockManager.insert(stockManager.getNextSerNr(), GeotechpyStockApp.getStockType(),
+                    getString(R.string.stock_active), userName, zone.getSernr());
             finish();
         }else{
             Toast.makeText(getApplicationContext(), R.string.must_select_zone, Toast.LENGTH_SHORT).show();

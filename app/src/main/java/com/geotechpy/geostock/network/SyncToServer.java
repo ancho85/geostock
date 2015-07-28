@@ -14,11 +14,7 @@ import com.geotechpy.geostock.adapters.StockAdapter;
 import com.geotechpy.geostock.app.GeotechpyStockApp;
 import com.geotechpy.geostock.database.StockDetailManager;
 import com.geotechpy.geostock.database.StockManager;
-import com.geotechpy.geostock.database.UserManager;
-import com.geotechpy.geostock.database.ZoneManager;
 import com.geotechpy.geostock.models.StockDetail;
-import com.geotechpy.geostock.models.User;
-import com.geotechpy.geostock.models.Zone;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,7 +34,6 @@ public class SyncToServer {
     Context mContext;
     StockAdapter stockAdapter;
     ProgressDialog progressDialog;
-    String userName;
     int pendingRequests = 0;
     int stockSerNr = 0;
     int zoneCode = 0;
@@ -46,10 +41,6 @@ public class SyncToServer {
 
     public SyncToServer(Context context){
         this.mContext = context;
-    }
-
-    public void setUserName(String userName){
-        this.userName = userName;
     }
 
     public void setStockAdapter(StockAdapter adapter){
@@ -70,15 +61,14 @@ public class SyncToServer {
         String stockURL = "http://geotechpy.com/inventario/ajax/inventario/save_inventario.php";
 
         //stock request
-        Zone zone = ZoneManager.load(mContext, zoneCode);
         StockDetailManager stockDetailManager = new StockDetailManager(mContext);
         ArrayList<StockDetail> al_stockDetail = stockDetailManager.getStockDetails(stockSerNr);
         List<Map<String,String>> paramsList =  new ArrayList<>();
         for (int i=0; i < al_stockDetail.size(); i++) {
             HashMap<String, String> params = new HashMap<>();
             params.put("zona_codigo", String.valueOf(zoneCode));
-            params.put("usua_codigo", userName);
-            params.put("inve_tipo", zone.getType());
+            params.put("usua_codigo", GeotechpyStockApp.getUserName());
+            params.put("inve_tipo", GeotechpyStockApp.getStockType());
             params.put("prod_codigo", al_stockDetail.get(i).getItem_code());
             params.put("invd_cantidad", al_stockDetail.get(i).getQty().toString());
             paramsList.add(params);
@@ -138,14 +128,13 @@ public class SyncToServer {
             if (response.has("status")){
                 try {
                     if (response.getString("status").equals("ok")){
-                        User user = UserManager.load(mContext, userName);
                         StockManager smd = new StockManager(mContext);
                         smd.update(stockSerNr,
-                                user.getType(),
+                                GeotechpyStockApp.getStockType(),
                                 mContext.getString(R.string.stock_confirmed), //Confirming line
-                                user.getCode(),
+                                GeotechpyStockApp.getUserName(),
                                 zoneCode);
-                        stockAdapter.populateStocks(userName);
+                        stockAdapter.populateStocks();
                     }else{
                         replyMsg = response.getString("status");
                     }

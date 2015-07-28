@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.geotechpy.geostock.R;
 import com.geotechpy.geostock.ItemListActivity;
+import com.geotechpy.geostock.app.GeotechpyStockApp;
 import com.geotechpy.geostock.database.StockDetailManager;
 import com.geotechpy.geostock.database.StockManager;
 import com.geotechpy.geostock.database.UserManager;
@@ -29,7 +30,6 @@ import java.util.ArrayList;
 public class StockAdapter extends BaseAdapter{
     private ArrayList<Stock> al_stocks = new ArrayList<>();
     private Context mContext;
-    private String userName;
     StockAdapter currentInstance;
 
     public StockAdapter(Context context){
@@ -49,15 +49,9 @@ public class StockAdapter extends BaseAdapter{
         int position;
     }
 
-    public void populateStocks(String userName){
-        setUserName(userName);
-        User user = UserManager.load(mContext, userName);
-        String typeFilter = "";
-        if (!user.getType().equals(mContext.getString(R.string.zone_admin)) || !user.getType().equals(mContext.getString(R.string.zone_both))){
-            typeFilter = user.getType();
-        }
+    public void populateStocks(){
         StockManager stockManager = new StockManager(mContext);
-        ArrayList<Stock> al_stocks = stockManager.getStocks(typeFilter);
+        ArrayList<Stock> al_stocks = stockManager.getStocks(GeotechpyStockApp.getStockType());
         updateStocks(al_stocks);
     }
 
@@ -69,10 +63,6 @@ public class StockAdapter extends BaseAdapter{
     public void deleteStock(int position){
         this.al_stocks.remove(position);
         notifyDataSetChanged();
-    }
-
-    public void setUserName(String userName){
-        this.userName = userName;
     }
 
     @Override
@@ -124,7 +114,6 @@ public class StockAdapter extends BaseAdapter{
                 String currentStatus = holder.tvStatusCode.getText().toString();
                 if (currentStatus.equals(mContext.getString(R.string.stock_active))) {
                     Intent itemList = new Intent(mContext, ItemListActivity.class);
-                    itemList.putExtra("username", userName);
                     itemList.putExtra("stockSerNr", holder.tvStockSerNr.getText().toString());
                     itemList.putExtra("zoneCode", holder.tvZoneCode.getText().toString());
                     mContext.startActivity(itemList);
@@ -177,7 +166,6 @@ public class StockAdapter extends BaseAdapter{
                         public void onClick(DialogInterface dialogInterface, int id) {
                             SyncToServer sync = new SyncToServer(mContext);
                             sync.setStockAdapter(currentInstance);
-                            sync.setUserName(userName);
                             sync.setStockSerNr(Integer.valueOf(holder.tvStockSerNr.getText().toString()));
                             sync.setZoneCode(Integer.valueOf(holder.tvZoneCode.getText().toString()));
                             sync.syncStock();

@@ -18,6 +18,7 @@ import com.geotechpy.geostock.network.NetRequester;
 public class GeotechpyStockApp extends Application {
 
     private static volatile String userName;
+    private static volatile String stockType;
     private static volatile GeotechpyStockApp appInstance;
 
     @Override
@@ -38,8 +39,16 @@ public class GeotechpyStockApp extends Application {
         NetRequester.getInstance(appInstance).addToRequestQueue(request);
     }
 
-    public String getUserName(){
+    public synchronized static String getUserName(){
         return userName;
+    }
+
+    public synchronized static void setStockType(String type){
+        stockType = type;
+    }
+
+    public synchronized static String getStockType(){
+        return stockType;
     }
 
     public synchronized static void setUserName(String userCode){

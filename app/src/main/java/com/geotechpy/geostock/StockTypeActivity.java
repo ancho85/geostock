@@ -91,11 +91,13 @@ public class StockTypeActivity extends AppCompatActivity {
     }
 
     public void onClickDeposit(View view){
+        GeotechpyStockApp.setStockType(getString(R.string.zone_deposit));
         Intent stockList = new Intent(this, StockListActivity.class);
         startActivity(stockList);
     }
 
     public void onClickLaboratory(View view){
+        GeotechpyStockApp.setStockType(getString(R.string.zone_lab));
         Intent stockList = new Intent(this, StockListActivity.class);
         startActivity(stockList);
     }

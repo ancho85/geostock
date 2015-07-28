@@ -27,7 +27,7 @@ public class StockListActivity extends AppCompatActivity{
     public void onResume(){
         super.onResume();
         tvUserName = (TextView) findViewById(R.id.tv_stocklist_username);
-        userName = ((GeotechpyStockApp)getApplication()).getUserName();
+        userName = GeotechpyStockApp.getUserName();
         if (userName == null){
             ((GeotechpyStockApp)getApplication()).respawnLogin(this);
         }
@@ -37,7 +37,7 @@ public class StockListActivity extends AppCompatActivity{
 
     public void showStocks(){
         StockAdapter stockAdapter = new StockAdapter(this);
-        stockAdapter.populateStocks(userName);
+        stockAdapter.populateStocks();
         ListView lvStocks = (ListView) findViewById(R.id.lv_stocks);
         lvStocks.setAdapter(stockAdapter);
     }
