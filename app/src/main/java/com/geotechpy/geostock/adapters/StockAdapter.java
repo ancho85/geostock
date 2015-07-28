@@ -17,9 +17,7 @@ import com.geotechpy.geostock.ItemListActivity;
 import com.geotechpy.geostock.app.GeotechpyStockApp;
 import com.geotechpy.geostock.database.StockDetailManager;
 import com.geotechpy.geostock.database.StockManager;
-import com.geotechpy.geostock.database.UserManager;
 import com.geotechpy.geostock.models.Stock;
-import com.geotechpy.geostock.models.User;
 import com.geotechpy.geostock.network.SyncToServer;
 
 import java.util.ArrayList;
