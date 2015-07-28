@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
 
 import com.geotechpy.geostock.R;
+import com.geotechpy.geostock.app.GeotechpyStockApp;
 import com.geotechpy.geostock.models.Stock;
 
 import java.util.ArrayList;
@@ -56,9 +57,9 @@ public class StockManager {
 
     public ArrayList<Stock> getStocks(String type) {
         String[] columns = new String[]{CN_SERNR, CN_TYPE, CN_STATUS, CN_USERCODE, CN_ZONESERNR};
-        String where = "";
+        String where = CN_USERCODE + "= '" + GeotechpyStockApp.getUserName() + "'";
         if (!TextUtils.isEmpty(type)){
-            where = CN_TYPE + "= '" + type + "'";
+            where += " AND " + CN_TYPE + "= '" + type + "'";
         }
         Cursor c = null;
         ArrayList<Stock> al_stock = new ArrayList<>();
