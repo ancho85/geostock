@@ -169,12 +169,28 @@ public class StockAdapter extends BaseAdapter{
             public void onClick(View view) {
                 String currentStatus = holder.tvStatusCode.getText().toString();
                 if (currentStatus.equals(mContext.getString(R.string.stock_active))) {
-                    SyncToServer sync = new SyncToServer(mContext);
-                    sync.setStockAdapter(currentInstance);
-                    sync.setUserName(userName);
-                    sync.setStockSerNr(Integer.valueOf(holder.tvStockSerNr.getText().toString()));
-                    sync.setZoneCode(Integer.valueOf(holder.tvZoneCode.getText().toString()));
-                    sync.syncStock();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                    builder.setMessage(R.string.confirm_action);
+                    builder.setTitle(R.string.confirm_title);
+                    builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int id) {
+                            SyncToServer sync = new SyncToServer(mContext);
+                            sync.setStockAdapter(currentInstance);
+                            sync.setUserName(userName);
+                            sync.setStockSerNr(Integer.valueOf(holder.tvStockSerNr.getText().toString()));
+                            sync.setZoneCode(Integer.valueOf(holder.tvZoneCode.getText().toString()));
+                            sync.syncStock();
+                        }
+                    });
+                    builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+                    builder.create();
+                    builder.show();
                 } else {
                     Toast.makeText(mContext, R.string.stock_already_sync, Toast.LENGTH_SHORT).show();
                 }
