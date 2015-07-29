@@ -18,6 +18,7 @@ import com.geotechpy.geostock.app.GeotechpyStockApp;
 import com.geotechpy.geostock.database.StockDetailManager;
 import com.geotechpy.geostock.database.StockManager;
 import com.geotechpy.geostock.models.Stock;
+import com.geotechpy.geostock.models.StockDetail;
 import com.geotechpy.geostock.network.SyncToServer;
 
 import java.util.ArrayList;
@@ -155,28 +156,36 @@ public class StockAdapter extends BaseAdapter{
             @Override
             public void onClick(View view) {
                 String currentStatus = holder.tvStatusCode.getText().toString();
+                final int stockNr = Integer.valueOf(holder.tvStockSerNr.getText().toString());
+                final int zoneCode = Integer.valueOf(holder.tvZoneCode.getText().toString());
                 if (currentStatus.equals(mContext.getString(R.string.stock_active))) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                    builder.setMessage(R.string.confirm_action);
-                    builder.setTitle(R.string.confirm_title);
-                    builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int id) {
-                            SyncToServer sync = new SyncToServer(mContext);
-                            sync.setStockAdapter(currentInstance);
-                            sync.setStockSerNr(Integer.valueOf(holder.tvStockSerNr.getText().toString()));
-                            sync.setZoneCode(Integer.valueOf(holder.tvZoneCode.getText().toString()));
-                            sync.syncStock();
-                        }
-                    });
-                    builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.cancel();
-                        }
-                    });
-                    builder.create();
-                    builder.show();
+                    StockDetailManager stockDetailManager = new StockDetailManager(mContext);
+                    ArrayList<StockDetail> al_stockDetail = stockDetailManager.getStockDetails(stockNr);
+                    if (al_stockDetail.size() > 0) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                        builder.setMessage(R.string.confirm_action);
+                        builder.setTitle(R.string.confirm_title);
+                        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int id) {
+                                SyncToServer sync = new SyncToServer(mContext);
+                                sync.setStockAdapter(currentInstance);
+                                sync.setStockSerNr(stockNr);
+                                sync.setZoneCode(zoneCode);
+                                sync.syncStock();
+                            }
+                        });
+                        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+                        builder.create();
+                        builder.show();
+                    }else{
+                        Toast.makeText(mContext, R.string.empty_stock, Toast.LENGTH_SHORT).show();
+                    }
                 } else {
                     Toast.makeText(mContext, R.string.stock_already_sync, Toast.LENGTH_SHORT).show();
                 }

@@ -66,5 +66,6 @@
     <string name="stock_already_sync">Stock Already Synchronized</string>
     <string name="session_expired">Session Expired</string>
     <string name="item_already_in_detail">Item Already In Stock Detail</string>
+    <string name="empty_stock">Stock Detail is empty. Cannot sync</string>
 
 </resources>
