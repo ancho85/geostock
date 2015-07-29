@@ -53,7 +53,7 @@ public class MainActivity1Test {
         unregisterIdlingResources(volleyIdlingResource);
     }
 
-    @Test
+    //@Test
     public void test1_shouldBeAbleToLaunchMainScreen() {
         onView(withText(R.string.username)).check(matches(isDisplayed()));
         onView(withText(R.string.password)).check(matches(isDisplayed()));
@@ -83,7 +83,7 @@ public class MainActivity1Test {
         onView(withText(R.string.db_sync)).check(matches(isDisplayed()));
     }
 
-    @Test
+    //@Test
     public void test4_shouldButtonLoginUser() throws InterruptedException {
         onView(withText(R.string.login)).perform(click());
         onView(withText(R.string.empty_field_user)).check(matches(isDisplayed()));

@@ -166,16 +166,16 @@ public class CustomMatchers {
     /**
      * Matches a StockDetail with a specific Line Number
      */
-    public static Matcher<Object> withStockDetailLineNumber(final int lineNr) {
+    public static Matcher<Object> withStockDetailLineNumber(final int stockNr, final int lineNr) {
         return new BoundedMatcher<Object, StockDetail>(StockDetail.class) {
             @Override
             protected boolean matchesSafely(StockDetail stockDetail) {
-                return lineNr == stockDetail.getLinenr();
+                return lineNr == stockDetail.getLinenr() && stockNr == stockDetail.getStock_sernr();
             }
 
             @Override
             public void describeTo(Description description) {
-                description.appendText("with id: " + lineNr);
+                description.appendText("with stockNr: " + stockNr + " & line: " + lineNr);
             }
         };
     }

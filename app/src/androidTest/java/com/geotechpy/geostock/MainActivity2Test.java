@@ -114,32 +114,31 @@ public class MainActivity2Test {
 
         //ItemActivity
         onView(withId(R.id.et_item_code)).check(matches(not(editTextNotEditable())));
-        //onView(withId(R.id.btn_ok)).perform(click()); //no code toast
-        //Thread.sleep(2000);
+        onView(withId(R.id.btn_ok)).perform(click()); //no code toast
+        Thread.sleep(2000);
         onView(withId(R.id.et_item_code))
                 .perform(clearText(), typeText("666"), closeSoftKeyboard());
         Thread.sleep(2000);
-        //onView(withId(R.id.btn_ok)).perform(click()); //invalid code toast
+        onView(withId(R.id.btn_ok)).perform(click()); //invalid code toast
 
         onView(withId(R.id.et_item_code))
                 .perform(clearText(), typeText("956803"), closeSoftKeyboard());
         Thread.sleep(2000);
-        //onView(withId(R.id.btn_ok)).perform(click()); //valid code invalid zone toast
+        onView(withId(R.id.btn_ok)).perform(click()); //valid code invalid zone toast
 
         onView(withId(R.id.et_item_code))
                 .perform(clearText(), typeText("100100"), closeSoftKeyboard());
         Thread.sleep(2000);
-        onView(withId(R.id.et_item_name)).perform(click()); //change focus to auto fill data
+        onView(withId(R.id.et_item_qty)).perform(click()); //change focus to auto fill data
         onView(withText("2147483647")).check(matches(isDisplayed()));
-        //onView(withId(R.id.btn_ok)).perform(click()); // no qty toast
-        //Thread.sleep(2000);
+
         onView(withId(R.id.et_item_qty))
                 .perform(clearText(), typeText("100"), closeSoftKeyboard());
         Thread.sleep(2000);
         onView(withId(R.id.btn_ok)).perform(click()); //item created toast
 
         //ItemListActivity
-        onData(allOf(is(instanceOf(StockDetail.class)), withStockDetailLineNumber(1)))
+        onData(allOf(is(instanceOf(StockDetail.class)), withStockDetailLineNumber(1, 1)))
                 .onChildView(withId(R.id.ib_items_edit))
                 .perform(click());
 
@@ -157,13 +156,13 @@ public class MainActivity2Test {
         onView(withId(R.id.btn_ok)).perform(click()); //item updated toast
 
         //ItemListActivity
-        onData(allOf(is(instanceOf(StockDetail.class)), withStockDetailLineNumber(1)))
+        onData(allOf(is(instanceOf(StockDetail.class)), withStockDetailLineNumber(1, 1)))
                 .onChildView(withId(R.id.ib_items_delete))
                 .perform(click());
         onView(withText(R.string.confirm_action)).check(matches(isDisplayed()));
         onView(withId(android.R.id.button1)).perform(click());
         onView(withId(R.id.lv_itemlist_items))
-                .check(matches(not(withAdaptedData(is(withStockDetailLineNumber(1))))));
+                .check(matches(not(withAdaptedData(withStockDetailLineNumber(1, 1)))));
 
         pressBack(); //back to StockActivity
         pressBack(); //back to StockTypeActivity
