@@ -69,5 +69,9 @@
     <string name="empty_stock">Stock Detail is empty. Cannot sync</string>
     <string name="statusCode">Status</string>
     <string name="item_number">Nr</string>
+    <string name="header_stock" translatable="false">Id</string>
+    <string name="header_zone">Zone</string>
+    <string name="header_status">Status</string>
+    <string name="header_item">Qty</string>
 
 </resources>

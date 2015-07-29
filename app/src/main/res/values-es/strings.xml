@@ -63,4 +63,7 @@
     <string name="empty_stock">Detalle de Inventario vacío. No se puede sincronizar</string>
     <string name="statusCode">Estado</string>
     <string name="item_number">Nro</string>
+    <string name="header_item">Cant</string>
+    <string name="header_status">Estado</string>
+    <string name="header_zone">Zona</string>
 </resources>
