@@ -39,8 +39,8 @@
     <string name="invalid_item_zone">Zona del producto inválida</string>
     <string name="item_created">Producto Creado</string>
     <string name="item_updated">Producto Actualizado</string>
-    <string name="stockSerNr">Inventario Nro:</string>
-    <string name="zoneCode">Zona Nro:</string>
+    <string name="stockSerNr">Inventario</string>
+    <string name="zoneCode">Zona</string>
     <string name="must_select_zone">Debe elegir una Zona</string>
     <string name="stock_detail_deleted">Detalle de Inventario Borrado</string>
     <string name="stock_deleted">Inventario Borrado</string>
@@ -61,4 +61,6 @@
     <string name="session_expired">La sesión ha expirado</string>
     <string name="item_already_in_detail">Cod. Producto ya existe en Detalle Inventario</string>
     <string name="empty_stock">Detalle de Inventario vacío. No se puede sincronizar</string>
+    <string name="statusCode">Estado</string>
+    <string name="item_number">Nro</string>
 </resources>

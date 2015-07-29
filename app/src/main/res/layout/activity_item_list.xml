@@ -66,6 +66,59 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textStyle="bold"/>
 
+    <LinearLayout
+        android:id="@+id/ll_items_headers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tv_itemlist_items"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/item_header_number"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".5"
+            android:text="@string/item_number"/>
+
+        <TextView
+            android:id="@+id/item_header_code"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/item_code"/>
+
+        <TextView
+            android:id="@+id/item_header_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="@string/item_name"/>
+
+        <TextView
+            android:id="@+id/item_header_qty"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".5"
+            android:text="@string/item_qty"/>
+
+        <TextView
+            android:id="@+id/item_header_edit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text=""/>
+
+        <TextView
+            android:id="@+id/item_header_delete"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text=""/>
+
+    </LinearLayout>
+
     <ListView
         android:id="@+id/lv_itemlist_items"
         android:layout_width="wrap_content"
@@ -73,7 +126,7 @@
         android:layout_above="@+id/btn_cancel"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/tv_itemlist_items"/>
+        android:layout_below="@+id/ll_items_headers"/>
 
     <Button
         android:id="@+id/btn_cancel"

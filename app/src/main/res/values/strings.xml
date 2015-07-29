@@ -46,8 +46,8 @@
     <string name="invalid_item_zone">Invalid Item Zone</string>
     <string name="item_created">Item Created</string>
     <string name="item_updated">Item Updated</string>
-    <string name="stockSerNr">Stock Nr:</string>
-    <string name="zoneCode">Zone Code:</string>
+    <string name="stockSerNr">Stock</string>
+    <string name="zoneCode">Zone</string>
     <string name="must_select_zone">Must select a Zone</string>
     <string name="stock_detail_deleted">Stock Detail Deleted</string>
     <string name="stock_deleted">Stock Deleted</string>
@@ -67,5 +67,7 @@
     <string name="session_expired">Session Expired</string>
     <string name="item_already_in_detail">Item Already In Stock Detail</string>
     <string name="empty_stock">Stock Detail is empty. Cannot sync</string>
+    <string name="statusCode">Status</string>
+    <string name="item_number">Nr</string>
 
 </resources>
