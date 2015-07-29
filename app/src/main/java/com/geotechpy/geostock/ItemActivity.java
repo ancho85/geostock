@@ -181,6 +181,6 @@ public class ItemActivity extends AppCompatActivity {
     }
 
     public void displayMessage(String toastString){
-        Toast.makeText(getApplicationContext(), toastString, Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), toastString, Toast.LENGTH_SHORT).show();
     }
 }
