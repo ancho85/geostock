@@ -18,9 +18,6 @@ import com.geotechpy.geostock.database.StockDetailManager;
 import com.geotechpy.geostock.database.StockManager;
 import com.geotechpy.geostock.models.Item;
 import com.geotechpy.geostock.models.Stock;
-import com.geotechpy.geostock.models.StockDetail;
-
-import java.util.ArrayList;
 
 
 public class ItemActivity extends AppCompatActivity {
@@ -74,10 +71,10 @@ public class ItemActivity extends AppCompatActivity {
             etCode.setText(intent.getStringExtra("itemCode"));
             etCode.setKeyListener(null);
             etName.setText(intent.getStringExtra("itemName"));
-            etName.requestFocus();
             etBarCode.setText(intent.getStringExtra("itemBarCode"));
             etQty.setText(intent.getStringExtra("itemQty"));
             lineNr = Integer.valueOf(intent.getStringExtra("itemLineNr"));
+            etQty.requestFocus();
         }
 
         etCode.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -100,6 +97,8 @@ public class ItemActivity extends AppCompatActivity {
                 }
             }
         });
+
+        etCode.setNextFocusDownId(etQty.getId());
     }
 
     @Override
