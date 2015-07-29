@@ -114,28 +114,28 @@ public class MainActivity2Test {
 
         //ItemActivity
         onView(withId(R.id.et_item_code)).check(matches(not(editTextNotEditable())));
-        onView(withId(R.id.btn_ok)).perform(click()); //no code toast
-        Thread.sleep(3500);
+        //onView(withId(R.id.btn_ok)).perform(click()); //no code toast
+        //Thread.sleep(2000);
         onView(withId(R.id.et_item_code))
                 .perform(clearText(), typeText("666"), closeSoftKeyboard());
-        Thread.sleep(3500);
-        onView(withId(R.id.btn_ok)).perform(click()); //invalid code toast
+        Thread.sleep(2000);
+        //onView(withId(R.id.btn_ok)).perform(click()); //invalid code toast
 
         onView(withId(R.id.et_item_code))
                 .perform(clearText(), typeText("956803"), closeSoftKeyboard());
-        Thread.sleep(3500);
-        onView(withId(R.id.btn_ok)).perform(click()); //valid code invalid zone toast
+        Thread.sleep(2000);
+        //onView(withId(R.id.btn_ok)).perform(click()); //valid code invalid zone toast
 
         onView(withId(R.id.et_item_code))
                 .perform(clearText(), typeText("100100"), closeSoftKeyboard());
-        Thread.sleep(3500);
+        Thread.sleep(2000);
         onView(withId(R.id.et_item_name)).perform(click()); //change focus to auto fill data
         onView(withText("2147483647")).check(matches(isDisplayed()));
-        onView(withId(R.id.btn_ok)).perform(click()); // no qty toast
-        Thread.sleep(3500);
+        //onView(withId(R.id.btn_ok)).perform(click()); // no qty toast
+        //Thread.sleep(2000);
         onView(withId(R.id.et_item_qty))
                 .perform(clearText(), typeText("100"), closeSoftKeyboard());
-        Thread.sleep(3500);
+        Thread.sleep(2000);
         onView(withId(R.id.btn_ok)).perform(click()); //item created toast
 
         //ItemListActivity
