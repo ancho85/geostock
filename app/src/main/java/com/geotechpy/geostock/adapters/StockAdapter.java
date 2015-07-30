@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.geotechpy.geostock.R;
 import com.geotechpy.geostock.ItemListActivity;
@@ -22,6 +21,8 @@ import com.geotechpy.geostock.models.StockDetail;
 import com.geotechpy.geostock.network.SyncToServer;
 
 import java.util.ArrayList;
+
+import static com.geotechpy.geostock.app.GeotechpyStockApp.displayMessage;
 
 /**
  * Stock Adapter
@@ -117,7 +118,7 @@ public class StockAdapter extends BaseAdapter{
                     itemList.putExtra("zoneCode", holder.tvZoneCode.getText().toString());
                     mContext.startActivity(itemList);
                 } else {
-                    Toast.makeText(mContext, R.string.stock_already_sync, Toast.LENGTH_SHORT).show();
+                    displayMessage(mContext.getString(R.string.stock_already_sync));
                 }
             }
         });
@@ -137,7 +138,7 @@ public class StockAdapter extends BaseAdapter{
                         StockManager smd = new StockManager(mContext);
                         smd.delete(stockNr);
                         deleteStock(holder.position);
-                        Toast.makeText(mContext, R.string.stock_deleted, Toast.LENGTH_SHORT).show();
+                        displayMessage(mContext.getString(R.string.stock_deleted));
                     }
                 });
                 builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -184,10 +185,10 @@ public class StockAdapter extends BaseAdapter{
                         builder.create();
                         builder.show();
                     }else{
-                        Toast.makeText(mContext, R.string.empty_stock, Toast.LENGTH_SHORT).show();
+                        displayMessage(mContext.getString(R.string.empty_stock));
                     }
                 } else {
-                    Toast.makeText(mContext, R.string.stock_already_sync, Toast.LENGTH_SHORT).show();
+                    displayMessage(mContext.getString(R.string.stock_already_sync));
                 }
 
             }

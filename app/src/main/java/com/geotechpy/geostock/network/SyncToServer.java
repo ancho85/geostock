@@ -2,7 +2,6 @@ package com.geotechpy.geostock.network;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -25,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.geotechpy.geostock.app.GeotechpyStockApp.displayMessage;
 import static com.geotechpy.geostock.network.WSErrorParser.webServiceErrorParser;
 
 /**
@@ -95,6 +95,14 @@ public class SyncToServer {
         GeotechpyStockApp.addToRequestQueue(request);
     }
 
+    public void checkQueue(String endMsg){
+        decreasePendingRequests();
+        if (getPendingRequests() == 0){
+            displayMessage(endMsg);
+            cancelDialog();
+        }
+    }
+
     public int getPendingRequests(){
         return pendingRequests;
     }
@@ -145,11 +153,7 @@ public class SyncToServer {
             }else{
                 replyMsg = response.toString();
             }
-            decreasePendingRequests();
-            if (getPendingRequests() == 0){
-                Toast.makeText(mContext, replyMsg, Toast.LENGTH_SHORT).show();
-                cancelDialog();
-            }
+            checkQueue(replyMsg);
         }
     }
 
@@ -157,12 +161,8 @@ public class SyncToServer {
 
         @Override
         public void onErrorResponse(VolleyError error) {
-            decreasePendingRequests();
             String errorMsg = webServiceErrorParser(mContext, error);
-            Toast.makeText(mContext, errorMsg, Toast.LENGTH_LONG).show();
-            if (getPendingRequests() == 0){
-                cancelDialog();
-            }
+            checkQueue(errorMsg);
         }
     }
 }

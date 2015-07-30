@@ -7,7 +7,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.geotechpy.geostock.adapters.ZoneAdapter;
 import com.geotechpy.geostock.app.GeotechpyStockApp;
@@ -16,6 +15,8 @@ import com.geotechpy.geostock.database.ZoneManager;
 import com.geotechpy.geostock.models.Zone;
 
 import java.util.ArrayList;
+
+import static com.geotechpy.geostock.app.GeotechpyStockApp.displayMessage;
 
 public class StockZoneListActivity extends AppCompatActivity {
 
@@ -85,7 +86,7 @@ public class StockZoneListActivity extends AppCompatActivity {
                     getString(R.string.stock_active), userName, zone.getSernr());
             finish();
         }else{
-            Toast.makeText(getApplicationContext(), R.string.must_select_zone, Toast.LENGTH_SHORT).show();
+            displayMessage(getApplicationContext().getString(R.string.must_select_zone));
         }
     }
 }

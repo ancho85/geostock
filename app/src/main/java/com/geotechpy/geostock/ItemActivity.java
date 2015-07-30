@@ -1,5 +1,6 @@
 package com.geotechpy.geostock;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,7 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.geotechpy.geostock.app.GeotechpyStockApp;
 import com.geotechpy.geostock.database.ItemManager;
@@ -18,6 +18,8 @@ import com.geotechpy.geostock.database.StockDetailManager;
 import com.geotechpy.geostock.database.StockManager;
 import com.geotechpy.geostock.models.Item;
 import com.geotechpy.geostock.models.Stock;
+
+import static com.geotechpy.geostock.app.GeotechpyStockApp.displayMessage;
 
 
 public class ItemActivity extends AppCompatActivity {
@@ -83,12 +85,13 @@ public class ItemActivity extends AppCompatActivity {
                 if (!hasFocus) {
                     etName.setText("");
                     etBarCode.setText("");
-                    Item it = ItemManager.load(getApplicationContext(), etCode.getText().toString());
+                    Context mContext = getApplicationContext();
+                    Item it = ItemManager.load(mContext, etCode.getText().toString());
                     if (it.getCode().equals("")){
-                        Toast.makeText(getApplicationContext(), R.string.invalid_item_code, Toast.LENGTH_SHORT).show();
+                        displayMessage(mContext.getString(R.string.invalid_item_code));
                     }
                     else if(!it.getType().equals(GeotechpyStockApp.getStockType())){ //item type not the same as chosen
-                        Toast.makeText(getApplicationContext(), R.string.invalid_item_zone, Toast.LENGTH_SHORT).show();
+                        displayMessage(mContext.getString(R.string.invalid_item_zone));
                     }
                     else{
                         etName.setText(it.getName());
@@ -180,7 +183,4 @@ public class ItemActivity extends AppCompatActivity {
         finish();
     }
 
-    public void displayMessage(String toastString){
-        Toast.makeText(getApplicationContext(), toastString, Toast.LENGTH_SHORT).show();
-    }
 }

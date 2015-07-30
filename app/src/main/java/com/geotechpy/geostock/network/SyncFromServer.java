@@ -76,7 +76,7 @@ public class SyncFromServer {
     public void checkQueue(String endMsg){
         decreasePendingRequests();
         if (getPendingRequests() == 0){
-            displayMessage(mContext, endMsg);
+            displayMessage(endMsg);
             tv_mainStatus.setText(endMsg);
             cancelDialog();
         }

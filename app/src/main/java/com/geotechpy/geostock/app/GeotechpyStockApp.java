@@ -61,15 +61,15 @@ public class GeotechpyStockApp extends Application {
          * to save memory. Thus the current activity is recreated without userName information.
          * http://www.developerphil.com/dont-store-data-in-the-application-object/
          */
-        Toast.makeText(mContext, R.string.session_expired, Toast.LENGTH_LONG).show();
+        displayMessage(mContext.getString(R.string.session_expired));
         Intent intent = new Intent(this, MainActivity.class); //Relogin
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         ((Activity)mContext).finish(); // call this to finish the current activity
     }
 
-    public static void displayMessage(Context mContext, String msg){
-        Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
+    public static void displayMessage(String msg){
+        Toast.makeText(appInstance, msg, Toast.LENGTH_SHORT).show();
     }
 
 

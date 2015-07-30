@@ -12,12 +12,13 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.geotechpy.geostock.app.GeotechpyStockApp;
 import com.geotechpy.geostock.database.UserManager;
 import com.geotechpy.geostock.fragments.ConfirmDialog;
 import com.geotechpy.geostock.models.User;
+
+import static com.geotechpy.geostock.app.GeotechpyStockApp.displayMessage;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -94,16 +95,16 @@ public class MainActivity extends AppCompatActivity {
         String passText = etPassword.getText().toString();
         if (TextUtils.isEmpty(userText)){
             etUserName.requestFocus();
-            displayMessage(getString(R.string.empty_field_user));
+            updateMessage(getString(R.string.empty_field_user));
         }else if (TextUtils.isEmpty(passText)){
             etPassword.requestFocus();
-            displayMessage(getString(R.string.empty_field_password));
+            updateMessage(getString(R.string.empty_field_password));
         }else{
             User user = UserManager.load(this, userText);
             if (TextUtils.isEmpty(user.getCode())){
-                displayMessage(getString(R.string.invalid_user));
+                updateMessage(getString(R.string.invalid_user));
             }else if (!user.getPassword().equals(passText)) {
-                displayMessage(getString(R.string.invalid_password));
+                updateMessage(getString(R.string.invalid_password));
                 } else{
                     ((GeotechpyStockApp)getApplication()).setUserName(userText);
                     Intent stockTypeActivity = new Intent(this, StockTypeActivity.class);
@@ -112,8 +113,8 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-    public void displayMessage(String toastString){
-        Toast.makeText(getApplicationContext(), toastString, Toast.LENGTH_LONG).show();
+    public void updateMessage(String toastString){
+        displayMessage(toastString);
         tvMainStatus.setText(toastString);
 
     }

@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.geotechpy.geostock.ItemActivity;
 import com.geotechpy.geostock.R;
@@ -22,6 +21,8 @@ import com.geotechpy.geostock.models.Stock;
 import com.geotechpy.geostock.models.StockDetail;
 
 import java.util.ArrayList;
+
+import static com.geotechpy.geostock.app.GeotechpyStockApp.displayMessage;
 
 /**
  * Item adapter
@@ -151,7 +152,7 @@ public class ItemAdapter extends BaseAdapter {
                         StockDetailManager sdmd = new StockDetailManager(mContext);
                         sdmd.delete(Integer.valueOf(stockSerNr), lineNr);
                         deleteItem(holder.position);
-                        Toast.makeText(mContext, R.string.stock_detail_deleted, Toast.LENGTH_SHORT).show();
+                        displayMessage(mContext.getString(R.string.stock_detail_deleted));
                     }
                 });
                 builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
