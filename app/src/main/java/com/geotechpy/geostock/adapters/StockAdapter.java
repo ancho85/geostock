@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.geotechpy.geostock.R;
@@ -46,7 +47,6 @@ public class StockAdapter extends BaseAdapter{
         ImageButton ibSync;
         ImageButton ibEdit;
         ImageButton ibDelete;
-        int position;
     }
 
     public void populateStocks(){
@@ -96,7 +96,6 @@ public class StockAdapter extends BaseAdapter{
             holder.ibSync = (ImageButton) convertView.findViewById(R.id.ib_sync);
             holder.ibEdit = (ImageButton) convertView.findViewById(R.id.ib_edit);
             holder.ibDelete = (ImageButton) convertView.findViewById(R.id.ib_delete);
-            holder.position = position;
 
             convertView.setTag(holder);
         }
@@ -125,7 +124,7 @@ public class StockAdapter extends BaseAdapter{
 
         holder.ibDelete.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(final View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
                 builder.setMessage(R.string.confirm_action);
                 builder.setTitle(R.string.confirm_title);
@@ -137,7 +136,9 @@ public class StockAdapter extends BaseAdapter{
                         stockDetailManager.deleteBySerNr(stockNr);
                         StockManager smd = new StockManager(mContext);
                         smd.delete(stockNr);
-                        deleteStock(holder.position);
+                        View parentRow = (View) view.getParent();
+                        ListView listView = (ListView) parentRow.getParent();
+                        deleteStock(listView.getPositionForView(parentRow));
                         displayMessage(mContext.getString(R.string.stock_deleted));
                     }
                 });

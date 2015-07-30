@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.geotechpy.geostock.ItemActivity;
@@ -47,7 +48,6 @@ public class ItemAdapter extends BaseAdapter {
         TextView tvItemQty;
         ImageButton ibEdit;
         ImageButton ibDelete;
-        int position;
         Long barCode;
     }
 
@@ -99,7 +99,6 @@ public class ItemAdapter extends BaseAdapter {
             holder.tvItemQty = (TextView) convertView.findViewById(R.id.tv_items_qty);
             holder.ibEdit = (ImageButton) convertView.findViewById(R.id.ib_items_edit);
             holder.ibDelete = (ImageButton) convertView.findViewById(R.id.ib_items_delete);
-            holder.position = position;
             convertView.setTag(holder);
         }
         else {
@@ -141,7 +140,7 @@ public class ItemAdapter extends BaseAdapter {
         holder.ibDelete.setOnClickListener(new View.OnClickListener() {
 
             @Override
-            public void onClick(View v) {
+            public void onClick(final View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
                 builder.setMessage(R.string.confirm_action);
                 builder.setTitle(R.string.confirm_title);
@@ -151,7 +150,9 @@ public class ItemAdapter extends BaseAdapter {
                         Integer lineNr = Integer.valueOf(holder.tvItemLineNr.getText().toString());
                         StockDetailManager sdmd = new StockDetailManager(mContext);
                         sdmd.delete(Integer.valueOf(stockSerNr), lineNr);
-                        deleteItem(holder.position);
+                        View parentRow = (View) v.getParent();
+                        ListView listView = (ListView) parentRow.getParent();
+                        deleteItem(listView.getPositionForView(parentRow));
                         displayMessage(mContext.getString(R.string.stock_detail_deleted));
                     }
                 });
