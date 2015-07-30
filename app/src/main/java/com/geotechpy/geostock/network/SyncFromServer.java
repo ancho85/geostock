@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -22,6 +21,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import static com.geotechpy.geostock.app.GeotechpyStockApp.displayMessage;
 import static com.geotechpy.geostock.network.WSErrorParser.webServiceErrorParser;
 
 /**
@@ -73,6 +73,15 @@ public class SyncFromServer {
         queue.add(request);
     }
 
+    public void checkQueue(String endMsg){
+        decreasePendingRequests();
+        if (getPendingRequests() == 0){
+            displayMessage(mContext, endMsg);
+            tv_mainStatus.setText(endMsg);
+            cancelDialog();
+        }
+    }
+
     public int getPendingRequests(){
         return pendingRequests;
     }
@@ -111,12 +120,7 @@ public class SyncFromServer {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            decreasePendingRequests();
-            if (getPendingRequests() == 0){
-                Toast.makeText(mContext, R.string.db_sync, Toast.LENGTH_SHORT).show();
-                tv_mainStatus.setText(R.string.db_sync);
-                cancelDialog();
-            }
+            checkQueue(mContext.getString(R.string.db_sync));
         }
     }
 
@@ -134,12 +138,7 @@ public class SyncFromServer {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            decreasePendingRequests();
-            if (getPendingRequests() == 0){
-                Toast.makeText(mContext, R.string.db_sync, Toast.LENGTH_SHORT).show();
-                tv_mainStatus.setText(R.string.db_sync);
-                cancelDialog();
-            }
+            checkQueue(mContext.getString(R.string.db_sync));
         }
     }
 
@@ -157,12 +156,7 @@ public class SyncFromServer {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            decreasePendingRequests();
-            if (getPendingRequests() == 0){
-                Toast.makeText(mContext, R.string.db_sync, Toast.LENGTH_SHORT).show();
-                tv_mainStatus.setText(R.string.db_sync);
-                cancelDialog();
-            }
+            checkQueue(mContext.getString(R.string.db_sync));
         }
     }
 
@@ -170,13 +164,8 @@ public class SyncFromServer {
 
         @Override
         public void onErrorResponse(VolleyError error) {
-            decreasePendingRequests();
             String errorMsg = webServiceErrorParser(mContext, error);
-            Toast.makeText(mContext, errorMsg, Toast.LENGTH_LONG).show();
-            tv_mainStatus.setText(errorMsg);
-            if (getPendingRequests() == 0){
-                cancelDialog();
-            }
+            checkQueue(errorMsg);
         }
     }
 }
