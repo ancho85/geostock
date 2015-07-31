@@ -5,6 +5,7 @@ import android.content.Context;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
 
+import com.geotechpy.geostock.app.GeotechpyStockApp;
 import com.geotechpy.geostock.resources.VolleyIdlingResource;
 import com.geotechpy.geostock.rules.ActivityRule;
 
@@ -63,6 +64,7 @@ public class MainActivity1Test {
     @Before
     public void setUp(){
         ctx = main.instrumentation().getTargetContext();
+        GeotechpyStockApp.setLastToastMessage("");
     }
 
     @Test
@@ -98,7 +100,7 @@ public class MainActivity1Test {
     @Test
     public void test4_shouldButtonLoginUser() throws InterruptedException {
         onView(withText(R.string.login)).perform(click());
-        onView(withText(R.string.empty_field_user)).check(matches(withText(getLastToastMessage())));
+        assertThat(getLastToastMessage(), equalTo(ctx.getString(R.string.empty_field_user)));
 
         onView(withId(R.id.et_user)).perform(clearText(), typeText("no_user"), closeSoftKeyboard());
         Thread.sleep(2000);

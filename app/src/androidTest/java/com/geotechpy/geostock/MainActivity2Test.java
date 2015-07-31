@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.MediumTest;
 
+import com.geotechpy.geostock.app.GeotechpyStockApp;
 import com.geotechpy.geostock.models.Stock;
 import com.geotechpy.geostock.models.StockDetail;
 import com.geotechpy.geostock.models.Zone;
@@ -26,13 +27,16 @@ import static android.support.test.espresso.matcher.ViewMatchers.isChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static com.geotechpy.geostock.app.GeotechpyStockApp.getLastToastMessage;
 import static com.geotechpy.geostock.matchers.CustomMatchers.editTextNotEditable;
 import static com.geotechpy.geostock.matchers.CustomMatchers.withAdaptedData;
 import static com.geotechpy.geostock.matchers.CustomMatchers.withStockDetailLineNumber;
 import static com.geotechpy.geostock.matchers.CustomMatchers.withStockSerNr;
 import static com.geotechpy.geostock.matchers.CustomMatchers.withStockType;
 import static com.geotechpy.geostock.matchers.CustomMatchers.withZoneSerNr;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
@@ -53,6 +57,7 @@ public class MainActivity2Test {
     @Before
     public void setUp(){
         ctx = main.instrumentation().getTargetContext();
+        GeotechpyStockApp.setLastToastMessage("");
     }
 
 
@@ -63,7 +68,7 @@ public class MainActivity2Test {
         onView(withId(R.id.et_password)).perform(clearText(), typeText("777"), closeSoftKeyboard());
         Thread.sleep(2000);
         onView(withText(R.string.login)).perform(click());
-        onView(withText(R.string.invalid_password)).check(matches(isDisplayed()));
+        assertThat(getLastToastMessage(), is(equalTo(ctx.getString(R.string.invalid_password))));
 
         onView(withId(R.id.et_password)).perform(clearText(), typeText("dep"), closeSoftKeyboard());
         Thread.sleep(2000);
@@ -81,7 +86,8 @@ public class MainActivity2Test {
         onView(withId(R.id.btn_new_stock)).perform(click());
 
         //StockZoneListActivity
-        onView(withId(R.id.btn_ok)).perform(click()); //must select one first
+        onView(withId(R.id.btn_ok)).perform(click());
+        assertThat(getLastToastMessage(), is(equalTo(ctx.getString(R.string.must_select_zone))));
         onData(allOf(is(instanceOf(Zone.class)), withZoneSerNr(1)))
                 .perform(click());
         onData(allOf(is(instanceOf(Zone.class)), withZoneSerNr(1)))
@@ -114,17 +120,19 @@ public class MainActivity2Test {
 
         //ItemActivity
         onView(withId(R.id.et_item_code)).check(matches(not(editTextNotEditable())));
-        onView(withId(R.id.btn_ok)).perform(click()); //no code toast
+        onView(withId(R.id.btn_ok)).perform(click());
+        assertThat(getLastToastMessage(), is(equalTo(ctx.getString(R.string.invalid_item_code))));
         Thread.sleep(2000);
         onView(withId(R.id.et_item_code))
                 .perform(clearText(), typeText("666"), closeSoftKeyboard());
         Thread.sleep(2000);
-        onView(withId(R.id.btn_ok)).perform(click()); //invalid code toast
-
+        onView(withId(R.id.btn_ok)).perform(click());
+        assertThat(getLastToastMessage(), is(equalTo(ctx.getString(R.string.invalid_item_code))));
         onView(withId(R.id.et_item_code))
                 .perform(clearText(), typeText("956803"), closeSoftKeyboard());
         Thread.sleep(2000);
-        onView(withId(R.id.btn_ok)).perform(click()); //valid code invalid zone toast
+        onView(withId(R.id.btn_ok)).perform(click());
+        assertThat(getLastToastMessage(), is(equalTo(ctx.getString(R.string.invalid_item_zone))));
 
         onView(withId(R.id.et_item_code))
                 .perform(clearText(), typeText("100100"), closeSoftKeyboard());
@@ -135,7 +143,8 @@ public class MainActivity2Test {
         onView(withId(R.id.et_item_qty))
                 .perform(clearText(), typeText("100"), closeSoftKeyboard());
         Thread.sleep(2000);
-        onView(withId(R.id.btn_ok)).perform(click()); //item created toast
+        onView(withId(R.id.btn_ok)).perform(click());
+        assertThat(getLastToastMessage(), is(equalTo(ctx.getString(R.string.item_created))));
 
         //ItemListActivity
         onData(allOf(is(instanceOf(StockDetail.class)), withStockDetailLineNumber(1, 1)))
@@ -153,7 +162,8 @@ public class MainActivity2Test {
         onView(withId(R.id.et_item_qty))
                 .perform(clearText(), typeText("34"), closeSoftKeyboard());
         Thread.sleep(2000);
-        onView(withId(R.id.btn_ok)).perform(click()); //item updated toast
+        onView(withId(R.id.btn_ok)).perform(click());
+        assertThat(getLastToastMessage(), is(equalTo(ctx.getString(R.string.item_updated))));
 
         //ItemListActivity
         onData(allOf(is(instanceOf(StockDetail.class)), withStockDetailLineNumber(1, 1)))
