@@ -79,7 +79,7 @@ public class MainActivity1Test {
         onView(withText(R.string.reset)).perform(click());
         onView(withText(R.string.confirm_title)).check(matches(isDisplayed()));
         onView(withId(android.R.id.button1)).perform(click());
-        assertThat(ctx.getString(R.string.db_reset), equalTo(getLastToastMessage()));
+        assertThat(getLastToastMessage(), equalTo(ctx.getString(R.string.db_reset)));
     }
 
 
@@ -92,7 +92,7 @@ public class MainActivity1Test {
         onView(withId(R.id.btn_sync)).perform(click());
         onView(withText(R.string.confirm_action)).check(matches(isDisplayed()));
         onView(withId(android.R.id.button1)).perform(click()); //confirm
-        assertThat(ctx.getString(R.string.db_sync), equalTo(getLastToastMessage()));
+        assertThat(getLastToastMessage(), equalTo(ctx.getString(R.string.db_sync)));
     }
 
     @Test
@@ -103,11 +103,11 @@ public class MainActivity1Test {
         onView(withId(R.id.et_user)).perform(clearText(), typeText("no_user"), closeSoftKeyboard());
         Thread.sleep(2000);
         onView(withText(R.string.login)).perform(click());
-        assertThat(ctx.getString(R.string.empty_field_password), equalTo(getLastToastMessage()));
+        assertThat(getLastToastMessage(), equalTo(ctx.getString(R.string.empty_field_password)));
 
         onView(withId(R.id.et_password)).perform(clearText(), typeText("no_pass"), closeSoftKeyboard());
         Thread.sleep(2000);
         onView(withText(R.string.login)).perform(click());
-        assertThat(ctx.getString(R.string.invalid_user), equalTo(getLastToastMessage()));
+        assertThat(getLastToastMessage(), equalTo(ctx.getString(R.string.invalid_user)));
     }
 }
