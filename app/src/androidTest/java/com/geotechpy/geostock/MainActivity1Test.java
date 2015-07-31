@@ -24,6 +24,7 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static com.geotechpy.geostock.app.GeotechpyStockApp.getLastToastMessage;
 
 /**
  * Login activity test case
@@ -67,35 +68,35 @@ public class MainActivity1Test {
         onView(withText(R.string.reset)).perform(click());
         onView(withText(R.string.confirm_title)).check(matches(isDisplayed()));
         onView(withId(android.R.id.button1)).perform(click());
-        onView(withText(R.string.db_reset)).check(matches(isDisplayed()));
+        onView(withText(R.string.db_reset)).check(matches(withText(getLastToastMessage())));
     }
 
 
     @Test
     public void test3_shouldDatabaseSync() throws InterruptedException {
-        Thread.sleep(5000);
+        //Thread.sleep(5000);
         onView(withId(R.id.btn_sync)).perform(click());
         onView(withText(R.string.confirm_action)).check(matches(isDisplayed()));
         onView(withId(android.R.id.button2)).perform(click()); //cancel
         onView(withId(R.id.btn_sync)).perform(click());
         onView(withText(R.string.confirm_action)).check(matches(isDisplayed()));
         onView(withId(android.R.id.button1)).perform(click()); //confirm
-        onView(withText(R.string.db_sync)).check(matches(isDisplayed()));
+        onView(withText(R.string.db_sync)).check(matches(withText(getLastToastMessage())));
     }
 
     //@Test
     public void test4_shouldButtonLoginUser() throws InterruptedException {
         onView(withText(R.string.login)).perform(click());
-        onView(withText(R.string.empty_field_user)).check(matches(isDisplayed()));
+        onView(withText(R.string.empty_field_user)).check(matches(withText(getLastToastMessage())));
 
         onView(withId(R.id.et_user)).perform(clearText(), typeText("no_user"), closeSoftKeyboard());
-        Thread.sleep(2000);
+        //Thread.sleep(2000);
         onView(withText(R.string.login)).perform(click());
-        onView(withText(R.string.empty_field_password)).check(matches(isDisplayed()));
+        onView(withText(R.string.empty_field_password)).check(matches(withText(getLastToastMessage())));
 
         onView(withId(R.id.et_password)).perform(clearText(), typeText("no_pass"), closeSoftKeyboard());
-        Thread.sleep(2000);
+        //Thread.sleep(2000);
         onView(withText(R.string.login)).perform(click());
-        onView(withText(R.string.invalid_user)).check(matches(isDisplayed()));
+        onView(withText(R.string.invalid_user)).check(matches(withText(getLastToastMessage())));
     }
 }

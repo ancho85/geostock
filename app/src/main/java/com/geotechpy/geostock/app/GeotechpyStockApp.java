@@ -19,6 +19,7 @@ public class GeotechpyStockApp extends Application {
 
     private static volatile String userName;
     private static volatile String stockType;
+    private static volatile String lastToastMessage; //for espresso tests
     private static volatile GeotechpyStockApp appInstance;
 
     @Override
@@ -55,6 +56,14 @@ public class GeotechpyStockApp extends Application {
         userName = userCode;
     }
 
+    public synchronized static void setLastToastMessage(String msg){
+        lastToastMessage = msg;
+    }
+
+    public synchronized static String getLastToastMessage(){
+        return lastToastMessage;
+    }
+
     public void respawnLogin(Context mContext){
         /*
          * The user leaves the app (with home button) and after a while the OS's kills the app
@@ -70,6 +79,7 @@ public class GeotechpyStockApp extends Application {
 
     public static void displayMessage(String msg){
         Toast.makeText(appInstance, msg, Toast.LENGTH_SHORT).show();
+        setLastToastMessage(msg);
     }
 
 
