@@ -1,6 +1,7 @@
 package com.geotechpy.geostock;
 
 
+import android.content.Context;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
 
@@ -8,6 +9,7 @@ import com.geotechpy.geostock.resources.VolleyIdlingResource;
 import com.geotechpy.geostock.rules.ActivityRule;
 
 import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
@@ -21,10 +23,12 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.assertThat;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static com.geotechpy.geostock.app.GeotechpyStockApp.getLastToastMessage;
+import static org.hamcrest.Matchers.equalTo;
 
 /**
  * Login activity test case
@@ -33,6 +37,8 @@ import static com.geotechpy.geostock.app.GeotechpyStockApp.getLastToastMessage;
 @RunWith(AndroidJUnit4.class)
 @LargeTest
 public class MainActivity1Test {
+
+    Context ctx;
 
     @Rule
     public final ActivityRule<MainActivity> main = new ActivityRule<>(MainActivity.class);
@@ -54,7 +60,12 @@ public class MainActivity1Test {
         unregisterIdlingResources(volleyIdlingResource);
     }
 
-    //@Test
+    @Before
+    public void setUp(){
+        ctx = main.instrumentation().getTargetContext();
+    }
+
+    @Test
     public void test1_shouldBeAbleToLaunchMainScreen() {
         onView(withText(R.string.username)).check(matches(isDisplayed()));
         onView(withText(R.string.password)).check(matches(isDisplayed()));
@@ -68,35 +79,32 @@ public class MainActivity1Test {
         onView(withText(R.string.reset)).perform(click());
         onView(withText(R.string.confirm_title)).check(matches(isDisplayed()));
         onView(withId(android.R.id.button1)).perform(click());
-        onView(withText(R.string.db_reset)).check(matches(withText(getLastToastMessage())));
+        assertThat(ctx.getString(R.string.db_reset), equalTo(getLastToastMessage()));
     }
 
 
     @Test
     public void test3_shouldDatabaseSync() throws InterruptedException {
-        //Thread.sleep(5000);
         onView(withId(R.id.btn_sync)).perform(click());
         onView(withText(R.string.confirm_action)).check(matches(isDisplayed()));
         onView(withId(android.R.id.button2)).perform(click()); //cancel
         onView(withId(R.id.btn_sync)).perform(click());
         onView(withText(R.string.confirm_action)).check(matches(isDisplayed()));
         onView(withId(android.R.id.button1)).perform(click()); //confirm
-        onView(withText(R.string.db_sync)).check(matches(withText(getLastToastMessage())));
+        assertThat(ctx.getString(R.string.db_sync), equalTo(getLastToastMessage()));
     }
 
-    //@Test
+    @Test
     public void test4_shouldButtonLoginUser() throws InterruptedException {
         onView(withText(R.string.login)).perform(click());
         onView(withText(R.string.empty_field_user)).check(matches(withText(getLastToastMessage())));
 
         onView(withId(R.id.et_user)).perform(clearText(), typeText("no_user"), closeSoftKeyboard());
-        //Thread.sleep(2000);
         onView(withText(R.string.login)).perform(click());
-        onView(withText(R.string.empty_field_password)).check(matches(withText(getLastToastMessage())));
+        assertThat(ctx.getString(R.string.empty_field_password), equalTo(getLastToastMessage()));
 
         onView(withId(R.id.et_password)).perform(clearText(), typeText("no_pass"), closeSoftKeyboard());
-        //Thread.sleep(2000);
         onView(withText(R.string.login)).perform(click());
-        onView(withText(R.string.invalid_user)).check(matches(withText(getLastToastMessage())));
+        assertThat(ctx.getString(R.string.invalid_user), equalTo(getLastToastMessage()));
     }
 }
