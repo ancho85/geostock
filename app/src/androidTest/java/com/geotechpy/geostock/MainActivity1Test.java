@@ -85,6 +85,7 @@ public class MainActivity1Test {
 
     @Test
     public void test3_shouldDatabaseSync() throws InterruptedException {
+        Thread.sleep(5000);
         onView(withId(R.id.btn_sync)).perform(click());
         onView(withText(R.string.confirm_action)).check(matches(isDisplayed()));
         onView(withId(android.R.id.button2)).perform(click()); //cancel
@@ -100,10 +101,12 @@ public class MainActivity1Test {
         onView(withText(R.string.empty_field_user)).check(matches(withText(getLastToastMessage())));
 
         onView(withId(R.id.et_user)).perform(clearText(), typeText("no_user"), closeSoftKeyboard());
+        Thread.sleep(2000);
         onView(withText(R.string.login)).perform(click());
         assertThat(ctx.getString(R.string.empty_field_password), equalTo(getLastToastMessage()));
 
         onView(withId(R.id.et_password)).perform(clearText(), typeText("no_pass"), closeSoftKeyboard());
+        Thread.sleep(2000);
         onView(withText(R.string.login)).perform(click());
         assertThat(ctx.getString(R.string.invalid_user), equalTo(getLastToastMessage()));
     }
