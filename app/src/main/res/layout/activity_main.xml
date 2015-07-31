@@ -79,11 +79,4 @@
         android:layout_below="@+id/et_password"
         android:onClick="onClickLogin"
         android:text="@string/login"/>
-
-    <TextView
-        android:id="@+id/tv_mainstatus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"/>
 </RelativeLayout>

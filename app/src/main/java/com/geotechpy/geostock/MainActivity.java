@@ -1,7 +1,6 @@
 package com.geotechpy.geostock;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -11,7 +10,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.geotechpy.geostock.app.GeotechpyStockApp;
 import com.geotechpy.geostock.database.UserManager;
@@ -25,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
 
     EditText etUserName;
     EditText etPassword;
-    TextView tvMainStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +34,6 @@ public class MainActivity extends AppCompatActivity {
         if (getIntent().getBooleanExtra("EXIT", false)) {
             finish();
         }
-        tvMainStatus = (TextView) findViewById(R.id.tv_mainstatus);
-        tvMainStatus.setText("");
-        tvMainStatus.setTextColor(Color.RED);
     }
 
     @Override
@@ -95,16 +89,16 @@ public class MainActivity extends AppCompatActivity {
         String passText = etPassword.getText().toString();
         if (TextUtils.isEmpty(userText)){
             etUserName.requestFocus();
-            updateMessage(getString(R.string.empty_field_user));
+            displayMessage(getString(R.string.empty_field_user));
         }else if (TextUtils.isEmpty(passText)){
             etPassword.requestFocus();
-            updateMessage(getString(R.string.empty_field_password));
+            displayMessage(getString(R.string.empty_field_password));
         }else{
             User user = UserManager.load(this, userText);
             if (TextUtils.isEmpty(user.getCode())){
-                updateMessage(getString(R.string.invalid_user));
+                displayMessage(getString(R.string.invalid_user));
             }else if (!user.getPassword().equals(passText)) {
-                updateMessage(getString(R.string.invalid_password));
+                displayMessage(getString(R.string.invalid_password));
                 } else{
                     ((GeotechpyStockApp)getApplication()).setUserName(userText);
                     Intent stockTypeActivity = new Intent(this, StockTypeActivity.class);
@@ -112,10 +106,4 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
-
-    public void updateMessage(String toastString){
-        displayMessage(toastString);
-        tvMainStatus.setText(toastString);
-
-    }
 }

@@ -31,7 +31,6 @@ public class SyncFromServer {
 
     Context mContext;
     ProgressDialog progressDialog;
-    TextView tv_mainStatus;
     int pendingRequests = 0;
     RequestQueue queue;
 
@@ -45,9 +44,6 @@ public class SyncFromServer {
         String itemURL = "http://geotechpy.com/inventario/ajax/productos/get_full_productos_rest.php";
         String userURL = "http://geotechpy.com/inventario/ajax/usuarios/get_full_usuarios_rest.php";
         String zoneURL = "http://geotechpy.com/inventario/ajax/zonas/get_full_zonas_rest.php";
-
-        tv_mainStatus = (TextView) ((AppCompatActivity) mContext).findViewById(R.id.tv_mainstatus);
-        tv_mainStatus.setText(mContext.getString(R.string.sync_started));
 
         //user request
         JsonArrayRequest jsonArrayUserRequest = new JsonArrayRequest(Request.Method.GET,
@@ -77,7 +73,6 @@ public class SyncFromServer {
         decreasePendingRequests();
         if (getPendingRequests() == 0){
             displayMessage(endMsg);
-            tv_mainStatus.setText(endMsg);
             cancelDialog();
         }
     }
