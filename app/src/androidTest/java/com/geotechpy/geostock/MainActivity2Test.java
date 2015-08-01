@@ -88,19 +88,19 @@ public class MainActivity2Test {
         //StockZoneListActivity
         onView(withId(R.id.btn_ok)).perform(click());
         assertThat(getLastToastMessage(), is(equalTo(ctx.getString(R.string.must_select_zone))));
-        onData(allOf(is(instanceOf(Zone.class)), withZoneSerNr(1)))
+        onData(allOf(is(instanceOf(Zone.class)), withZoneSerNr(5)))
                 .perform(click());
-        onData(allOf(is(instanceOf(Zone.class)), withZoneSerNr(1)))
+        onData(allOf(is(instanceOf(Zone.class)), withZoneSerNr(5)))
                 .check(matches(isChecked()));
         onView(withId(R.id.btn_cancel)).perform(click());
         onView(withId(R.id.btn_new_stock)).perform(click());
-        onData(allOf(is(instanceOf(Zone.class)), withZoneSerNr(3)))
+        onData(allOf(is(instanceOf(Zone.class)), withZoneSerNr(6)))
                 .perform(click());
         onView(withId(R.id.btn_ok)).perform(click());
         onData(allOf(is(instanceOf(Stock.class)), withStockSerNr(1)))
                 .check(matches(isDisplayed())); //created stock appears
         onView(withId(R.id.btn_new_stock)).perform(click());
-        onData(allOf(is(instanceOf(Zone.class)), withZoneSerNr(1)))
+        onData(allOf(is(instanceOf(Zone.class)), withZoneSerNr(5)))
                 .perform(click());
         onView(withId(R.id.btn_ok)).perform(click()); //another stock detail of the same type
         String deposit = ctx.getString(R.string.zone_deposit);
@@ -112,7 +112,7 @@ public class MainActivity2Test {
         //ItemListActivity
         onView(withText("dep")).check(matches(isDisplayed()));
         onView(withId(R.id.tv_itemlist_stock_sernr)).check(matches(withText("1")));
-        onView(withId(R.id.tv_itemlist_stock_zone_code)).check(matches(withText("3")));
+        onView(withId(R.id.tv_itemlist_stock_zone_code)).check(matches(withText("6")));
         onView(withId(R.id.lv_itemlist_items)).check(matches(isDisplayed()));
         onView(withId(R.id.btn_new)).perform(click());
         onView(withId(R.id.btn_cancel)).perform(click());
@@ -195,8 +195,8 @@ public class MainActivity2Test {
         onView(withId(R.id.btn_laboratory)).perform(click());
         onView(withId(R.id.lv_stocks)).check(matches(not(withAdaptedData(withStockSerNr(2))))); //there is nothing of other user
         onView(withId(R.id.btn_new_stock)).perform(click());
-        onView(withId(R.id.lv_zones)).check(matches(not(withAdaptedData(withZoneSerNr(4))))); //deposit zones are hidden
-        onData(allOf(is(instanceOf(Zone.class)), withZoneSerNr(5)))
+        onView(withId(R.id.lv_zones)).check(matches(not(withAdaptedData(withZoneSerNr(5))))); //deposit zones are hidden
+        onData(allOf(is(instanceOf(Zone.class)), withZoneSerNr(9)))
                 .perform(click());
         onView(withId(R.id.btn_ok)).perform(click());
         onView(withId(R.id.lv_stocks)).check(matches(withAdaptedData(withStockSerNr(3)))); //new stock
