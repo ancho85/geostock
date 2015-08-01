@@ -77,7 +77,7 @@ public class GeotechpyStockApp extends Application {
         ((Activity)mContext).finish(); // call this to finish the current activity
     }
 
-    public static void displayMessage(String msg){
+    public synchronized static void displayMessage(String msg){
         Toast.makeText(appInstance, msg, Toast.LENGTH_SHORT).show();
         setLastToastMessage(msg);
     }
