@@ -2,8 +2,10 @@ package com.geotechpy.geostock;
 
 
 import android.content.Context;
+import android.support.test.espresso.IdlingPolicies;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
+import android.text.format.DateUtils;
 
 import com.geotechpy.geostock.app.GeotechpyStockApp;
 import com.geotechpy.geostock.resources.VolleyIdlingResource;
@@ -15,6 +17,8 @@ import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.util.concurrent.TimeUnit;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.Espresso.registerIdlingResources;
@@ -48,6 +52,9 @@ public class MainActivity1Test {
 
     @BeforeClass
     public static void registerIntentServiceIdlingResource() {
+        long waitingTime = DateUtils.SECOND_IN_MILLIS * 75;
+        IdlingPolicies.setMasterPolicyTimeout(waitingTime * 2, TimeUnit.MILLISECONDS);
+        IdlingPolicies.setIdlingResourceTimeout(waitingTime * 2, TimeUnit.MILLISECONDS);
         try {
             volleyIdlingResource = new VolleyIdlingResource("VolleyCalls");
             registerIdlingResources(volleyIdlingResource);
