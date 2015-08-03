@@ -180,7 +180,12 @@ public class ItemActivity extends AppCompatActivity {
             sdm.update(stockSerNr, lineNr, code, fQty);
             displayMessage(getString(R.string.item_updated));
         }
-        finish();
+        //finish();
+        etCode.setText("");
+        etName.setText("");
+        etBarCode.setText("");
+        etQty.setText("");
+        etCode.requestFocus();
     }
 
 }
