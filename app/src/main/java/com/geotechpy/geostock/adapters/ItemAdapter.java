@@ -142,7 +142,7 @@ public class ItemAdapter extends BaseAdapter {
             @Override
             public void onClick(final View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                builder.setMessage(R.string.confirm_action);
+                builder.setMessage(R.string.sure_delete);
                 builder.setTitle(R.string.confirm_title);
                 builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override

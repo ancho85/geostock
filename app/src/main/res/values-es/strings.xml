@@ -66,4 +66,6 @@
     <string name="header_item">Cant</string>
     <string name="header_status">Estado</string>
     <string name="header_zone">Zona</string>
+    <string name="save_stock">Desea guardar el inventario?</string>
+    <string name="sure_delete">Esta seguro que desea eliminar?</string>
 </resources>

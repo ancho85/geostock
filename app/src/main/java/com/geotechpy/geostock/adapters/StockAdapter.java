@@ -126,7 +126,7 @@ public class StockAdapter extends BaseAdapter{
             @Override
             public void onClick(final View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                builder.setMessage(R.string.confirm_action);
+                builder.setMessage(R.string.sure_delete);
                 builder.setTitle(R.string.confirm_title);
                 builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
@@ -165,7 +165,7 @@ public class StockAdapter extends BaseAdapter{
                     ArrayList<StockDetail> al_stockDetail = stockDetailManager.getStockDetails(stockNr);
                     if (al_stockDetail.size() > 0) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                        builder.setMessage(R.string.confirm_action);
+                        builder.setMessage(R.string.save_stock);
                         builder.setTitle(R.string.confirm_title);
                         builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                             @Override

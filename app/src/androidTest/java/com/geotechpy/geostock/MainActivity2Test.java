@@ -169,7 +169,7 @@ public class MainActivity2Test {
         onData(allOf(is(instanceOf(StockDetail.class)), withStockDetailLineNumber(1, 1)))
                 .onChildView(withId(R.id.ib_items_delete))
                 .perform(click());
-        onView(withText(R.string.confirm_action)).check(matches(isDisplayed()));
+        onView(withText(R.string.sure_delete)).check(matches(isDisplayed()));
         onView(withId(android.R.id.button1)).perform(click());
         onView(withId(R.id.lv_itemlist_items))
                 .check(matches(not(withAdaptedData(withStockDetailLineNumber(1, 1)))));

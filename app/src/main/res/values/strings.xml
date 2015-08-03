@@ -73,5 +73,7 @@
     <string name="header_zone">Zone</string>
     <string name="header_status">Status</string>
     <string name="header_item">Qty</string>
+    <string name="save_stock">Save stock?</string>
+    <string name="sure_delete">Are you sure you want to Delete?</string>
 
 </resources>
