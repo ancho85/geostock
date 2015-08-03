@@ -143,15 +143,36 @@ public class SyncFromServer {
         public void onResponse(JSONArray response) {
             updateDialogMessage(mContext.getString(R.string.sync_items));
             try {
+                String code;
+                String name;
+                Long barCode;
+                String type;
+                String tmpBarCode;
                 for(int index = 0 ; index < response.length(); index++) {
                     JSONArray itemArray = response.getJSONArray(index);
                     ItemManager it = new ItemManager(mContext);
-                    it.insert(itemArray.get(0).toString(), itemArray.get(1).toString(), Long.valueOf(itemArray.get(2).toString()), itemArray.get(3).toString());
+                    code = getNotNullString(itemArray.get(0).toString());
+                    name = getNotNullString(itemArray.get(1).toString());
+                    tmpBarCode = getNotNullString(itemArray.get(2).toString());
+                    if (tmpBarCode.equals("")){
+                        tmpBarCode = "0";
+                    }
+                    barCode = Long.valueOf(tmpBarCode);
+                    type = getNotNullString(itemArray.get(3).toString());
+                    it.insert(code, name, barCode, type);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
             checkQueue(mContext.getString(R.string.db_sync));
+        }
+
+        public String getNotNullString(String string){
+            String result = "";
+            if (!string.equals("null")){
+                result = string;
+            }
+            return result;
         }
     }
 
