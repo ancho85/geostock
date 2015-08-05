@@ -10,6 +10,8 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.BasicNetwork;
 import com.android.volley.toolbox.NoCache;
 
+import java.io.UnsupportedEncodingException;
+
 public class FakeRequestQueue extends RequestQueue {
     public FakeRequestQueue(Context context) {
         super(new NoCache(), new BasicNetwork(new FakeHttpStack(context)));
@@ -56,10 +58,12 @@ public class FakeRequestQueue extends RequestQueue {
             if (request.getBody() == null) {
                 Log.d("FAKE", "body is null");
             } else {
-                Log.d("FAKE", "Body:" + new String(request.getBody()));
+                Log.d("FAKE", "Body:" + new String(request.getBody(), "UTF-8"));
             }
         } catch (AuthFailureError e) {
             // cannot do anything
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
         return super.add(request);
     }
