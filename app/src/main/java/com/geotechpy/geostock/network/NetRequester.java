@@ -14,7 +14,7 @@ import com.geotechpy.geostock.network.dev.FakeRequestQueue;
 public class NetRequester {
     private static NetRequester mInstance = null;
     private RequestQueue requestQueue;
-    private static Context mContext;
+    private Context mContext;
 
     private NetRequester(Context context) {
         mContext = context;
