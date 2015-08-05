@@ -31,6 +31,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Random;
 
 /**
  * Fake {@link HttpStack} that returns the fake content using resource file in res/raw.
@@ -86,7 +87,7 @@ class FakeHttpStack implements HttpStack {
             try {
                 String string = CharStreams.toString(new InputStreamReader(stream, Charsets.UTF_8));
                 if ("randomInt".equals(string)) {
-                    string = Integer.toString((int) (Math.random() * Integer.MAX_VALUE));
+                    string = Integer.toString(new Random().nextInt(Integer.MAX_VALUE));
                 }
                 httpEntity = new StringEntity(string);
             } catch (IOException e) {
