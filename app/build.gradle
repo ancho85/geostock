@@ -104,11 +104,11 @@ project.afterEvaluate {
     createDebugCoverageReport.dependsOn testDebug
 }
 
-gradle.projectsEvaluated {
+/*gradle.projectsEvaluated {
     tasks.withType(JavaCompile) {
         options.compilerArgs << "-Xlint:unchecked"
     }
-}
+}*/
 
 task findBugs(type: FindBugs) {
     group = "Reporting"
