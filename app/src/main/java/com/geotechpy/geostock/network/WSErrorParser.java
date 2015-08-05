@@ -24,20 +24,20 @@ public class WSErrorParser {
 
     public static String webServiceErrorParser(Context mContext, VolleyError error) {
         StringBuilder messageError = new StringBuilder();
-        messageError.append(mContext.getString(R.string.sync_wscomm_error));
-        messageError.append("\n");
+        messageError.append(mContext.getString(R.string.sync_wscomm_error)).append("\n");
         NetworkResponse response = error.networkResponse;
         if (response != null && response.data != null) {
             try {
                 String json = new String(response.data, "UTF-8");
                 JSONObject responseWS = new JSONObject(json);
                 JSONArray messagesObject = new JSONArray(responseWS.getString("messages"));
-                for (int i = 0; i < messagesObject.length(); i++) {
+                int i;
+                for (i = 0; i < messagesObject.length(); i++) {
                     JSONObject message = (JSONObject) messagesObject.get(i);
                     messageError.append(message.getString("dsc"));
                     messageError.append("\n");
                 }
-                if (messageError.length() <= 0) {
+                if (i == 0) {
                     messageError.append(mContext.getString(R.string.sync_unknown_error));
                     messageError.append("\n");
                 }
