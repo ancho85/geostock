@@ -37,6 +37,7 @@ public class GeotechpyStockApp extends Application {
         return NetRequester.getInstance(appInstance).getRequestQueue();
     }
 
+    @SuppressWarnings("unchecked")
     public synchronized static void addToRequestQueue(Request request){
         NetRequester.getInstance(appInstance).addToRequestQueue(request);
     }
