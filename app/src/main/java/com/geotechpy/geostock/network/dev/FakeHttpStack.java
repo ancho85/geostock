@@ -74,29 +74,40 @@ class FakeHttpStack implements HttpStack {
 
     private HttpEntity createEntity(Request request) throws UnsupportedEncodingException {
         String resourceName = constructFakeResponseFileName(request);
+        HttpEntity httpEntity = new StringEntity("[{\"a\":1,\"b\":2,\"c\":3,\"d\":4,\"e\":5}]"); //default response
+        InputStream stream;
         int resourceId = context.getResources().getIdentifier(
                 resourceName, "raw", context.getApplicationContext().getPackageName());
         if (resourceId == 0) {
             Log.w("FAKE", "No fake file named " + resourceName +
                     " default fake response should be used.");
         } else {
-            InputStream stream = context.getResources().openRawResource(resourceId);
+            stream = context.getResources().openRawResource(resourceId);
             try {
                 String string = CharStreams.toString(new InputStreamReader(stream, Charsets.UTF_8));
                 if ("randomInt".equals(string)) {
                     string = Integer.toString((int) (Math.random() * Integer.MAX_VALUE));
                 }
-
-                return new StringEntity(string);
+                httpEntity = new StringEntity(string);
             } catch (IOException e) {
                 Log.d("FAKE", "error reading " + resourceName + ". Error: " + e);
+            }
+            finally{
+                if (stream != null){
+                    try{
+                        stream.close();
+                    }catch (IOException e){
+                        Log.d("FAKE", "error closing stream" + ". Error: " + e);
+                    }
+
+                }
             }
         }
 
         if (request instanceof StringRequest) {
-            return new StringEntity("100");
+            httpEntity = new StringEntity("100");
         }
-        return new StringEntity("[{\"a\":1,\"b\":2,\"c\":3,\"d\":4,\"e\":5}]");
+        return httpEntity;
     }
 
     private String constructFakeResponseFileName(Request request) {
