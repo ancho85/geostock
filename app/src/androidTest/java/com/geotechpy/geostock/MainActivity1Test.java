@@ -52,6 +52,7 @@ public class MainActivity1Test {
 
     @BeforeClass
     public static void registerIntentServiceIdlingResource() {
+        GeotechpyStockApp.setFakeHttpConnections(true);
         long waitingTime = DateUtils.SECOND_IN_MILLIS * 75;
         IdlingPolicies.setMasterPolicyTimeout(waitingTime * 2, TimeUnit.MILLISECONDS);
         IdlingPolicies.setIdlingResourceTimeout(waitingTime * 2, TimeUnit.MILLISECONDS);

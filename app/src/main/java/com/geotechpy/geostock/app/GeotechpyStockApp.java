@@ -20,6 +20,7 @@ public class GeotechpyStockApp extends Application {
     private static volatile String userName;
     private static volatile String stockType;
     private static volatile String lastToastMessage; //for espresso tests
+    private static volatile boolean fakeHttpConnections = false; //for espresso tests
     private static volatile GeotechpyStockApp appInstance;
 
     @Override
@@ -62,6 +63,14 @@ public class GeotechpyStockApp extends Application {
 
     public synchronized static String getLastToastMessage(){
         return lastToastMessage;
+    }
+
+    public synchronized static void setFakeHttpConnections(boolean isFake){
+        fakeHttpConnections = isFake;
+    }
+
+    public synchronized static boolean getFakeHttpConnections(){
+        return fakeHttpConnections;
     }
 
     public void respawnLogin(Context mContext){

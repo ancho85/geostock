@@ -2,8 +2,6 @@ package com.geotechpy.geostock.network;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
-import android.widget.TextView;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -41,9 +39,9 @@ public class SyncFromServer {
 
     public void syncMasters() {
         showDialog();
-        String itemURL = "http://geotechpy.com/inventario/ajax/productos/get_full_productos_rest.php";
-        String userURL = "http://geotechpy.com/inventario/ajax/usuarios/get_full_usuarios_rest.php";
-        String zoneURL = "http://geotechpy.com/inventario/ajax/zonas/get_full_zonas_rest.php";
+        String itemURL = GeotechpyApi.BASEURL + GeotechpyApi.getItemsURL();
+        String userURL = GeotechpyApi.BASEURL + GeotechpyApi.getUsersURL();
+        String zoneURL = GeotechpyApi.BASEURL + GeotechpyApi.getZonesURL();
 
         //user request
         JsonArrayRequest jsonArrayUserRequest = new JsonArrayRequest(Request.Method.GET,

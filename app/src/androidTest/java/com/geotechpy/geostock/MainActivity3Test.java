@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
 
+import com.geotechpy.geostock.app.GeotechpyStockApp;
 import com.geotechpy.geostock.models.Stock;
 import com.geotechpy.geostock.resources.VolleyIdlingResource;
 import com.geotechpy.geostock.rules.ActivityRule;
@@ -25,13 +26,16 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.assertThat;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static com.geotechpy.geostock.app.GeotechpyStockApp.getLastToastMessage;
 import static com.geotechpy.geostock.matchers.CustomMatchers.withAdaptedData;
 import static com.geotechpy.geostock.matchers.CustomMatchers.withStockSerNr;
 import static com.geotechpy.geostock.matchers.CustomMatchers.withStockStatus;
 import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
@@ -48,6 +52,7 @@ public class MainActivity3Test {
 
     @BeforeClass
     public static void registerIntentServiceIdlingResource() {
+        GeotechpyStockApp.setFakeHttpConnections(true);
         try {
             volleyIdlingResource = new VolleyIdlingResource("VolleyCalls");
             registerIdlingResources(volleyIdlingResource);
@@ -64,13 +69,14 @@ public class MainActivity3Test {
     @Before
     public void setUp(){
         ctx = main.instrumentation().getTargetContext();
+        GeotechpyStockApp.setLastToastMessage("");
     }
 
     @Test
     public void test1_mustInsertDataToSync() throws InterruptedException {
-        onView(withId(R.id.et_user)).perform(clearText(), typeText("dep"), closeSoftKeyboard());
+        onView(withId(R.id.et_user)).perform(clearText(), typeText("ancho"), closeSoftKeyboard());
         Thread.sleep(2000);
-        onView(withId(R.id.et_password)).perform(clearText(), typeText("dep"), closeSoftKeyboard());
+        onView(withId(R.id.et_password)).perform(clearText(), typeText("666"), closeSoftKeyboard());
         Thread.sleep(2000);
         onView(withText(R.string.login)).perform(click());
         onView(withId(R.id.btn_deposit)).perform(click());
@@ -86,6 +92,7 @@ public class MainActivity3Test {
                 .perform(clearText(), typeText("100"), closeSoftKeyboard());
         Thread.sleep(2000);
         onView(withId(R.id.btn_ok)).perform(click());
+        onView(withId(R.id.btn_cancel)).perform(click());
         pressBack();
         pressBack();
         pressBack();
@@ -96,9 +103,9 @@ public class MainActivity3Test {
 
     @Test
     public void test2_shouldSendDataToServer() throws InterruptedException{
-        onView(withId(R.id.et_user)).perform(clearText(), typeText("dep"), closeSoftKeyboard());
+        onView(withId(R.id.et_user)).perform(clearText(), typeText("ancho"), closeSoftKeyboard());
         Thread.sleep(2000);
-        onView(withId(R.id.et_password)).perform(clearText(), typeText("dep"), closeSoftKeyboard());
+        onView(withId(R.id.et_password)).perform(clearText(), typeText("666"), closeSoftKeyboard());
         Thread.sleep(2000);
         onView(withText(R.string.login)).perform(click());
         onView(withId(R.id.btn_deposit)).perform(click());
@@ -110,18 +117,19 @@ public class MainActivity3Test {
         onData(allOf(is(instanceOf(Stock.class)), withStockSerNr(1)))
                 .onChildView(withId(R.id.ib_sync)) //resource id of first column from xml layout
                 .perform(click());
-        onView(withText(R.string.confirm_action)).check(matches(isDisplayed()));
+        onView(withText(R.string.save_stock)).check(matches(isDisplayed()));
         onView(withId(android.R.id.button1)).perform(click()); //confirm sync
         String confirmed = ctx.getString(R.string.stock_confirmed);
         onView(withId(R.id.lv_stocks)).check(matches(withAdaptedData(withStockStatus(confirmed))));
         onData(allOf(is(instanceOf(Stock.class)), withStockStatus(confirmed)))
                 .onChildView(withId(R.id.ib_sync)) //resource id of first column from xml layout
-                .perform(click()); //toast text of already sync
+                .perform(click());
+        assertThat(getLastToastMessage(), is(equalTo(ctx.getString(R.string.stock_already_sync))));
         Thread.sleep(2000);
         onData(allOf(is(instanceOf(Stock.class)), withStockSerNr(1)))
                 .onChildView(withId(R.id.ib_delete)) //resource id of third column from xml layout
                 .perform(click());
-        onView(withText(R.string.confirm_action)).check(matches(isDisplayed()));
+        onView(withText(R.string.sure_delete)).check(matches(isDisplayed()));
         onView(withId(android.R.id.button1)).perform(click());
         onView(withId(R.id.lv_stocks)).check(matches(not(withAdaptedData(withStockSerNr(1))))); //there is nothing
     }

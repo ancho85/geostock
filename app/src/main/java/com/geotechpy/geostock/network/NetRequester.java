@@ -5,6 +5,8 @@ import android.content.Context;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.geotechpy.geostock.app.GeotechpyStockApp;
+import com.geotechpy.geostock.network.dev.FakeRequestQueue;
 
 /**
  * Singleton for volley requests
@@ -30,7 +32,12 @@ public class NetRequester {
         if (requestQueue == null){
             // getApplicationContext() is key, it keeps you from leaking the
             // Activity or BroadcastReceiver if someone passes one in.
-            requestQueue = Volley.newRequestQueue(mContext.getApplicationContext());
+            if (GeotechpyStockApp.getFakeHttpConnections()){
+                requestQueue = new FakeRequestQueue(mContext.getApplicationContext());
+            }else{
+                requestQueue = Volley.newRequestQueue(mContext.getApplicationContext());
+            }
+
         }
         return requestQueue;
     }

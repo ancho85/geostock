@@ -58,7 +58,7 @@ public class SyncToServer {
 
     public void syncStock() {
         showDialog();
-        String stockURL = "http://geotechpy.com/inventario/ajax/inventario/save_inventario.php";
+        String stockURL = GeotechpyApi.BASEURL + GeotechpyApi.getStockSaveURL();
 
         //stock request
         StockDetailManager stockDetailManager = new StockDetailManager(mContext);
