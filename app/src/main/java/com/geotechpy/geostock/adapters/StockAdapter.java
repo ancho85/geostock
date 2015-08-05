@@ -131,7 +131,7 @@ public class StockAdapter extends BaseAdapter{
                 builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int id) {
-                        Integer stockNr = Integer.valueOf(holder.tvStockSerNr.getText().toString());
+                        Integer stockNr = Integer.parseInt(holder.tvStockSerNr.getText().toString());
                         StockDetailManager stockDetailManager = new StockDetailManager(mContext);
                         stockDetailManager.deleteBySerNr(stockNr);
                         StockManager smd = new StockManager(mContext);
@@ -158,8 +158,8 @@ public class StockAdapter extends BaseAdapter{
             @Override
             public void onClick(View view) {
                 String currentStatus = holder.tvStatusCode.getText().toString();
-                final int stockNr = Integer.valueOf(holder.tvStockSerNr.getText().toString());
-                final int zoneCode = Integer.valueOf(holder.tvZoneCode.getText().toString());
+                final int stockNr = Integer.parseInt(holder.tvStockSerNr.getText().toString());
+                final int zoneCode = Integer.parseInt(holder.tvZoneCode.getText().toString());
                 if (currentStatus.equals(mContext.getString(R.string.stock_active))) {
                     StockDetailManager stockDetailManager = new StockDetailManager(mContext);
                     ArrayList<StockDetail> al_stockDetail = stockDetailManager.getStockDetails(stockNr);
