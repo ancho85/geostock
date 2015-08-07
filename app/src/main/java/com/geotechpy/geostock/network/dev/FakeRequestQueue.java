@@ -4,7 +4,6 @@ import android.content.Context;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.Cache;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.BasicNetwork;
@@ -28,24 +27,6 @@ public class FakeRequestQueue extends RequestQueue {
     public void stop() {
         Log.d("FAKE", "request stop");
         super.stop();
-    }
-
-    @Override
-    public Cache getCache() {
-        Log.d("FAKE", "request start");
-        return super.getCache();
-    }
-
-    @Override
-    public void cancelAll(RequestFilter filter) {
-        Log.d("FAKE", "Request cancel with filter " + filter);
-        super.cancelAll(filter);
-    }
-
-    @Override
-    public void cancelAll(Object tag) {
-        Log.d("FAKE", "Request cancel with tag " + tag);
-        super.cancelAll(tag);
     }
 
     @Override
