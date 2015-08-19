@@ -9,7 +9,7 @@
         android:id="@+id/tv_stock_sernr"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"/>
+        android:layout_weight="0.5"/>
 
     <TextView
         android:id="@+id/tv_zone_code"
@@ -34,6 +34,8 @@
         android:id="@+id/ib_edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         android:background="@android:drawable/ic_menu_edit"
         android:contentDescription="@string/edit_stock"/>
 
@@ -41,6 +43,8 @@
         android:id="@+id/ib_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         android:background="@android:drawable/ic_menu_delete"
         android:contentDescription="@string/delete_stock"/>
 </LinearLayout>
