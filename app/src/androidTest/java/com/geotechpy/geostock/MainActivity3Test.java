@@ -119,6 +119,7 @@ public class MainActivity3Test {
                 .perform(click());
         onView(withText(R.string.save_stock)).check(matches(isDisplayed()));
         onView(withId(android.R.id.button1)).perform(click()); //confirm sync
+        assertThat(getLastToastMessage(), equalTo(ctx.getString(R.string.db_sync) + ". ok: " + "Sincronizacion exitosa"));
         String confirmed = ctx.getString(R.string.stock_confirmed);
         onView(withId(R.id.lv_stocks)).check(matches(withAdaptedData(withStockStatus(confirmed))));
         onData(allOf(is(instanceOf(Stock.class)), withStockStatus(confirmed)))

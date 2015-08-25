@@ -132,10 +132,13 @@ public class SyncToServer {
         @Override
         public void onResponse(JSONObject response){
             updateDialogMessage(mContext.getString(R.string.sync_stock));
-            String replyMsg = mContext.getString(R.string.db_sync);
+            StringBuilder replyMsg = new StringBuilder();
+            replyMsg.append(mContext.getString(R.string.db_sync));
+            replyMsg.append(". ");
             if (response.has("status")){
                 try {
-                    if (response.getString("status").equals("ok")){
+                    String status = response.getString("status");
+                    if (status.equals("ok")){
                         StockManager smd = new StockManager(mContext);
                         smd.update(stockSerNr,
                                 GeotechpyStockApp.getStockType(),
@@ -144,16 +147,21 @@ public class SyncToServer {
                                 zoneCode);
                         stockAdapter.populateStocks();
                     }else{
-                        replyMsg = response.getString("status");
+                        replyMsg = new StringBuilder();
+                    }
+                    replyMsg.append(status);
+                    if (response.has("message")) {
+                        replyMsg.append(": ");
+                        replyMsg.append(response.getString("message"));
                     }
                 } catch (JSONException e) {
-                    replyMsg = e.getMessage();
+                    replyMsg.insert(0, e.getMessage());
                     e.printStackTrace();
                 }
-            }else{
-                replyMsg = response.toString();
+            } else {
+                replyMsg.insert(0, response.toString());
             }
-            checkQueue(replyMsg);
+            checkQueue(replyMsg.toString());
         }
     }
 
