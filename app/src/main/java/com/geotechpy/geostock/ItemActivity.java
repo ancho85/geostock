@@ -108,6 +108,19 @@ public class ItemActivity extends AppCompatActivity {
         });
 
         etCode.setNextFocusDownId(etQty.getId());
+
+        etQty.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus){
+                    Item it = ItemManager.load(getApplicationContext(), etCode.getText().toString());
+                    if (it.getCode().equals("") || !it.getType().equals(GeotechpyStockApp.getStockType())){
+                        etQty.clearFocus();
+                        etCode.requestFocus();
+                    }
+                }
+            }
+        });
     }
 
     @Override
