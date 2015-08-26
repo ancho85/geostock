@@ -17,8 +17,10 @@ import com.geotechpy.geostock.ItemListActivity;
 import com.geotechpy.geostock.app.GeotechpyStockApp;
 import com.geotechpy.geostock.database.StockDetailManager;
 import com.geotechpy.geostock.database.StockManager;
+import com.geotechpy.geostock.database.ZoneManager;
 import com.geotechpy.geostock.models.Stock;
 import com.geotechpy.geostock.models.StockDetail;
+import com.geotechpy.geostock.models.Zone;
 import com.geotechpy.geostock.network.SyncToServer;
 
 import java.util.ArrayList;
@@ -43,6 +45,7 @@ public class StockAdapter extends BaseAdapter{
         // to findViewById() on each row.
         TextView tvStockSerNr;
         TextView tvZoneCode;
+        TextView tvZoneName;
         TextView tvStatusCode;
         ImageButton ibSync;
         ImageButton ibEdit;
@@ -92,6 +95,7 @@ public class StockAdapter extends BaseAdapter{
             holder = new StockViewHolder();
             holder.tvStockSerNr = (TextView) convertView.findViewById(R.id.tv_stock_sernr);
             holder.tvZoneCode = (TextView) convertView.findViewById(R.id.tv_zone_code);
+            holder.tvZoneName = (TextView) convertView.findViewById(R.id.tv_zone_name);
             holder.tvStatusCode = (TextView) convertView.findViewById(R.id.tv_status_code);
             holder.ibSync = (ImageButton) convertView.findViewById(R.id.ib_sync);
             holder.ibEdit = (ImageButton) convertView.findViewById(R.id.ib_edit);
@@ -105,6 +109,8 @@ public class StockAdapter extends BaseAdapter{
         holder.tvStockSerNr.setText(al_stocks.get(position).getSernr().toString());
         holder.tvZoneCode.setText(al_stocks.get(position).getZone_sernr().toString());
         holder.tvStatusCode.setText(al_stocks.get(position).getStatus());
+        Zone zone = ZoneManager.load(mContext, Integer.parseInt(holder.tvZoneCode.getText().toString()));
+        holder.tvZoneName.setText(zone.getName());
 
         holder.ibEdit.setOnClickListener(new View.OnClickListener() {
 

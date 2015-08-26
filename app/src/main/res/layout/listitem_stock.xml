@@ -9,7 +9,14 @@
         android:id="@+id/tv_stock_sernr"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="0.5"/>
+        android:layout_weight="0.5"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/tv_zone_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.5"/>
 
     <TextView
         android:id="@+id/tv_zone_code"
