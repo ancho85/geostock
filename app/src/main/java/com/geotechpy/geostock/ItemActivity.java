@@ -143,28 +143,34 @@ public class ItemActivity extends AppCompatActivity {
         if (!editMode) {
             if (TextUtils.isEmpty(code)){
                 displayMessage(getString(R.string.invalid_item_code));
+                etCode.requestFocus();
                 return;
             }else{
                 Item item = ItemManager.load(this, code);
                 if (TextUtils.isEmpty(item.getCode())){
                     displayMessage(getString(R.string.invalid_item_code));
+                    etCode.requestFocus();
                     return;
                 } else if(!item.getType().equals(GeotechpyStockApp.getStockType())) { //item type not the same as chosen
                     displayMessage(getString(R.string.invalid_item_zone));
+                    etCode.requestFocus();
                     return;
                 }
             }
             if (TextUtils.isEmpty(name)){
                 displayMessage(getString(R.string.invalid_item_name));
+                etName.requestFocus();
                 return;
             }
             if (TextUtils.isEmpty(barCode)){
                 displayMessage(getString(R.string.invalid_item_barcode));
+                etBarCode.requestFocus();
                 return;
             }
         }
         if (TextUtils.isEmpty(qty)){
             displayMessage(getString(R.string.invalid_item_qty));
+            etQty.requestFocus();
             return;
         }
         Long longBarCode = Long.valueOf(barCode);
