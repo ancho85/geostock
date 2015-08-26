@@ -16,8 +16,10 @@ import com.geotechpy.geostock.app.GeotechpyStockApp;
 import com.geotechpy.geostock.database.ItemManager;
 import com.geotechpy.geostock.database.StockDetailManager;
 import com.geotechpy.geostock.database.StockManager;
+import com.geotechpy.geostock.database.ZoneManager;
 import com.geotechpy.geostock.models.Item;
 import com.geotechpy.geostock.models.Stock;
+import com.geotechpy.geostock.models.Zone;
 
 import static com.geotechpy.geostock.app.GeotechpyStockApp.displayMessage;
 
@@ -27,6 +29,7 @@ public class ItemActivity extends AppCompatActivity {
     TextView tvUserName;
     TextView tvStockSerNr;
     TextView tvZoneCode;
+    TextView tvZoneName;
     Boolean editMode;
     EditText etCode;
     EditText etName;
@@ -52,6 +55,7 @@ public class ItemActivity extends AppCompatActivity {
         tvUserName = (TextView) findViewById(R.id.tv_item_username);
         tvStockSerNr = (TextView) findViewById(R.id.tv_item_stock_sernr);
         tvZoneCode = (TextView) findViewById(R.id.tv_item_stock_zone_code);
+        tvZoneName = (TextView) findViewById(R.id.tv_item_zone_name);
         etCode = (EditText) findViewById(R.id.et_item_code);
         etName = (EditText) findViewById(R.id.et_item_name);
         etBarCode = (EditText) findViewById(R.id.et_item_barcode);
@@ -60,6 +64,8 @@ public class ItemActivity extends AppCompatActivity {
         tvUserName.setText(userName);
         tvStockSerNr.setText(intent.getStringExtra("stockSerNr"));
         tvZoneCode.setText(intent.getStringExtra("zoneCode"));
+        Zone zone = ZoneManager.load(getApplicationContext(), Integer.parseInt(tvZoneCode.getText().toString()));
+        tvZoneName.setText(zone.getName());
         editMode = intent.getBooleanExtra("editMode", false);
         etBarCode.setInputType(InputType.TYPE_CLASS_NUMBER);
 

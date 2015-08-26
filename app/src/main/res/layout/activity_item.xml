@@ -33,15 +33,25 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/tv_item_username"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/tv_item_zone_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/tv_item_username"
         android:textAppearance="?android:attr/textAppearanceSmall"/>
 
     <TextView
         android:id="@+id/tv_item_stock_zone_code"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/tv_item_stock_sernr"
-        android:layout_alignRight="@+id/tv_item_stock_sernr"
-        android:layout_below="@+id/tv_item_stock_sernr"
+        android:layout_alignEnd="@+id/tv_item_zone_name"
+        android:layout_alignRight="@+id/tv_item_zone_name"
+        android:layout_below="@+id/tv_item_zone_name"
         android:textAppearance="?android:attr/textAppearanceSmall"/>
 
 
@@ -49,10 +59,10 @@
         android:id="@+id/tv_item_i"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/tv_item_stock_zone_code"
-        android:layout_toLeftOf="@+id/tv_item_stock_sernr"
-        android:layout_toStartOf="@+id/tv_item_stock_sernr"
-        android:text="@string/stockSerNr"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/btn_ok"
+        android:layout_toStartOf="@+id/btn_ok"
+        android:text="@string/header_zone_name"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textStyle="bold"/>
 
@@ -60,9 +70,9 @@
         android:id="@+id/tv_item_z"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tv_item_i"
+        android:layout_alignStart="@+id/tv_item_i"
         android:layout_below="@+id/tv_item_i"
-        android:layout_toLeftOf="@+id/tv_item_stock_zone_code"
-        android:layout_toStartOf="@+id/tv_item_stock_zone_code"
         android:text="@string/zoneCode"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textStyle="bold"/>

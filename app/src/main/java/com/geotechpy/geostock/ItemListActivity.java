@@ -13,7 +13,9 @@ import android.widget.TextView;
 import com.geotechpy.geostock.adapters.ItemAdapter;
 import com.geotechpy.geostock.app.GeotechpyStockApp;
 import com.geotechpy.geostock.database.StockDetailManager;
+import com.geotechpy.geostock.database.ZoneManager;
 import com.geotechpy.geostock.models.StockDetail;
+import com.geotechpy.geostock.models.Zone;
 
 import java.util.ArrayList;
 
@@ -23,6 +25,7 @@ public class ItemListActivity extends AppCompatActivity {
     TextView tvUserName;
     TextView tvStockSerNr;
     TextView tvZoneCode;
+    TextView tvZoneName;
     String userName;
 
     @Override
@@ -41,11 +44,14 @@ public class ItemListActivity extends AppCompatActivity {
         tvUserName = (TextView) findViewById(R.id.tv_itemlist_username);
         tvStockSerNr = (TextView) findViewById(R.id.tv_itemlist_stock_sernr);
         tvZoneCode = (TextView) findViewById(R.id.tv_itemlist_stock_zone_code);
+        tvZoneName = (TextView) findViewById(R.id.tv_itemlist_zone_name);
         Intent intent = getIntent();
         userName = GeotechpyStockApp.getUserName();
         tvUserName.setText(userName);
         tvStockSerNr.setText(intent.getStringExtra("stockSerNr"));
         tvZoneCode.setText(intent.getStringExtra("zoneCode"));
+        Zone zone = ZoneManager.load(getApplicationContext(), Integer.parseInt(tvZoneCode.getText().toString()));
+        tvZoneName.setText(zone.getName());
         showItems();
     }
 
