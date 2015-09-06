@@ -31,7 +31,7 @@
     <string name="sync_stock">Sync to Server</string>
     <string name="edit_stock">Edit stock</string>
     <string name="delete_stock">Delete stock</string>
-    <string name="title_activity_stock_zone_list">Zones</string>
+    <string name="title_activity_stock_zone_list">Quadrilles</string>
     <string name="title_activity_item_list">Items</string>
     <string name="edit_item">Edit Item</string>
     <string name="delete_item">Delete Item</string>
@@ -47,8 +47,8 @@
     <string name="item_created">Item Created</string>
     <string name="item_updated">Item Updated</string>
     <string name="stockSerNr">Stock</string>
-    <string name="zoneCode">Zone</string>
-    <string name="must_select_zone">Must select a Zone</string>
+    <string name="zoneCode">Quadr.</string>
+    <string name="must_select_zone">Must select a Quadrille</string>
     <string name="stock_detail_deleted">Stock Detail Deleted</string>
     <string name="stock_deleted">Stock Deleted</string>
     <string name="confirm_exit">Are you sure you want to exit?</string>
@@ -58,7 +58,7 @@
     <string name="sync_wscomm_error">WS Comm Error</string>
     <string name="sync_users">Synchronizing Users</string>
     <string name="sync_items">Synchronizing Items</string>
-    <string name="sync_zones">Synchronizing Zones</string>
+    <string name="sync_zones">Synchronizing Quadrilles</string>
     <string name="sync_started">Synchronization Started</string>
     <string name="sync_sending_data">Sending Data</string>
     <string name="item_barcode">Bar Code</string>
@@ -70,7 +70,7 @@
     <string name="statusCode">Status</string>
     <string name="item_number">Nr</string>
     <string name="header_stock" translatable="false">Id</string>
-    <string name="header_zone">Zone</string>
+    <string name="header_zone">Quadr.</string>
     <string name="header_status">Status</string>
     <string name="header_item">Qty</string>
     <string name="save_stock">Save stock?</string>

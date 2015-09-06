@@ -89,8 +89,9 @@
             android:id="@+id/item_header_number"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight=".5"
-            android:text="@string/item_number"/>
+            android:layout_weight=".01"
+            android:text="@string/item_number"
+            android:visibility="invisible" />
 
         <TextView
             android:id="@+id/item_header_code"

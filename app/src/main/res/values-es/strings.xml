@@ -24,7 +24,7 @@
     <string name="sync_stock">Sincronizar al Servidor</string>
     <string name="delete_stock">Borrar Inventario</string>
     <string name="edit_stock">Editar Inventario</string>
-    <string name="title_activity_stock_zone_list">Zonas</string>
+    <string name="title_activity_stock_zone_list">Cuadrillas</string>
     <string name="title_activity_item_list">Productos</string>
     <string name="delete_item">Borrar Producto</string>
     <string name="edit_item">Editar Producto</string>
@@ -36,12 +36,12 @@
     <string name="invalid_item_code">Codigo no válido</string>
     <string name="invalid_item_name">Descripción no válida</string>
     <string name="invalid_item_qty">Cantidad no válida</string>
-    <string name="invalid_item_zone">Zona del producto inválida</string>
+    <string name="invalid_item_zone">Cuadrilla del producto inválida</string>
     <string name="item_created">Producto Creado</string>
     <string name="item_updated">Producto Actualizado</string>
     <string name="stockSerNr">Inventario</string>
-    <string name="zoneCode">Zona</string>
-    <string name="must_select_zone">Debe elegir una Zona</string>
+    <string name="zoneCode">Cuadr.</string>
+    <string name="must_select_zone">Debe elegir una Cuadrilla</string>
     <string name="stock_detail_deleted">Detalle de Inventario Borrado</string>
     <string name="stock_deleted">Inventario Borrado</string>
     <string name="confirm_exit">¿Esta seguro de cerrar la aplicación?</string>
@@ -51,7 +51,7 @@
     <string name="sync_wscomm_error">Error de comunicacion con el WS</string>
     <string name="sync_users">Sincronizando usuarios</string>
     <string name="sync_items">Sincronizando productos</string>
-    <string name="sync_zones">Sincronizando zonas</string>
+    <string name="sync_zones">Sincronizando cuadrillas</string>
     <string name="sync_started">Iniciando sincronización</string>
     <string name="sync_sending_data">Enviando datos</string>
     <string name="item_barcode">Cod. Barra</string>
@@ -65,7 +65,7 @@
     <string name="item_number">Nro</string>
     <string name="header_item">Cant</string>
     <string name="header_status">Estado</string>
-    <string name="header_zone">Zona</string>
+    <string name="header_zone">Cuadr.</string>
     <string name="save_stock">Desea guardar el inventario?</string>
     <string name="sure_delete">Esta seguro que desea eliminar?</string>
     <string name="back">Atrás</string>
