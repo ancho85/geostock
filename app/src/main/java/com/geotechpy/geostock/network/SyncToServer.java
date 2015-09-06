@@ -75,7 +75,7 @@ public class SyncToServer {
         }
         JSONObject json = new JSONObject();
         try {
-            json.put("json", new JSONArray(paramsList.toString()));
+            json.put("json", String.valueOf(new JSONArray(paramsList.toString())));
         } catch (JSONException e) {
             e.printStackTrace();
         }
