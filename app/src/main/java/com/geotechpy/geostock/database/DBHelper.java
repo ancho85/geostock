@@ -27,7 +27,8 @@ public class DBHelper extends SQLiteOpenHelper {
     String sqlZoneCreate = "CREATE TABLE Zone (" +
             "sernr INTEGER PRIMARY KEY NOT NULL, " +
             "name TEXT NOT NULL, " +
-            "type TEXT NOT NULL)";
+            "type TEXT NOT NULL," +
+            "depo_name TEXT NOT NULL)";
     String sqlStockCreate = "CREATE TABLE Stock (" +
             "sernr INTEGER PRIMARY KEY AUTOINCREMENT, " +
             "type TEXT NOT NULL, " +

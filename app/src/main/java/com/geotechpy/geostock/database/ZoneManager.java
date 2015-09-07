@@ -18,6 +18,7 @@ public class ZoneManager {
     public static final String CN_SERNR = "sernr";
     public static final String CN_NAME = "name";
     public static final String CN_TYPE = "type";
+    public static final String CN_DEPO_NAME = "depo_name";
 
     private SQLiteDatabase db;
 
@@ -27,28 +28,29 @@ public class ZoneManager {
         db = helper.getWritableDatabase();
     }
 
-    private ContentValues setContentValues(Integer sernr, String name, String type) {
+    private ContentValues setContentValues(Integer sernr, String name, String type, String depo_name) {
         ContentValues values = new ContentValues();
         values.put(CN_SERNR, sernr);
         values.put(CN_NAME, name);
         values.put(CN_TYPE, type);
+        values.put(CN_DEPO_NAME, depo_name);
         return values;
     }
 
-    public void insert(Integer sernr, String name, String type) {
-        db.insert(TABLE_NAME, null, setContentValues(sernr, name, type));
+    public void insert(Integer sernr, String name, String type, String depo_name) {
+        db.insert(TABLE_NAME, null, setContentValues(sernr, name, type, depo_name));
     }
 
     public void delete(Integer sernr) {
         db.delete(TABLE_NAME, CN_SERNR + "=?", new String[]{sernr.toString()});
     }
 
-    public void update(Integer sernr, String name, String type) {
-        db.update(TABLE_NAME, setContentValues(sernr, name, type), CN_SERNR + "=?", new String[]{sernr.toString()});
+    public void update(Integer sernr, String name, String type, String depo_name) {
+        db.update(TABLE_NAME, setContentValues(sernr, name, type, depo_name), CN_SERNR + "=?", new String[]{sernr.toString()});
     }
 
     public ArrayList<Zone> getZones(String type) {
-        String[] columns = new String[]{CN_SERNR, CN_NAME, CN_TYPE};
+        String[] columns = new String[]{CN_SERNR, CN_NAME, CN_TYPE, CN_DEPO_NAME};
         String where = "";
         if (!TextUtils.isEmpty(type)){
             where = CN_TYPE + "= '" + type + "'";
@@ -59,7 +61,7 @@ public class ZoneManager {
             c = db.query(TABLE_NAME, columns, where, null, null, null, null);
             while (c.moveToNext()){
                 Integer position = c.getPosition();
-                Zone zone = new Zone(Integer.valueOf(c.getString(0)), c.getString(1), c.getString(2));
+                Zone zone = new Zone(Integer.valueOf(c.getString(0)), c.getString(1), c.getString(2), c.getString(3));
                 alzone.add(position, zone);
             }
         }finally {
@@ -86,7 +88,7 @@ public class ZoneManager {
         Zone zone = new Zone();
         try{
             db = sdb.getReadableDatabase();
-            String[] columns = new String[]{CN_SERNR, CN_NAME, CN_TYPE};
+            String[] columns = new String[]{CN_SERNR, CN_NAME, CN_TYPE, CN_DEPO_NAME};
             String where = "sernr = '" + sernr.toString() + "'";
             Cursor c = null;
             try{
@@ -95,6 +97,7 @@ public class ZoneManager {
                     zone.setSernr(Integer.valueOf(c.getString(0)));
                     zone.setName(c.getString(1));
                     zone.setType(c.getString(2));
+                    zone.setDepo_name(c.getString(3));
                 }
             }finally {
                 if (c != null){

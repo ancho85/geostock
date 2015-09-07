@@ -126,7 +126,7 @@ public class SyncFromServer {
                 for(int index = 0 ; index < response.length(); index++) {
                     JSONArray zoneArray = response.getJSONArray(index);
                     ZoneManager zm = new ZoneManager(mContext);
-                    zm.insert(Integer.valueOf(zoneArray.get(0).toString()), zoneArray.get(1).toString(), zoneArray.get(2).toString());
+                    zm.insert(Integer.valueOf(zoneArray.get(0).toString()), zoneArray.get(1).toString(), zoneArray.get(2).toString(), zoneArray.get(3).toString());
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

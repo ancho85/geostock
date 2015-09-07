@@ -70,9 +70,9 @@ public class ItemActivity extends AppCompatActivity {
         Intent intent = getIntent();
         tvUserName.setText(userName);
         tvStockSerNr.setText(intent.getStringExtra("stockSerNr"));
-        tvZoneCode.setText(intent.getStringExtra("zoneCode"));
-        Zone zone = ZoneManager.load(getApplicationContext(), Integer.parseInt(tvZoneCode.getText().toString()));
-        tvZoneName.setText(zone.getName());
+        Zone zone = ZoneManager.load(getApplicationContext(), Integer.parseInt(intent.getStringExtra("zoneCode")));
+        tvZoneCode.setText(zone.getName());
+        tvZoneName.setText(zone.getDepo_name());
         editMode = intent.getBooleanExtra("editMode", false);
         etBarCode.setInputType(InputType.TYPE_CLASS_NUMBER);
 

@@ -69,7 +69,7 @@
     <string name="save_stock">Desea guardar el inventario?</string>
     <string name="sure_delete">Esta seguro que desea eliminar?</string>
     <string name="back">Atrás</string>
-    <string name="header_zone_name">Nombre</string>
+    <string name="header_zone_name">Depósito</string>
     <string name="action_calculator">Calculadora</string>
     <string name="calculator_not_found">Calculadora no encontrada</string>
 </resources>
