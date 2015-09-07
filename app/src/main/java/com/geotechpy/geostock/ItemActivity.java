@@ -2,6 +2,8 @@ package com.geotechpy.geostock;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
@@ -21,6 +23,10 @@ import com.geotechpy.geostock.database.ZoneManager;
 import com.geotechpy.geostock.models.Item;
 import com.geotechpy.geostock.models.Stock;
 import com.geotechpy.geostock.models.Zone;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import static com.geotechpy.geostock.app.GeotechpyStockApp.displayMessage;
 
@@ -139,8 +145,27 @@ public class ItemActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_calculator) {
+            ArrayList<HashMap<String,Object>> items =new ArrayList<>();
+            final PackageManager pm = getPackageManager();
+            List<PackageInfo> packs = pm.getInstalledPackages(0);
+            for (PackageInfo pi : packs) {
+                if( pi.packageName.toLowerCase().contains("calcul")){
+                    HashMap<String, Object> map = new HashMap<>();
+                    map.put("appName", pi.applicationInfo.loadLabel(pm));
+                    map.put("packageName", pi.packageName);
+                    items.add(map);
+                }
+            }
+            if(items.size()>=1){
+                String packageName = (String) items.get(0).get("packageName");
+                Intent i = pm.getLaunchIntentForPackage(packageName);
+                if (i != null)
+                    startActivity(i);
+            }
+            else{
+                displayMessage(getApplicationContext().getString(R.string.calculator_not_found));
+            }
         }
 
         return super.onOptionsItemSelected(item);

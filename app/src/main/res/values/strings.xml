@@ -77,5 +77,7 @@
     <string name="sure_delete">Are you sure you want to Delete?</string>
     <string name="back">Back</string>
     <string name="header_zone_name">Name</string>
+    <string name="action_calculator">Calculator</string>
+    <string name="calculator_not_found">Calculator not found</string>
 
 </resources>
