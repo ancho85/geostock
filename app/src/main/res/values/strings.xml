@@ -24,7 +24,7 @@
     <string name="invalid_user">Invalid User</string>
     <string name="invalid_password">Invalid Password</string>
     <string name="title_activity_stock_type">Stock Type</string>
-    <string name="deposit">Deposit</string>
+    <string name="deposit">Distributor</string>
     <string name="laboratory">Laboratory</string>
     <string name="title_activity_stock_list">Stock List</string>
     <string name="new_stock">New</string>
