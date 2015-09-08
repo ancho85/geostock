@@ -49,9 +49,9 @@ public class ItemListActivity extends AppCompatActivity {
         userName = GeotechpyStockApp.getUserName();
         tvUserName.setText(userName);
         tvStockSerNr.setText(intent.getStringExtra("stockSerNr"));
-        tvZoneCode.setText(intent.getStringExtra("zoneCode"));
         Zone zone = ZoneManager.load(getApplicationContext(), Integer.parseInt(tvZoneCode.getText().toString()));
-        tvZoneName.setText(zone.getName());
+        tvZoneCode.setText(zone.getName());
+        tvZoneName.setText(zone.getDepo_name());
         showItems();
     }
 
