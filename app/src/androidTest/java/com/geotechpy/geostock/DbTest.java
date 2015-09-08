@@ -78,10 +78,10 @@ public class DbTest extends AndroidTestCase {
     }
 
     public void testZone() throws Exception {
-        zone.insert(1, "Admin", ctx.getString(R.string.zone_admin));
-        zone.insert(2, "Deposit", ctx.getString(R.string.zone_deposit));
-        zone.insert(3, "Lab", ctx.getString(R.string.zone_lab));
-        zone.insert(4, "Deposit and Lab", ctx.getString(R.string.zone_both));
+        zone.insert(1, "Admin", ctx.getString(R.string.zone_admin), "DepNameAdmin");
+        zone.insert(2, "Deposit", ctx.getString(R.string.zone_deposit), "DepNameDepo");
+        zone.insert(3, "Lab", ctx.getString(R.string.zone_lab), "DepNameLab");
+        zone.insert(4, "Deposit and Lab", ctx.getString(R.string.zone_both), "DepNameBoth");
         assertEquals(4, zone.count().intValue());
 
         zone.delete(1);
@@ -96,7 +96,7 @@ public class DbTest extends AndroidTestCase {
         assertEquals(ctx.getString(R.string.zone_both), posZone.getType());
         assertEquals("Other", posZone.getName());
 
-        zone.update(4, "Deposit & Lab", ctx.getString(R.string.zone_both));
+        zone.update(4, "Deposit & Lab", ctx.getString(R.string.zone_both), "DepNameBoth");
         Zone lab = ZoneManager.load(ctx, 4);
         assertEquals(ctx.getString(R.string.zone_both), lab.getType());
     }
@@ -127,7 +127,7 @@ public class DbTest extends AndroidTestCase {
     }
 
     public void testStock() throws Exception {
-        zone.insert(1, "Admin", ctx.getString(R.string.zone_admin));
+        zone.insert(1, "Admin", ctx.getString(R.string.zone_admin), "DepNameAdmin");
         user.insert("ancho", "123456", ctx.getString(R.string.zone_admin));
         item.insert("keyboard", "Keyboard", 1234567890123L, ctx.getString(R.string.zone_admin));
 
@@ -160,7 +160,7 @@ public class DbTest extends AndroidTestCase {
 
     public void testStockDetail() throws Exception{
         user.insert("alex", "654321", ctx.getString(R.string.zone_deposit));
-        zone.insert(2, "Deposit", ctx.getString(R.string.zone_deposit));
+        zone.insert(2, "Deposit", ctx.getString(R.string.zone_deposit), "DepNameDepo");
         item.insert("paper", "Papers", 1234567890123L, ctx.getString(R.string.zone_deposit));
         stock.insert(100, ctx.getString(R.string.zone_deposit), ctx.getString(R.string.stock_active), "alex", 2);
         stock.insert(200, ctx.getString(R.string.zone_deposit), ctx.getString(R.string.stock_active), "alex", 2);
