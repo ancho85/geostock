@@ -49,7 +49,7 @@ public class ItemListActivity extends AppCompatActivity {
         userName = GeotechpyStockApp.getUserName();
         tvUserName.setText(userName);
         tvStockSerNr.setText(intent.getStringExtra("stockSerNr"));
-        Zone zone = ZoneManager.load(getApplicationContext(), Integer.parseInt(tvZoneCode.getText().toString()));
+        Zone zone = ZoneManager.load(getApplicationContext(), Integer.parseInt(intent.getStringExtra("zoneCode")));
         tvZoneCode.setText(zone.getName());
         tvZoneName.setText(zone.getDepo_name());
         showItems();
@@ -99,7 +99,7 @@ public class ItemListActivity extends AppCompatActivity {
         tvZoneCode = (TextView) findViewById(R.id.tv_itemlist_stock_zone_code);
         Intent itemActivity = new Intent(this, ItemActivity.class);
         itemActivity.putExtra("stockSerNr", tvStockSerNr.getText().toString());
-        itemActivity.putExtra("zoneCode", tvZoneCode.getText().toString());
+        itemActivity.putExtra("zoneCode", getIntent().getStringExtra("zoneCode"));
         itemActivity.putExtra("editMode", false);
         startActivity(itemActivity);
 
