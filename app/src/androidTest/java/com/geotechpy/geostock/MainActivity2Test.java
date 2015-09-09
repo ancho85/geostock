@@ -1,6 +1,7 @@
 package com.geotechpy.geostock;
 
 import android.content.Context;
+import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.MediumTest;
 
@@ -25,6 +26,7 @@ import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static com.geotechpy.geostock.app.GeotechpyStockApp.getLastToastMessage;
@@ -110,11 +112,13 @@ public class MainActivity2Test {
 
         //ItemListActivity
         onView(withText("ancho")).check(matches(isDisplayed()));
-        onView(withId(R.id.tv_itemlist_stock_sernr)).check(matches(withText("1")));
-        onView(withId(R.id.tv_itemlist_stock_zone_code)).check(matches(withText("1")));
+        onView(withId(R.id.tv_itemlist_stock_sernr)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
+        onView(withId(R.id.tv_itemlist_stock_zone_code)).check(matches(withText("Deposit Nr. 1")));
+        onView(withId(R.id.tv_itemlist_zone_name)).check(matches(withText("DepName1")));
         onView(withId(R.id.lv_itemlist_items)).check(matches(isDisplayed()));
         onView(withId(R.id.btn_new)).perform(click());
-        onView(withId(R.id.btn_cancel)).perform(click());
+        //onView(withId(R.id.btn_cancel)).perform(click());
+        pressBack();
         onView(withId(R.id.btn_new)).perform(click());
 
         //ItemActivity
@@ -144,7 +148,8 @@ public class MainActivity2Test {
         Thread.sleep(2000);
         onView(withId(R.id.btn_ok)).perform(click());
         assertThat(getLastToastMessage(), is(equalTo(ctx.getString(R.string.item_created))));
-        onView(withId(R.id.btn_cancel)).perform(click());
+        //onView(withId(R.id.btn_cancel)).perform(click());
+        pressBack();
         //ItemListActivity
         onData(allOf(is(instanceOf(StockDetail.class)), withStockDetailLineNumber(1, 1)))
                 .onChildView(withId(R.id.ib_items_edit))
@@ -163,7 +168,7 @@ public class MainActivity2Test {
         Thread.sleep(2000);
         onView(withId(R.id.btn_ok)).perform(click());
         assertThat(getLastToastMessage(), is(equalTo(ctx.getString(R.string.item_updated))));
-        onView(withId(R.id.btn_cancel)).perform(click());
+        //onView(withId(R.id.btn_cancel)).perform(click());
 
         //ItemListActivity
         onData(allOf(is(instanceOf(StockDetail.class)), withStockDetailLineNumber(1, 1)))

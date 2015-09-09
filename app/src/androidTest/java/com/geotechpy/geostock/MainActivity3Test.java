@@ -92,7 +92,8 @@ public class MainActivity3Test {
                 .perform(clearText(), typeText("100"), closeSoftKeyboard());
         Thread.sleep(2000);
         onView(withId(R.id.btn_ok)).perform(click());
-        onView(withId(R.id.btn_cancel)).perform(click());
+        //onView(withId(R.id.btn_cancel)).perform(click());
+        pressBack();
         pressBack();
         pressBack();
         pressBack();
