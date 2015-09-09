@@ -172,4 +172,15 @@
         android:layout_alignParentRight="true"
         android:onClick="onClickOk"
         android:text="@string/ok"/>
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/calc"
+        android:id="@+id/btn_calc"
+        android:layout_above="@+id/btn_ok"
+        android:layout_alignRight="@+id/btn_ok"
+        android:layout_alignEnd="@+id/btn_ok"
+        android:onClick="onClickOpenCalc"/>
 </RelativeLayout>

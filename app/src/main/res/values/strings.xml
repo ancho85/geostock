@@ -79,5 +79,6 @@
     <string name="header_zone_name">Deposit</string>
     <string name="action_calculator">Calculator</string>
     <string name="calculator_not_found">Calculator not found</string>
+    <string name="calc">Calculator</string>
 
 </resources>

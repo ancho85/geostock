@@ -146,29 +146,36 @@ public class ItemActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_calculator) {
-            ArrayList<HashMap<String,Object>> items =new ArrayList<>();
-            final PackageManager pm = getPackageManager();
-            List<PackageInfo> packs = pm.getInstalledPackages(0);
-            for (PackageInfo pi : packs) {
-                if( pi.packageName.toLowerCase().contains("calcul")){
-                    HashMap<String, Object> map = new HashMap<>();
-                    map.put("appName", pi.applicationInfo.loadLabel(pm));
-                    map.put("packageName", pi.packageName);
-                    items.add(map);
-                }
-            }
-            if(items.size()>=1){
-                String packageName = (String) items.get(0).get("packageName");
-                Intent i = pm.getLaunchIntentForPackage(packageName);
-                if (i != null)
-                    startActivity(i);
-            }
-            else{
-                displayMessage(getApplicationContext().getString(R.string.calculator_not_found));
-            }
+            openCalculator();
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void openCalculator(){
+        ArrayList<HashMap<String,Object>> items =new ArrayList<>();
+        final PackageManager pm = getPackageManager();
+        List<PackageInfo> packs = pm.getInstalledPackages(0);
+        for (PackageInfo pi : packs) {
+            if( pi.packageName.toLowerCase().contains("calcul")){
+                HashMap<String, Object> map = new HashMap<>();
+                map.put("appName", pi.applicationInfo.loadLabel(pm));
+                map.put("packageName", pi.packageName);
+                items.add(map);
+            }
+        }
+        if(items.size()>=1){
+            String packageName = (String) items.get(0).get("packageName");
+            Intent i = pm.getLaunchIntentForPackage(packageName);
+            if (i != null)
+                startActivity(i);
+        }
+        else{
+            displayMessage(getApplicationContext().getString(R.string.calculator_not_found));
+        }
+    }
+    public void onClickOpenCalc(View view){
+        openCalculator();
     }
 
     public void onClickCancel(View view){
