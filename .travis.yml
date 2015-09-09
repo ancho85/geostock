@@ -58,7 +58,7 @@ before_script:
   - ./adv-test.sh
 
 script:
-    - if [ "$COVERITY_SCAN_BRANCH" != 1 ]; then travis_retry ./gradlew clean test connectedAndroidTest -PdisablePreDex; fi
+    - if [ "$COVERITY_SCAN_BRANCH" != 1 ]; then travis_retry ./gradlew clean test connectedAndroidTest -PdisablePreDex --info; fi
 
 notifications:
   email: false
