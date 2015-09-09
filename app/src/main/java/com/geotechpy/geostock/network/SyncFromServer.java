@@ -2,6 +2,7 @@ package com.geotechpy.geostock.network;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.os.AsyncTask;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -140,14 +141,22 @@ public class SyncFromServer {
         @Override
         public void onResponse(JSONArray response) {
             updateDialogMessage(mContext.getString(R.string.sync_items));
+            new ItemInsertor().execute(response);
+        }
+    }
+
+    public class ItemInsertor extends AsyncTask<JSONArray, Void, Void> {
+
+        @Override
+        protected Void doInBackground(JSONArray... response) {
             try {
                 String code;
                 String name;
                 Long barCode;
                 String type;
                 String tmpBarCode;
-                for(int index = 0 ; index < response.length(); index++) {
-                    JSONArray itemArray = response.getJSONArray(index);
+                for(int index = 0 ; index < response[0].length(); index++) {
+                    JSONArray itemArray = response[0].getJSONArray(index);
                     ItemManager it = new ItemManager(mContext);
                     code = getNotNullString(itemArray.get(0).toString());
                     name = getNotNullString(itemArray.get(1).toString());
@@ -162,6 +171,10 @@ public class SyncFromServer {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+            return null;
+        }
+
+        protected void onPostExecute(Void none) {
             checkQueue(mContext.getString(R.string.db_sync));
         }
 
