@@ -17,6 +17,7 @@ env:
     - ARMEABI=armeabi-v7a
     - ADB_INSTALL_TIMEOUT=8 # minutes (2 minutes by default)
     - TARGET="android-22" NAME="android-22"
+    - TERM=dumb
 
      # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
      #   via the "travis encrypt" command using the project repo's public key
