@@ -237,8 +237,8 @@ public class ItemActivity extends AppCompatActivity {
             im.update(code, name, longBarCode, stock.getType());
             sdm.update(stockSerNr, lineNr, code, fQty);
             displayMessage(getString(R.string.item_updated));
+            finish();
         }
-        //finish();
         etCode.setText("");
         etName.setText("");
         etBarCode.setText("");

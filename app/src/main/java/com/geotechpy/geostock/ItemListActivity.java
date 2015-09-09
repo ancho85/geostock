@@ -27,6 +27,7 @@ public class ItemListActivity extends AppCompatActivity {
     TextView tvZoneCode;
     TextView tvZoneName;
     String userName;
+    String realZoneCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +47,11 @@ public class ItemListActivity extends AppCompatActivity {
         tvZoneCode = (TextView) findViewById(R.id.tv_itemlist_stock_zone_code);
         tvZoneName = (TextView) findViewById(R.id.tv_itemlist_zone_name);
         Intent intent = getIntent();
+        realZoneCode = intent.getStringExtra("zoneCode");
         userName = GeotechpyStockApp.getUserName();
         tvUserName.setText(userName);
         tvStockSerNr.setText(intent.getStringExtra("stockSerNr"));
-        Zone zone = ZoneManager.load(getApplicationContext(), Integer.parseInt(intent.getStringExtra("zoneCode")));
+        Zone zone = ZoneManager.load(getApplicationContext(), Integer.parseInt(realZoneCode));
         tvZoneCode.setText(zone.getName());
         tvZoneName.setText(zone.getDepo_name());
         showItems();
@@ -57,13 +59,12 @@ public class ItemListActivity extends AppCompatActivity {
 
     public void showItems(){
         String stockSerNr = tvStockSerNr.getText().toString();
-        String zoneCode = tvZoneCode.getText().toString();
 
         StockDetailManager stockDetailManager = new StockDetailManager(this);
         ArrayList<StockDetail> al_stockDetail = stockDetailManager.getStockDetails(Integer.valueOf(stockSerNr));
         ItemAdapter itemAdapter = new ItemAdapter(this);
         itemAdapter.updateItems(al_stockDetail);
-        itemAdapter.setUserStockZone(userName, stockSerNr, zoneCode);
+        itemAdapter.setUserStockZone(userName, stockSerNr, realZoneCode);
         ListView lvItems = (ListView) findViewById(R.id.lv_itemlist_items);
         lvItems.setAdapter(itemAdapter);
     }
@@ -99,7 +100,7 @@ public class ItemListActivity extends AppCompatActivity {
         tvZoneCode = (TextView) findViewById(R.id.tv_itemlist_stock_zone_code);
         Intent itemActivity = new Intent(this, ItemActivity.class);
         itemActivity.putExtra("stockSerNr", tvStockSerNr.getText().toString());
-        itemActivity.putExtra("zoneCode", getIntent().getStringExtra("zoneCode"));
+        itemActivity.putExtra("zoneCode", realZoneCode);
         itemActivity.putExtra("editMode", false);
         startActivity(itemActivity);
 
