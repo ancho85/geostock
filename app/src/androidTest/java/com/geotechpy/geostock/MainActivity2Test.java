@@ -118,9 +118,9 @@ public class MainActivity2Test {
         onView(withId(R.id.lv_itemlist_items)).check(matches(isDisplayed()));
         onView(withId(R.id.btn_new)).perform(click());
         //onView(withId(R.id.btn_cancel)).perform(click());
-        pressBack();
-        Thread.sleep(2000);
-        onView(withId(R.id.btn_new)).perform(click());
+        //pressBack();
+        //Thread.sleep(2000);
+        //onView(withId(R.id.btn_new)).perform(click());
 
         //ItemActivity
         onView(withId(R.id.et_item_code)).check(matches(not(editTextNotEditable())));
