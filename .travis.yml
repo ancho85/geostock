@@ -73,7 +73,7 @@ cache:
 
 before_cache:
     # cleanup a little for better caching reuse
-    - rm $HOME/.gradle/daemon/2.4/*.*
+    - rm $HOME/.gradle/daemon/2.5/*.*
     - rm $HOME/.gradle/caches/modules-2/modules-2.lock
 
 after_success:
