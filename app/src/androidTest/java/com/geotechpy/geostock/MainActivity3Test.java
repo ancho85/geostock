@@ -113,11 +113,13 @@ public class MainActivity3Test {
         onData(allOf(is(instanceOf(Stock.class)), withStockSerNr(1)))
                 .onChildView(withId(R.id.ib_sync)) //resource id of first column from xml layout
                 .perform(click());
+        Thread.sleep(2000);
         onView(withText(R.string.save_stock)).check(matches(isDisplayed()));
         onView(withId(android.R.id.button2)).perform(click()); //cancel sync
         onData(allOf(is(instanceOf(Stock.class)), withStockSerNr(1)))
                 .onChildView(withId(R.id.ib_sync)) //resource id of first column from xml layout
                 .perform(click());
+        Thread.sleep(2000);
         onView(withText(R.string.save_stock)).check(matches(isDisplayed()));
         onView(withId(android.R.id.button1)).perform(click()); //confirm sync
         assertThat(getLastToastMessage(), equalTo(ctx.getString(R.string.db_sync) + ". ok: " + "Sincronizacion exitosa"));

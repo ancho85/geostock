@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -90,6 +92,13 @@ public class GeotechpyStockApp extends Application {
     public synchronized static void displayMessage(String msg){
         Toast.makeText(appInstance, msg, Toast.LENGTH_SHORT).show();
         setLastToastMessage(msg);
+    }
+
+    public synchronized static void showEditTextSoftKeyboard(Context mContext, EditText editText){
+        if (!getFakeHttpConnections()){
+            InputMethodManager imm =  (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
+        }
     }
 
 
