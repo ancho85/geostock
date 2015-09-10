@@ -11,7 +11,6 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -244,8 +243,7 @@ public class ItemActivity extends AppCompatActivity {
         etBarCode.setText("");
         etQty.setText("");
         etCode.requestFocus();
-        InputMethodManager imm =  (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.showSoftInput(etCode, InputMethodManager.SHOW_IMPLICIT);
+        GeotechpyStockApp.showEditTextSoftKeyboard(getApplicationContext(), etCode);
     }
 
 }
