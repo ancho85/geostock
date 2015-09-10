@@ -1,7 +1,6 @@
 package com.geotechpy.geostock.resources;
 
 import android.support.test.espresso.IdlingResource;
-import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -13,7 +12,7 @@ import java.util.Set;
 import static com.android.support.test.deps.guava.base.Preconditions.checkNotNull;
 
 public final class VolleyIdlingResource implements IdlingResource {
-    private static final String TAG = "VolleyIdlingResource";
+    //private static final String TAG = "VolleyIdlingResource";
     private final String resourceName;
 
     // written from main thread, read from any thread.
@@ -42,17 +41,13 @@ public final class VolleyIdlingResource implements IdlingResource {
             int count = set.size();
 
             if (count == 0) {
-                Log.d(TAG, "Volley is idle now! with: " + count);
                 resourceCallback.onTransitionToIdle();
-            } else {
-                Log.d(TAG, "Not idle... " +count);
             }
             return count == 0;
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        Log.d(TAG, "Eita porra.. ");
         return true;
     }
 
