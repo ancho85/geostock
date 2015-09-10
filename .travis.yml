@@ -12,11 +12,11 @@ jdk:
 
 env:
   global:
-    - ANDROID_API_LEVEL=22
-    - ANDROID_BUILD_TOOLS_VERSION=22.0.1
+    - ANDROID_API_LEVEL=23
+    - ANDROID_BUILD_TOOLS_VERSION=23.0.1
     - ARMEABI=armeabi-v7a
     - ADB_INSTALL_TIMEOUT=8 # minutes (2 minutes by default)
-    - TARGET="android-22" NAME="android-22"
+    - TARGET="android-23" NAME="android-23"
 
      # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
      #   via the "travis encrypt" command using the project repo's public key
