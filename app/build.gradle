@@ -56,8 +56,16 @@ dependencies {
     compile 'com.mcxiaoke.volley:library:1.0.19'
     compile 'com.google.guava:guava:18.0'
 
-    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.0'
-    androidTestCompile 'com.android.support.test:testing-support-lib:0.1'
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2'
+    androidTestCompile 'com.android.support.test:runner:0.3'
+}
+
+configurations.all{
+    //ignore the warning "ambiguous" here, https://youtrack.jetbrains.com/issue/IDEA-141744
+    resolutionStrategy{
+        // for espresso-core:2.2 forcing use for this version of support-annotations
+        force 'com.android.support:support-annotations:23.0.1'
+    }
 }
 
 jacoco {
