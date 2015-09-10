@@ -91,4 +91,4 @@ addons:
     branch_pattern: coverity-scan
 
 after_failure:
-    - adb logcat -t 500
+    - adb logcat -t 2000
