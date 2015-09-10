@@ -58,8 +58,7 @@ before_script:
   - ./adv-test.sh
 
 script:
-    - if [ "$COVERITY_SCAN_BRANCH" != 1 ]; then ./gradlew clean prepareDebugDependencies; fi
-    - if [ "$COVERITY_SCAN_BRANCH" != 1 ]; then ./gradlew installDebug; fi
+    - if [ "$COVERITY_SCAN_BRANCH" != 1 ]; then ./gradlew clean installDebug; fi
     - if [ "$COVERITY_SCAN_BRANCH" != 1 ]; then travis_retry ./gradlew connectedAndroidTest -PdisablePreDex --info --stacktrace; fi
 
 notifications:
