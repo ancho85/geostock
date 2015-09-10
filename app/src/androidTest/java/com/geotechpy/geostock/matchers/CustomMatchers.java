@@ -15,7 +15,7 @@ import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
-import static com.android.support.test.deps.guava.base.Preconditions.checkNotNull;
+import static android.support.test.espresso.core.deps.guava.base.Preconditions.checkNotNull;
 import static org.hamcrest.Matchers.equalTo;
 
 /**

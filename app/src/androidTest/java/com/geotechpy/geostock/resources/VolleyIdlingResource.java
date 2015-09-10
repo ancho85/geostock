@@ -10,7 +10,8 @@ import com.geotechpy.geostock.app.GeotechpyStockApp;
 import java.lang.reflect.Field;
 import java.util.Set;
 
-import static com.android.support.test.deps.guava.base.Preconditions.checkNotNull;
+import static android.support.test.espresso.core.deps.guava.base.Preconditions.checkNotNull;
+
 
 public final class VolleyIdlingResource implements IdlingResource {
     private static final String TAG = "VolleyIdlingResource";
