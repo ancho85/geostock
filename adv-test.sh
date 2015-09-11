@@ -25,3 +25,6 @@ emulator -avd "$NAME" -no-audio -no-window &
 android-wait-for-emulator
 adb shell input keyevent 82
 disable_animation
+echo "    Disabling boot animation"
+adb shell setprop ctl.stop bootanim.exit 1
+echo "Done"
