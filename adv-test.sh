@@ -20,7 +20,7 @@ function disable_animation() {
   echo "Done"
 }
 
-echo "no" | android create avd --force -n "$NAME" -t "$TARGET" --abi "$ARMEABI"
+echo "no" | android create avd --force -n "$NAME" -t "$TARGET" --abi "$ARMEABI" --skin WVGA800
 emulator -avd "$NAME" -no-audio -no-window &
 android-wait-for-emulator
 adb shell input keyevent 82
